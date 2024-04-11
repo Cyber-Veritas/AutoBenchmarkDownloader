@@ -25,11 +25,16 @@
             <ImageBrush ImageSource="Resources/Images/app_background.jpg" Stretch="UniformToFill" Opacity="0.95" />
         </Grid.Background>
 
-        <Border Grid.Row="1" Grid.RowSpan="2" CornerRadius="10" Background="Black" Opacity="0.5" Margin="10, 10, 10, 0"/>
-        <Border Grid.Row="3" CornerRadius="10" Background="Black" Opacity="0.5" Margin="10, 10, 10, 10"/>
-        <Border Grid.Row="1" Grid.Column="2" CornerRadius="10" Background="Black" Opacity="0.5" Margin="0, 10, 10, 0"/>
-        <Border Grid.Row="2" Grid.Column="2" CornerRadius="10" Background="Black" Opacity="0.5" Margin="0, 10, 10, 0"/>
-        <Border Grid.Row="5" Grid.ColumnSpan="2" Background="Black" Opacity="0.6"/>
+        <!-- download widget -->
+        <Border Grid.Row="1" Grid.RowSpan="2" CornerRadius="10" Background="#303030" Opacity="0.75" Margin="10, 10, 10, 0"/>
+        <!-- file path widget -->
+        <Border Grid.Row="3" CornerRadius="10" Background="#303030" Opacity="0.75" Margin="10, 10, 10, 10"/>
+        <!-- PC usage widget -->
+        <Border Grid.Row="1" Grid.Column="2" CornerRadius="10" Background="#303030" Opacity="0.75" Margin="0, 10, 10, 0"/>
+        <!-- DXDiag widget -->
+        <Border Grid.Row="2" Grid.Column="2" CornerRadius="10" Background="#303030" Opacity="0.75" Margin="0, 10, 10, 0"/>
+        <!-- footer -->
+        <Border Grid.Row="5" Grid.ColumnSpan="2" Background="#131313" Opacity="0.6"/>
 
 
         <userControls:MenuBar Grid.ColumnSpan="2"/>
