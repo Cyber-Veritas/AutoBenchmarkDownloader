@@ -1,24 +1,38 @@
-﻿using System.Text;
+﻿using AutoBenchmarkDownloader.Model;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace AutoBenchmarkDownloader
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, INotifyPropertyChanged
     {
         public MainWindow()
         {
+            DataContext = this;
             InitializeComponent();
+            SoftwareInfos =
+            [
+                new() { Name="Software A", Address="https://example.com/", Download=true },
+                new() { Name="Software B", Address="https://example.com/", Download=false }
+            ];
         }
+
+        private ObservableCollection<SoftwareInfo> softwareInfos;
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        public ObservableCollection<SoftwareInfo> SoftwareInfos
+        {
+            get { return softwareInfos; }
+            set 
+            { 
+                softwareInfos = value; 
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("SoftwareInfos"));
+            }
+        }
+
+
+
     }
 }

@@ -39,7 +39,19 @@
             
             
             <!-- download widget -->
-            <Border Grid.RowSpan="2" Style="{StaticResource Tile.Background}" Margin="10, 10, 10, 0"/>
+            <Border Grid.RowSpan="2" Style="{StaticResource Tile.Background}" Margin="10, 10, 10, 0">
+                <StackPanel Margin="20">
+                    <ListBox ItemsSource="{Binding SoftwareInfos}" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <CheckBox IsChecked="{Binding Download}" Content="{Binding Name}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </StackPanel>
+            </Border>
             <!-- file path widget -->
             <Border Grid.Row="2" Style="{StaticResource Tile.Background}" Margin="10, 10, 10, 10"/>
             <!-- PC usage widget -->
