@@ -5,14 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AutoBenchmarkDownloader"
         xmlns:userControls="clr-namespace:AutoBenchmarkDownloader.View.UserControls"
+        xmlns:userView="clr-namespace:AutoBenchmarkDownloader.ViewModel"
         mc:Ignorable="d"
         Title="MainWindow" ResizeMode="NoResize" Height="600" Width="800">
     <Window.Resources>
         <Style TargetType="Border" x:Key="Tile.Background">
-            <Setter Property="CornerRadius" Value="10" />
-            <Setter Property="Background" Value="#303030" />
-            <Setter Property="Opacity" Value="0.75" />
-        </Style>
+                <Setter Property="CornerRadius" Value="10" />
+                <Setter Property="Background" Value="#303030" />
+                <Setter Property="Opacity" Value="0.75" />
+            </Style>
     </Window.Resources>
 
     <Grid>
@@ -43,14 +44,15 @@
             <!-- file path widget -->
             <Border Grid.Row="2" Style="{StaticResource Tile.Background}" Margin="10, 10, 10, 10"/>
             <!-- PC usage widget -->
+            <!-- <userView:SystemUsageInfoViewModel Grid.Column="1" Margin="0,10,10,0"/> -->
             <Border Grid.Column="1" Style="{StaticResource Tile.Background}" Margin="0, 10, 10, 0"/>
-            <TextBlock Text="{Binding SelectedInfo.cpuUsage}" Foreground="Red" FontSize="30" Margin="48,22,48,24" Grid.Column="1"/> <!-- temp -->
+            <TextBlock Text="{Binding SelectedInfo.ramUsage}" Foreground="Red" FontSize="24" Margin="48,22,48,24" Grid.Column="1"/> <!-- temp -->
             <!-- DXDiag widget -->
             <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource Tile.Background}"  Margin="0, 10, 10, 0"/>
         </Grid>
 
 
-
+        
         <userControls:MenuBar />
 
         <!-- footer -->

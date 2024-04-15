@@ -3,10 +3,10 @@ namespace AutoBenchmarkDownloader.Model
 {
     public class SystemUsageInfo
     {
-        public  int cpuUsage { get; set; }
-        public  int cpuTemp { get; set; }
-        public int ramUsage { get; set; }
-        public int gpuUsage { get; set; }
-        public int gpuTemp { get; set; }
+        public required string cpuUsage { get; set; }
+        public  required string cpuTemp { get; set; }
+        public required string ramUsage { get; set; }
+        public required string gpuUsage { get; set; }
+        public required string gpuTemp { get; set; }
     }
 }
