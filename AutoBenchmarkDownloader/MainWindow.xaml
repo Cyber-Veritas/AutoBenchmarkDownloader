@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AutoBenchmarkDownloader"
-        xmlns:userControls="clr-namespace:AutoBenchmarkDownloader.View.UserControls"
+        xmlns:userControls="clr-namespace:AutoBenchmarkDownloader.View.UserControls" xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
         mc:Ignorable="d"
         Title="MainWindow" ResizeMode="NoResize" Height="600" Width="800">
     <Window.Resources>
@@ -17,7 +17,7 @@
     
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="25" />
+            <RowDefinition Height="45" />
             <RowDefinition />
             <RowDefinition Height="20" />
         </Grid.RowDefinitions>
@@ -36,30 +36,32 @@
                 <ColumnDefinition Width="2*" />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            
+
             
             <!-- download widget -->
             <Border Grid.RowSpan="2" Style="{StaticResource Tile.Background}" Margin="10, 10, 10, 0">
-                <StackPanel Margin="20">
-                    <ListBox ItemsSource="{Binding SoftwareInfos}" ScrollViewer.VerticalScrollBarVisibility="Auto">
-                        <ListBox.ItemTemplate>
+                <ItemsControl ItemsSource="{Binding SoftwareInfos}" Margin="20">
+                        <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <StackPanel>
-                                    <CheckBox IsChecked="{Binding Download}" Content="{Binding Name}" />
+                                <StackPanel Margin="0, 0, 0, 10">
+                                    <ui:ToggleSwitch IsChecked="{Binding Download}" Content="{Binding Name}" />
                                 </StackPanel>
                             </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
-                </StackPanel>
+                        </ItemsControl.ItemTemplate>
+                </ItemsControl>
             </Border>
+
             <!-- file path widget -->
-            <Border Grid.Row="2" Style="{StaticResource Tile.Background}" Margin="10, 10, 10, 10"/>
+            <Border Grid.Row="2" Grid.Column="0" Style="{StaticResource Tile.Background}" Margin="10, 10, 10, 10"/>
+
             <!-- PC usage widget -->
-            <Border Grid.Column="1" Style="{StaticResource Tile.Background}" Margin="0, 10, 10, 0"/>
+            <Border Grid.Row="0" Grid.Column="1" Style="{StaticResource Tile.Background}" Margin="0, 10, 10, 0"/>
+            
             <!-- DXDiag widget -->
             <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource Tile.Background}"  Margin="0, 10, 10, 0"/>
+
         </Grid>
-        
+
 
 
         <userControls:MenuBar />

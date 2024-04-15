@@ -1,6 +1,7 @@
 ﻿using AutoBenchmarkDownloader.Model;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Windows;
 
 namespace AutoBenchmarkDownloader
@@ -13,26 +14,30 @@ namespace AutoBenchmarkDownloader
             InitializeComponent();
             SoftwareInfos =
             [
-                new() { Name="Software A", Address="https://example.com/", Download=true },
-                new() { Name="Software B", Address="https://example.com/", Download=false }
+                new SoftwareInfo { Name="Software A", Address="https://example.com/", Download=true },
+                new SoftwareInfo { Name="Software B", Address="https://example.com/", Download=false }
             ];
         }
 
-        private ObservableCollection<SoftwareInfo> softwareInfos;
+        private ObservableCollection<SoftwareInfo> _softwareInfos;
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
         public ObservableCollection<SoftwareInfo> SoftwareInfos
         {
-            get { return softwareInfos; }
+            get { return _softwareInfos; }
             set 
             { 
-                softwareInfos = value; 
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("SoftwareInfos"));
+                _softwareInfos = value;
+                OnPropertyChanged("SoftwareInfos");
+                
             }
         }
 
-
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
 
     }
 }
