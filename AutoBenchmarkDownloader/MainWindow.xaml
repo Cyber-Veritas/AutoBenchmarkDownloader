@@ -14,7 +14,7 @@
             <Setter Property="Opacity" Value="0.75" />
         </Style>
     </Window.Resources>
-    
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="25" />
@@ -36,22 +36,23 @@
                 <ColumnDefinition Width="2*" />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            
-            
+
+
             <!-- download widget -->
             <Border Grid.RowSpan="2" Style="{StaticResource Tile.Background}" Margin="10, 10, 10, 0"/>
             <!-- file path widget -->
             <Border Grid.Row="2" Style="{StaticResource Tile.Background}" Margin="10, 10, 10, 10"/>
             <!-- PC usage widget -->
             <Border Grid.Column="1" Style="{StaticResource Tile.Background}" Margin="0, 10, 10, 0"/>
+            <TextBlock Text="{Binding SelectedInfo.cpuUsage}" Foreground="Red" FontSize="30" Margin="48,22,48,24" Grid.Column="1"/> <!-- temp -->
             <!-- DXDiag widget -->
             <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource Tile.Background}"  Margin="0, 10, 10, 0"/>
         </Grid>
-        
+
 
 
         <userControls:MenuBar />
-        
+
         <!-- footer -->
         <Border Grid.Row="2" Background="#131313" Opacity="0.6"/>
 

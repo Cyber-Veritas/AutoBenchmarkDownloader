@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using AutoBenchmarkDownloader.ViewModel;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -11,14 +12,17 @@ using System.Windows.Shapes;
 
 namespace AutoBenchmarkDownloader
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
+        private SystemUsageInfoViewModel viewModel;
         public MainWindow()
         {
             InitializeComponent();
+
+            // initialize system usage info
+            viewModel = new SystemUsageInfoViewModel(); 
+
+            DataContext = viewModel;
         }
     }
 }
