@@ -18,4 +18,13 @@
     </Resource>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Utilities\" />
+    <Folder Include="Styles\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="WPF-UI" Version="3.0.4" />
+  </ItemGroup>
+
 </Project>
