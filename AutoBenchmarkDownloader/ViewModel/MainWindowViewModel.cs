@@ -1,9 +1,8 @@
-﻿using System.Collections.ObjectModel;
-using System.IO;
-using AutoBenchmarkDownloader.Model;
+﻿using AutoBenchmarkDownloader.Model;
 using AutoBenchmarkDownloader.MVVM;
-using System.Net.Http;
-using System.Windows;
+using AutoBenchmarkDownloader.Utilities;
+using System.Collections.ObjectModel;
+using System.IO;
 
 namespace AutoBenchmarkDownloader.ViewModel
 {
@@ -11,64 +10,44 @@ namespace AutoBenchmarkDownloader.ViewModel
     {
         public ObservableCollection<SoftwareInfo> SoftwareInfos { get; set; }
 
-        public RelayCommand DownloadCommand => new RelayCommand(execute => DownloadSelectedSoftware(), canExecute => SoftwareInfos.Any(info => info.Download));
+        private readonly YamlOperations _yamlOperations;
+        private readonly DownloadOperations _downloadOperations;
+
+        public RelayCommand DownloadCommand => new(
+            execute => _downloadOperations.DownloadSelectedSoftware(),
+            canExecute => SoftwareInfos.Any(info => info.Download));
         
+        public RelayCommand SaveConfigCommand => new(
+            execute => _yamlOperations.SaveConfig());
+        
+
         public MainWindowViewModel()
         {
-            SoftwareInfos =
-            [
-                new SoftwareInfo { Name = "FurMark 2", Address = "https://geeks3d.com/dl/get/748", Download = true },
-                new SoftwareInfo { Name = "CPU-Z", Address = "https://download.cpuid.com/cpu-z/cpu-z_2.09-en.zip", Download = false }
-            ];
+            SoftwareInfos = new ObservableCollection<SoftwareInfo>();
+            _yamlOperations = new YamlOperations(SoftwareInfos);
+            _downloadOperations = new DownloadOperations(SoftwareInfos);
+
+            if (File.Exists(YamlOperations.DefaultYamlPath))
+            {
+                _yamlOperations.LoadConfig();
+            }
+            else
+            {
+                _yamlOperations.SaveDefaultConfig();
+            }
         }
 
-        private SoftwareInfo selectedSoftwareInfo;
+
+        private SoftwareInfo _selectedSoftwareInfo;
 
         public SoftwareInfo SelectedSoftwareInfo
         {
-            get { return selectedSoftwareInfo; }
+            get { return _selectedSoftwareInfo; }
             set
             {
-                selectedSoftwareInfo = value;
+                _selectedSoftwareInfo = value;
                 OnPropertyChanged();
             }
-        }
-
-        private async void DownloadSelectedSoftware()
-        {
-            var itemsToDownload = SoftwareInfos.Where(info => info.Download);
-
-            foreach (var item in itemsToDownload)
-            {
-                var url = item.Address;
-
-                try
-                {
-                    using (var client = new HttpClient())
-                    {
-                        var response = await client.GetAsync(url);
-                        response.EnsureSuccessStatusCode();
-
-                        string filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), item.Name + ".zip");
-
-                        using (var fileStream = File.Create(filePath))
-                        {
-                            await response.Content.CopyToAsync(fileStream);
-                        }
-
-                        MessageBox.Show("File downloaded successfully!"); 
-                    }
-                }
-                catch (HttpRequestException ex)
-                {
-                    MessageBox.Show($"Download failed: {ex.Message}");  
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"An error occurred: {ex.Message}"); 
-                }
-            }
-
         }
     }
 }
