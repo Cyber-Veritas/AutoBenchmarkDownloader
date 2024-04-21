@@ -1,14 +1,9 @@
 ﻿using AutoBenchmarkDownloader.ViewModel;
 using System.Text;
+﻿using System.IO;
+using System.Net.Http;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using AutoBenchmarkDownloader.ViewModel;
 
 namespace AutoBenchmarkDownloader
 {
@@ -23,6 +18,8 @@ namespace AutoBenchmarkDownloader
             viewModel = new SystemUsageInfoViewModel(); 
 
             DataContext = viewModel;
+            MainWindowViewModel vm = new MainWindowViewModel();
+            DataContext = vm;
         }
     }
 }
