@@ -11,10 +11,19 @@
         mc:Ignorable="d"
         Title="MainWindow" ResizeMode="NoResize" Height="600" Width="800">
     <Window.Resources>
+        <!-- widget background -->
         <Style TargetType="Border" x:Key="Tile.Background">
             <Setter Property="CornerRadius" Value="10" />
             <Setter Property="Background" Value="#303030" />
             <Setter Property="Opacity" Value="0.75" />
+        </Style>
+
+        <!-- dxDiag textBlock -->
+        <Style TargetType="TextBlock" x:Key="dxDiagTextBlock">
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="FontFamily" Value="Bahnschrift Regular" />
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="Margin" Value="5, 10, 0, 0" />
         </Style>
     </Window.Resources>
     
@@ -55,23 +64,35 @@
             </Border>
 
             <!-- file path widget -->
-            <Border Grid.Row="2" Grid.Column="0" Style="{StaticResource Tile.Background}" Margin="10, 10, 10, 10" >
-                <Button Content="COS" Height="40" Width="120" Command="{Binding dx}"></Button>
-            </Border>
+            <Border Grid.Row="2" Grid.Column="0" Style="{StaticResource Tile.Background}" Margin="10, 10, 10, 10" />
 
             <!-- PC usage widget -->
             <Border Grid.Row="0" Grid.Column="1" Style="{StaticResource Tile.Background}" Margin="0, 10, 10, 0"/>
             
             <!-- DXDiag widget -->
-            <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource Tile.Background}"  Margin="0, 10, 10, 0"/>
-            <ItemsControl Grid.Column="1" ItemsSource="{Binding dxDiagInfos}">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding CpuModel}" Foreground="Red" FontSize="10"/>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-
+            <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource Tile.Background}"  Margin="0, 10, 10, 0" >
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                    <StackPanel>
+                        <ItemsControl ItemsSource="{Binding dxDiagInfos}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding CpuModel}" Style="{StaticResource dxDiagTextBlock}"/>
+                                        <TextBlock Text="{Binding Ram}" Style="{StaticResource dxDiagTextBlock}"/>
+                                        <TextBlock Text="{Binding Motherboard}" Style="{StaticResource dxDiagTextBlock}"/>
+                                        <TextBlock Text="{Binding Bios}" Style="{StaticResource dxDiagTextBlock}"/>
+                                        <TextBlock Text="{Binding Os}" Style="{StaticResource dxDiagTextBlock}"/>
+                                        <TextBlock Text="{Binding Gpu}" Style="{StaticResource dxDiagTextBlock}"/>
+                                        <TextBlock Text="{Binding DirectX}" Style="{StaticResource dxDiagTextBlock}"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </ScrollViewer>
+            </Border>
+            
+            <!-- download button -->
             <Button Grid.Row="2" Grid.Column="1" Content="DOWNLOAD" Margin="20" HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch" Command="{Binding DownloadCommand}" />
 
