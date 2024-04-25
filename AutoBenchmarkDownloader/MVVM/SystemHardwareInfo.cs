@@ -12,7 +12,6 @@ namespace AutoBenchmarkDownloader.MVVM
                 foreach (ManagementObject item in searcher.Get())
                 {
                     return (string)item[infoToGet];
-
                 }
                 return "["+errorInfo+" info ERROR]";
             }

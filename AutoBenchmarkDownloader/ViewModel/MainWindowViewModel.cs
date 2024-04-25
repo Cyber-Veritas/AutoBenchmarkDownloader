@@ -1,56 +1,17 @@
-﻿using AutoBenchmarkDownloader.Model;
-using AutoBenchmarkDownloader.MVVM;
-using AutoBenchmarkDownloader.Utilities;
-using System.Collections.ObjectModel;
-using System.IO;
-using System.Runtime.Intrinsics.Arm;
+﻿using AutoBenchmarkDownloader.MVVM;
+using System.ComponentModel;
 
 namespace AutoBenchmarkDownloader.ViewModel
 {
-    internal class MainWindowViewModel : ViewModelBase
+    internal class MainWindowViewModel
     {
-        public ObservableCollection<SoftwareInfo> SoftwareInfos { get; set; }
-        public ObservableCollection<DxDiagInfo> dxDiagInfos { get; set; }
+        public DxDiagInfoViewModel DxDiagInfoViewModel { get; }
+        public SystemUsageInfoViewModel SystemUsageInfoView { get; }
 
-        private readonly YamlOperations _yamlOperations;
-        private readonly DownloadOperations _downloadOperations;
-        private readonly DxDiagOperations _dxDiagInfo;
-
-        public RelayCommand DownloadCommand => new(
-            execute => _downloadOperations.DownloadSelectedSoftware(),
-            canExecute => SoftwareInfos.Any(info => info.Download));
-        
-        public RelayCommand SaveConfigCommand => new(
-            execute => _yamlOperations.SaveConfig());
-
-        public MainWindowViewModel()
+        public MainWindowViewModel  ()
         {
-            SoftwareInfos = new ObservableCollection<SoftwareInfo>();
-            dxDiagInfos = new ObservableCollection<DxDiagInfo>();
-            _yamlOperations = new YamlOperations(SoftwareInfos);
-            _downloadOperations = new DownloadOperations(SoftwareInfos);
-            _dxDiagInfo = new DxDiagOperations(dxDiagInfos);
-
-            if (File.Exists(YamlOperations.DefaultYamlPath))
-            {
-                _yamlOperations.LoadConfig();
-            }
-            else
-            {
-                _yamlOperations.SaveDefaultConfig();
-            }
+            DxDiagInfoViewModel = new DxDiagInfoViewModel ();
+            SystemUsageInfoView = new SystemUsageInfoViewModel ();
         }
-
-        private SoftwareInfo _selectedSoftwareInfo;
-
-        public SoftwareInfo SelectedSoftwareInfo
-        {
-            get { return _selectedSoftwareInfo; }
-            set
-            {
-                _selectedSoftwareInfo = value;
-                OnPropertyChanged();
-            }
-        }        
     }
 }
