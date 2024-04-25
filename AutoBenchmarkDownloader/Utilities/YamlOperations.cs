@@ -1,90 +1,103 @@
 ﻿using AutoBenchmarkDownloader.Model;
-using System.Collections.ObjectModel;
 using System.IO;
 using System.Windows;
-using AutoBenchmarkDownloader.ViewModel;
 using YamlDotNet.Serialization;
 
-namespace AutoBenchmarkDownloader.Utilities
+namespace AutoBenchmarkDownloader.Utilities;
+
+
+internal class YamlOperations
 {
-    internal class YamlOperations
+    public const string DefaultYamlPath = "default.yaml";
+
+    private readonly State _currentState;
+
+    public YamlOperations(State currentState)
     {
-        public const string DefaultYamlPath = "default.yaml";
+        _currentState = currentState;
+    }
 
-        private ObservableCollection<SoftwareInfo> _softwareInfos;
+    public readonly State _defaultState = new()
+    {
+        SoftwareInfos =
+        [
+            new SoftwareInfo { Name = "FurMark 2", Address = "https://geeks3d.com/dl/get/748", Download = true },
+            new SoftwareInfo { Name = "CPU-Z", Address = "https://download.cpuid.com/cpu-z/cpu-z_2.09-en.zip", Download = false }
+        ],
+        OutputPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
+    };
 
-        public YamlOperations(ObservableCollection<SoftwareInfo> softwareInfos)
+
+    public void LoadConfig()
+    {
+        var deserializer = new DeserializerBuilder().Build();
+
+        try
         {
-            _softwareInfos = softwareInfos;
-        }
-
-        Dictionary<string, List<SoftwareInfo>> _defaultData = new Dictionary<string, List<SoftwareInfo>>()
-        {
-            { "SoftwareInfos", new List<SoftwareInfo> {
-                new() { Name = "FurMark 2", Address = "https://geeks3d.com/dl/get/748", Download = true },
-                new() { Name = "CPU-Z", Address = "https://download.cpuid.com/cpu-z/cpu-z_2.09-en.zip", Download = false }
-            }}
-        };
-
-        public void LoadConfig()
-        {
-            var deserializer = new DeserializerBuilder().Build();
-
-            try
+            using (var reader = new StreamReader(DefaultYamlPath))
             {
-                using (var reader = new StreamReader(DefaultYamlPath))
-                {
-                    var appConfig = deserializer.Deserialize<Dictionary<string, List<SoftwareInfo>>>(reader);
-                    AddDataFromDictionary(appConfig);
-                }
-            }
-            catch (Exception ex)
-            {
-                var result = MessageBox.Show($"Error loading default.yaml: {ex.Message}. Do you want to use default config?", "ERROR!", MessageBoxButton.OKCancel, MessageBoxImage.Error);
-                if (result == MessageBoxResult.OK)
-                {
-                    AddDataFromDictionary(_defaultData);
-                    SaveDefaultConfig();
-                }
-                else
-                {
-                    Application.Current.Shutdown();
-                }
+                var savedState = deserializer.Deserialize<State>(reader);
+                AddDataFromState(savedState);
             }
         }
-
-        public void SaveDefaultConfig()
+        catch (Exception ex)
         {
-            var serializer = new SerializerBuilder().Build();
-            using (var writer = new StreamWriter(DefaultYamlPath))
+            var result = MessageBox.Show($"Error loading default.yaml: {ex.Message}. Do you want to use default config?", "ERROR!", MessageBoxButton.OKCancel, MessageBoxImage.Error);
+            if (result == MessageBoxResult.OK)
             {
-                serializer.Serialize(writer, _defaultData);
+                AddDataFromState(DeepCopyState(_defaultState));
+                SaveDefaultConfig();
             }
-            AddDataFromDictionary(_defaultData);
-        }
-
-        public void SaveConfig()
-        {
-            var dataToSave = new Dictionary<string, List<SoftwareInfo>>()
+            else
             {
-                { "SoftwareInfos", _softwareInfos.ToList() }
+                Application.Current.Shutdown();
+            }
+        }
+    }
+
+    public void SaveDefaultConfig()
+    {
+        var serializer = new SerializerBuilder().Build();
+        using (var writer = new StreamWriter(DefaultYamlPath))
+        {
+            serializer.Serialize(writer, _defaultState);
+        }
+        AddDataFromState(DeepCopyState(_defaultState));
+    }
+
+    public void SaveConfig()
+    {
+        var dataToSave = new State()
+            {
+                SoftwareInfos = _currentState.SoftwareInfos,
+                OutputPath = _currentState.OutputPath
             };
 
-            var serializer = new SerializerBuilder().Build();
+        var serializer = new SerializerBuilder().Build();
 
-            using (var writer = new StreamWriter(DefaultYamlPath))
-            {
-                serializer.Serialize(writer, dataToSave);
-            }
-        }
-
-        private void AddDataFromDictionary(Dictionary<string, List<SoftwareInfo>> sourceDictionary)
+        using (var writer = new StreamWriter(DefaultYamlPath))
         {
-            _softwareInfos.Clear();
-            foreach (var info in sourceDictionary["SoftwareInfos"])
-            {
-                _softwareInfos.Add(info);
-            }
+            serializer.Serialize(writer, dataToSave);
         }
+    }
+
+    public State DeepCopyState(State source)
+    {
+        var serializer = new SerializerBuilder().Build();
+        var deserializer = new DeserializerBuilder().Build();
+
+        var serialized = serializer.Serialize(source);
+        return deserializer.Deserialize<State>(serialized);
+    }
+
+    public void AddDataFromState(State sourceState)
+    {
+        _currentState.SoftwareInfos.Clear();
+        foreach (var info in sourceState.SoftwareInfos)
+        {
+            _currentState.SoftwareInfos.Add(info);
+        }
+
+        _currentState.OutputPath = sourceState.OutputPath;
     }
 }

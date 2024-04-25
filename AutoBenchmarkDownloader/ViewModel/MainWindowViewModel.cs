@@ -1,31 +1,41 @@
 ﻿using AutoBenchmarkDownloader.Model;
 using AutoBenchmarkDownloader.MVVM;
 using AutoBenchmarkDownloader.Utilities;
-using System.Collections.ObjectModel;
 using System.IO;
+using System.Windows;
+using Microsoft.Win32;
 
 namespace AutoBenchmarkDownloader.ViewModel
 {
     internal class MainWindowViewModel : ViewModelBase
     {
-        public ObservableCollection<SoftwareInfo> SoftwareInfos { get; set; }
+        public State CurrentState { get; set; }
 
         private readonly YamlOperations _yamlOperations;
-        private readonly DownloadOperations _downloadOperations;
 
         public RelayCommand DownloadCommand => new(
-            execute => _downloadOperations.DownloadSelectedSoftware(),
-            canExecute => SoftwareInfos.Any(info => info.Download));
+            execute => DownloadOperations.DownloadSelectedSoftware(CurrentState),
+            canExecute => CurrentState.SoftwareInfos.Any(info => info.Download));
         
         public RelayCommand SaveConfigCommand => new(
             execute => _yamlOperations.SaveConfig());
+
+        public RelayCommand ResetConfigCommand => new(
+            execute => _yamlOperations.AddDataFromState(_yamlOperations.DeepCopyState(_yamlOperations._defaultState)));
+
+        public RelayCommand ChooseOutputPathCommand => new(
+            execute => ChooseOutputPath());
         
 
         public MainWindowViewModel()
         {
-            SoftwareInfos = new ObservableCollection<SoftwareInfo>();
-            _yamlOperations = new YamlOperations(SoftwareInfos);
-            _downloadOperations = new DownloadOperations(SoftwareInfos);
+            CurrentState = new State()
+            {
+                SoftwareInfos = [],
+                OutputPath = ""
+            };
+
+            _yamlOperations = new YamlOperations(CurrentState);
 
             if (File.Exists(YamlOperations.DefaultYamlPath))
             {
@@ -37,17 +47,20 @@ namespace AutoBenchmarkDownloader.ViewModel
             }
         }
 
-
-        private SoftwareInfo _selectedSoftwareInfo;
-
-        public SoftwareInfo SelectedSoftwareInfo
+        private void ChooseOutputPath()
         {
-            get { return _selectedSoftwareInfo; }
-            set
+            var dialog = new OpenFolderDialog
             {
-                _selectedSoftwareInfo = value;
-                OnPropertyChanged();
+                InitialDirectory = CurrentState.OutputPath
+            };
+            var result = dialog.ShowDialog();
+
+            if (result == true)
+            {
+                CurrentState.OutputPath = dialog.FolderName;
             }
+
         }
+
     }
 }

@@ -27,7 +27,8 @@
             </MenuItem>
             <MenuItem Header="Edit"/>
             <MenuItem Header="View"/>
-            <ui:MenuItem Icon="{ui:SymbolIcon Save16}" Command="{Binding SaveConfigCommand}"/>
+            <ui:MenuItem Icon="{ui:SymbolIcon Save28}" Command="{Binding SaveConfigCommand}" />
+            <ui:MenuItem Icon="{ui:SymbolIcon ArrowClockwise28}" Command="{Binding ResetConfigCommand}"/>
         </Menu>
     </Grid>
 </UserControl>
