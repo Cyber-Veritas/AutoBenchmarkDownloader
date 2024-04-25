@@ -19,6 +19,7 @@ namespace AutoBenchmarkDownloader.Model
     {
         public required string CpuModel {get; set;}
         public required List<RamModule> RamModules { get; set; }
+        public required string RamModulesInfo { get; set; }
         public required string TotalRam {  get; set; }
         public required string Motherboard { get; set; }
         public required string Bios { get; set; }

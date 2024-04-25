@@ -20,26 +20,27 @@ namespace AutoBenchmarkDownloader.ViewModel
 
         private void SetInfo()
         {
+            List<RamModule> ramModules = RamInfo();
+
             string CpuModel = GetHardwareInfo("Win32_Processor", "Name", "CPU");
+            string RamModuleInfo = ListToStringConverter(ramModules);
             string Motherboard = GetHardwareInfo("Win32_BaseBoard", "Product", "MOBO");
             string Bios = "BIOS: " + GetHardwareInfo("Win32_BIOS", "Name", "BIOS");
             string Os = GetHardwareInfo("Win32_OperatingSystem", "Caption", "OS") + " " + GetHardwareInfo("Win32_OperatingSystem", "Version", "VERSION");
             string Gpu = GetHardwareInfo("Win32_VideoController", "Name", "GPU");
-            string DirectX = GetHardwareInfo("Win32_DirectXVersion", "Caption", "DX");
-
-            List<RamModule> ramModules = RamInfo();
-            
+            string DirectX = GetHardwareInfo("Win32_DirectXVersion", "Caption", "DX");      
 
             DxDiagInfo dxDiagInfo = new DxDiagInfo()
             {
                 CpuModel = CpuModel,
                 RamModules = ramModules,
+                RamModulesInfo = RamModuleInfo,
                 TotalRam = TotalRam,
                 Motherboard = Motherboard,
                 Bios = Bios,
                 Os = Os,
                 Gpu = Gpu,
-                DirectX = DirectX
+                DirectX = DirectX,
             };
 
             dxDiagInfos.Add(dxDiagInfo);
@@ -63,7 +64,7 @@ namespace AutoBenchmarkDownloader.ViewModel
                     RamModule ramModule = new RamModule()
                     {
                         id = id,
-                        DeviceLocator = "["+(string)item["DeviceLocator"]+ "]",
+                        DeviceLocator = "[" + (string)item["DeviceLocator"] + "]",
                         Manufacturer = (string)item["Manufacturer"],
                         Code = (string)item["PartNumber"],
                         Speed = item["Speed"].ToString(),
@@ -88,6 +89,25 @@ namespace AutoBenchmarkDownloader.ViewModel
         static string BytesToGB(ulong bytes)
         {
             return ((bytes / Math.Pow(1024, 3))).ToString();
+        }
+
+        static string ListToStringConverter(List<RamModule> ramModules)
+        {
+            string ramModulesString = "";
+
+            for (int i = 0; i < ramModules.Count; i++)
+            {
+                ramModulesString += ramModules[i].id + ":";
+                ramModulesString += " " + ramModules[i].DeviceLocator;
+                ramModulesString += " " + ramModules[i].Size;
+                ramModulesString += " " + ramModules[i].Code;
+
+                if (i < ramModules.Count - 1)
+                {
+                    ramModulesString += "\n\n";
+                }
+            }
+            return ramModulesString;
         }
     }
 }
