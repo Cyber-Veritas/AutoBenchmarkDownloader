@@ -92,12 +92,20 @@ internal class YamlOperations
 
     public void AddDataFromState(State sourceState)
     {
-        _currentState.SoftwareInfos.Clear();
         foreach (var info in sourceState.SoftwareInfos)
         {
-            _currentState.SoftwareInfos.Add(info);
+            var existingInfo = _currentState.SoftwareInfos.FirstOrDefault(i => i.Name == info.Name);
+            if (existingInfo != null && existingInfo.Download != info.Download) 
+            {
+                existingInfo.Download = info.Download;
+            }
+            else if (existingInfo == null)
+            {
+                _currentState.SoftwareInfos.Add(info);
+            }
         }
 
         _currentState.OutputPath = sourceState.OutputPath;
+
     }
 }
