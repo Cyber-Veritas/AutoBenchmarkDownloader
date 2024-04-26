@@ -79,15 +79,23 @@
                                     <StackPanel>
                                         <TextBlock Text="CPU" Style="{StaticResource dxDiagTextBlock}" FontSize="16" FontFamily="Bahnschrift Bold"/>
                                         <TextBlock Text="{Binding CpuModel}" Style="{StaticResource dxDiagTextBlock}"/>
+
                                         <TextBlock Text="RAM" Style="{StaticResource dxDiagTextBlock}" FontSize="16" FontFamily="Bahnschrift Bold" Margin="5, 20, 0, 0"/>
-                                        <TextBlock Text="{Binding TotalRam}" Style="{StaticResource dxDiagTextBlock}"/>
+                                        <TextBlock Style="{StaticResource dxDiagTextBlock}" >
+                                            <Run Text="{Binding TotalRam}"/>
+                                            <Run Text="{Binding RamModules[0].Speed}"/>
+                                        </TextBlock>
                                         <TextBlock Text="{Binding RamModulesInfo}" Style="{StaticResource dxDiagTextBlock}"/>
+                                        
                                         <TextBlock Text="Motherboard" Style="{StaticResource dxDiagTextBlock}" FontSize="16" FontFamily="Bahnschrift Bold" Margin="5, 20, 0, 0"/>
                                         <TextBlock Text="{Binding Motherboard}" Style="{StaticResource dxDiagTextBlock}"/>
                                         <TextBlock Text="{Binding Bios}" Style="{StaticResource dxDiagTextBlock}"/>
+                                            
                                         <TextBlock Text="GPU" Style="{StaticResource dxDiagTextBlock}" FontSize="16" FontFamily="Bahnschrift Bold" Margin="5, 20, 0, 0"/>
                                         <TextBlock Text="{Binding Gpu}" Style="{StaticResource dxDiagTextBlock}"/>
-                                        <TextBlock Text="{Binding DirectX}" Style="{StaticResource dxDiagTextBlock}"/>
+                                        <TextBlock Text="{Binding GpuDriverVer}" Style="{StaticResource dxDiagTextBlock}"/>
+                                        <TextBlock Text="{Binding GpuDriverDate}" Style="{StaticResource dxDiagTextBlock}"/>
+                                            
                                         <TextBlock Text="System" Style="{StaticResource dxDiagTextBlock}" FontSize="16" FontFamily="Bahnschrift Bold" Margin="5, 20, 0, 0"/>
                                         <TextBlock Text="{Binding Os}" Style="{StaticResource dxDiagTextBlock}"/>
                                         <TextBlock Text=""/>

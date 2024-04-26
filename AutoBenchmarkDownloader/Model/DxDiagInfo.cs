@@ -25,6 +25,8 @@ namespace AutoBenchmarkDownloader.Model
         public required string Bios { get; set; }
         public required string Os { get; set; }
         public required string Gpu { get; set; }
+        public required string GpuDriverVer {  get; set; }
+        public required string GpuDriverDate { get; set; }
         public required string DirectX { get; set; }
 
         public DxDiagInfo()

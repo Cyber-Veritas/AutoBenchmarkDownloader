@@ -3,6 +3,7 @@ using AutoBenchmarkDownloader.MVVM;
 using System.Collections.ObjectModel;
 using System.Management;
 using System.Security.Policy;
+using System.Xml.Linq;
 
 namespace AutoBenchmarkDownloader.ViewModel
 {
@@ -27,7 +28,9 @@ namespace AutoBenchmarkDownloader.ViewModel
             string Motherboard = GetHardwareInfo("Win32_BaseBoard", "Product", "MOBO");
             string Bios = "BIOS: " + GetHardwareInfo("Win32_BIOS", "Name", "BIOS");
             string Os = GetHardwareInfo("Win32_OperatingSystem", "Caption", "OS") + " " + GetHardwareInfo("Win32_OperatingSystem", "Version", "VERSION");
-            string Gpu = GetHardwareInfo("Win32_VideoController", "Name", "GPU");
+            string Gpu = GetHardwareInfo("Win32_VideoController", "VideoProcessor", "GPU");
+            string GpuDriverDate = "Driver Date: " + ConvertDateDriver(GetHardwareInfo("Win32_VideoController", "DriverDate", "GPU"));
+            string GpuDriverVer = "Driver Version: " + GetHardwareInfo("Win32_VideoController", "DriverVersion", "GPU");
             string DirectX = GetHardwareInfo("Win32_DirectXVersion", "Caption", "DX");      
 
             DxDiagInfo dxDiagInfo = new DxDiagInfo()
@@ -40,6 +43,8 @@ namespace AutoBenchmarkDownloader.ViewModel
                 Bios = Bios,
                 Os = Os,
                 Gpu = Gpu,
+                GpuDriverVer= GpuDriverVer,
+                GpuDriverDate= GpuDriverDate,
                 DirectX = DirectX,
             };
 
@@ -67,7 +72,7 @@ namespace AutoBenchmarkDownloader.ViewModel
                         DeviceLocator = "[" + (string)item["DeviceLocator"] + "]",
                         Manufacturer = (string)item["Manufacturer"],
                         Code = (string)item["PartNumber"],
-                        Speed = item["Speed"].ToString(),
+                        Speed = item["Speed"].ToString() + "MHz",
                         Size = BytesToGB(ramCapacity) + "GB"
                     };
 
@@ -108,6 +113,21 @@ namespace AutoBenchmarkDownloader.ViewModel
                 }
             }
             return ramModulesString;
+        }
+
+        static string ConvertDateDriver(string dateDriver)
+        {
+            if (dateDriver.Contains("ERROR") == true)
+            {
+                return "";
+            }
+            else
+            {
+                string year = dateDriver.Substring(0, Math.Min(4, dateDriver.Length));
+                string day = dateDriver.Substring(4, Math.Min(2, dateDriver.Length));
+                string month = dateDriver.Substring(6, Math.Min(2, dateDriver.Length));
+                return day + "." + month + "." + year;
+            }
         }
     }
 }
