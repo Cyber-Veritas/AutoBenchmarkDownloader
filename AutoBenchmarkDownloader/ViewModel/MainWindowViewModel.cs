@@ -1,4 +1,4 @@
-﻿using AutoBenchmarkDownloader.MVVM;
+using AutoBenchmarkDownloader.MVVM;
 using System.ComponentModel;
 
 namespace AutoBenchmarkDownloader.ViewModel
@@ -13,5 +13,6 @@ namespace AutoBenchmarkDownloader.ViewModel
             DxDiagInfoViewModel = new DxDiagInfoViewModel ();
             SystemUsageInfoView = new SystemUsageInfoViewModel ();
         }
+
     }
 }

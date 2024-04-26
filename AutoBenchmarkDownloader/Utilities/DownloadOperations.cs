@@ -1,23 +1,32 @@
 ﻿using AutoBenchmarkDownloader.Model;
-using System.Collections.ObjectModel;
 using System.IO;
 using System.Net.Http;
 using System.Windows;
 
 namespace AutoBenchmarkDownloader.Utilities
 {
-    internal class DownloadOperations
+    internal static class DownloadOperations
     {
-        private ObservableCollection<SoftwareInfo> _softwareInfos;
 
-        public DownloadOperations(ObservableCollection<SoftwareInfo> softwareInfos)
+        public static async void DownloadSelectedSoftware(State currentState)
         {
-            _softwareInfos = softwareInfos;
-        }
+            if (!Path.Exists(currentState.OutputPath))
+            {
+                var result = MessageBox.Show("Defined path does not exist. Do you want to create it?", "Warning",
+                    MessageBoxButton.YesNo, MessageBoxImage.Warning);
 
-        public async void DownloadSelectedSoftware()
-        {
-            var itemsToDownload = _softwareInfos.Where(info => info.Download);
+                if (result == MessageBoxResult.Yes)
+                {
+                    Directory.CreateDirectory(currentState.OutputPath);
+                }
+                else
+                {
+                    return;
+                }
+            }
+
+            var itemsToDownload = currentState.SoftwareInfos.Where(info => info.Download);
+            Directory.CreateDirectory(Path.Combine(currentState.OutputPath, "Benchmark"));
 
             foreach (var item in itemsToDownload)
             {
@@ -30,7 +39,7 @@ namespace AutoBenchmarkDownloader.Utilities
                         var response = await client.GetAsync(url);
                         response.EnsureSuccessStatusCode();
 
-                        string filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), item.Name + ".zip");
+                        var filePath = Path.Combine(currentState.OutputPath, "Benchmark", item.Name + ".zip");
 
                         using (var fileStream = File.Create(filePath))
                         {
