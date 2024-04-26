@@ -2,8 +2,6 @@
 using AutoBenchmarkDownloader.MVVM;
 using System.Collections.ObjectModel;
 using System.Management;
-using System.Security.Policy;
-using System.Xml.Linq;
 
 namespace AutoBenchmarkDownloader.ViewModel
 {
@@ -22,6 +20,8 @@ namespace AutoBenchmarkDownloader.ViewModel
         private void SetInfo()
         {
             List<RamModule> ramModules = RamInfo();
+
+            // Win32_PerfFormattedData_GPUPerformanceCounters_GPUAdapterMemory - gpu memory info
 
             string CpuModel = GetHardwareInfo("Win32_Processor", "Name", "CPU");
             string RamModuleInfo = ListToStringConverter(ramModules);

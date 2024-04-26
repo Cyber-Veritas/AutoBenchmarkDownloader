@@ -18,16 +18,15 @@
             <Setter Property="Background" Value="#303030" />
             <Setter Property="Opacity" Value="0.75" />
         </Style>
-        
+
         <!-- SystemUsageInfo Style -->
         <Style x:Key="SysUsageInfo" TargetType="TextBlock">
             <Setter Property="HorizontalAlignment" Value="Center" />
             <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Foreground" Value="White" />
             <Setter Property="FontSize" Value="30" />
-            <Setter Property="FontFamily" Value="Franklin Gothic Heavy" />
+            <Setter Property="FontFamily" Value="Bahnschrift Regular" />
         </Style>
-    </Window.Resources>
-
 
         <!-- dxDiag textBlock -->
         <Style TargetType="TextBlock" x:Key="dxDiagTextBlock">
@@ -38,7 +37,6 @@
         </Style>
     </Window.Resources>
 
-    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="45" />
@@ -92,7 +90,30 @@
             </Border>
 
             <!-- PC usage widget -->
-            <Border Grid.Row="0" Grid.Column="1" Style="{StaticResource Tile.Background}" Margin="0, 10, 10, 0"/>
+            <Border Grid.Row="0" Grid.Column="1" Style="{StaticResource Tile.Background}" Margin="0, 10, 10, 0" >
+                <Grid Grid.Row="1" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" Style="{StaticResource SysUsageInfo}" >
+                        <Run Text="{Binding SystemUsageInfoVm.SelectedInfo.cpuUsage}"/>
+                        <Run Text="%" FontSize="15"/>
+                    </TextBlock>
+
+                    <TextBlock Grid.Column="1" Style="{StaticResource SysUsageInfo}" >
+                        <Run Text="{Binding SystemUsageInfoVm.SelectedInfo.ramUsage}"/>
+                        <Run Text="%" FontSize="15"/>
+                    </TextBlock>
+
+                    <TextBlock Grid.Column="2" Style="{StaticResource SysUsageInfo}" >
+                        <Run Text="{Binding SystemUsageInfoVm.SelectedInfo.gpuUsage}"/>
+                        <Run Text="%" FontSize="15"/>
+                    </TextBlock>
+                </Grid>
+            </Border>
             
             <!-- DXDiag widget -->
             <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource Tile.Background}"  Margin="0, 10, 10, 0" >
