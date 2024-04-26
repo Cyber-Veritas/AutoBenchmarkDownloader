@@ -1,9 +1,6 @@
 ﻿using AutoBenchmarkDownloader.ViewModel;
-using System.Text;
-﻿using System.IO;
-using System.Net.Http;
 using System.Windows;
-using AutoBenchmarkDownloader.ViewModel;
+using System.Windows.Input;
 
 namespace AutoBenchmarkDownloader
 {
@@ -14,12 +11,15 @@ namespace AutoBenchmarkDownloader
         {
             InitializeComponent();
 
-            // initialize system usage info
-            viewModel = new SystemUsageInfoViewModel(); 
-
-            DataContext = viewModel;
             MainWindowViewModel vm = new MainWindowViewModel();
             DataContext = vm;
+        }
+
+        private void MainWindow_OnMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (sender is not UIElement element) return;
+            Keyboard.ClearFocus();
+            FocusManager.SetFocusedElement(element, null);
         }
     }
 }
