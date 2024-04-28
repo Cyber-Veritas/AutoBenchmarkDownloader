@@ -1,7 +1,6 @@
 ﻿using AutoBenchmarkDownloader.Model;
 using AutoBenchmarkDownloader.MVVM;
-using System.Collections.ObjectModel;
-using System.Linq.Expressions;
+using System.Diagnostics;
 using System.Management;
 using System.Windows.Threading;
 
@@ -27,20 +26,33 @@ namespace AutoBenchmarkDownloader.ViewModel
 
         private void Timer_Tick(object sender, EventArgs e)
         {
-            SelectedInfo = new SystemUsageInfo
+            Task.Run(() =>
             {
-                cpuUsage = CpuPercentage(),
-                cpuTemp = -1,
-                ramUsage = RamPercentage(),
-                gpuUsage = GpuPercentage(),
-                gpuTemp = -1,
-            };
+                SelectedInfo = new SystemUsageInfo
+                {
+                    cpuUsage = CpuPercentage(),
+                    ramUsage = RamPercentage(),
+                    gpuUsage = GpuPercentage()
+                };
+            });
         }
+
+        // it is only "_Total" info
         private int CpuPercentage()
         {
             try
             {
-                return 1;
+                int percCpuUsage = -1;
+                ManagementObjectSearcher searcher = new ManagementObjectSearcher("root\\CIMV2", "SELECT * FROM Win32_PerfFormattedData_PerfOS_Processor WHERE Name='_Total'");
+                foreach (ManagementObject obj in searcher.Get())
+                {
+                    percCpuUsage = Convert.ToInt32(obj["PercentProcessorTime"]);
+                    break;
+                }
+
+                if (percCpuUsage == 0) { percCpuUsage = 1; }
+
+                return percCpuUsage;
             }
 
             catch (Exception ex)
@@ -73,19 +85,27 @@ namespace AutoBenchmarkDownloader.ViewModel
             }
         }
 
+        // based on https://stackoverflow.com/questions/56830434/c-sharp-get-total-usage-of-gpu-in-percentage
         private int GpuPercentage()
         {
             try
             {
-                double gpuDecode = 0;
-                ManagementObjectSearcher searcher = new ManagementObjectSearcher("SELECT * FROM Win32_PerfFormattedData_GPUPerformanceCounters_GPUEngine");
-                ManagementObjectCollection collection = searcher.Get();
+                var category = new PerformanceCounterCategory("GPU Engine");
+                var counterNames = category.GetInstanceNames();
 
-                foreach (ManagementObject obj in collection)
-                {
-                    gpuDecode += (double)obj["UtilizationPercentage"];
-                }
-                return Convert.ToInt32(gpuDecode);
+                List<PerformanceCounter> gpuCounters = new List<PerformanceCounter>();
+
+                gpuCounters = counterNames
+                                    .Where(counterName => counterName.EndsWith("engtype_3D"))
+                                    .SelectMany(counterName => category.GetCounters(counterName))
+                                    .Where(counter => counter.CounterName.Equals("Utilization Percentage"))
+                                    .ToList();
+
+                gpuCounters.ForEach(x => x.NextValue());
+                float percGpuUsageFloat = gpuCounters.Sum(x => x.NextValue());
+                int percGpuUsageInt = (int)percGpuUsageFloat;
+
+                return percGpuUsageInt;
             }
 
             catch (Exception ex)
