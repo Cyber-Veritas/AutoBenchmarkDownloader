@@ -6,6 +6,7 @@ namespace AutoBenchmarkDownloader
 {
     public partial class MainWindow : Window
     {
+        private SystemUsageInfoViewModel viewModel;
         public MainWindow()
         {
             InitializeComponent();
