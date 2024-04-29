@@ -102,16 +102,19 @@
                         <Run Text="{Binding SystemUsageInfoVm.SelectedInfo.cpuUsage}"/>
                         <Run Text="%" FontSize="15"/>
                     </TextBlock>
+                    <Label Content="CPU" Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" Margin="0, 75, 0, 0" FontFamily="Bahnschrift Regular"/>
 
                     <TextBlock Grid.Column="1" Style="{StaticResource SysUsageInfo}" >
                         <Run Text="{Binding SystemUsageInfoVm.SelectedInfo.ramUsage}"/>
                         <Run Text="%" FontSize="15"/>
                     </TextBlock>
+                    <Label Content="RAM" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" Margin="0, 75, 0, 0" FontFamily="Bahnschrift Regular"/>
 
                     <TextBlock Grid.Column="2" Style="{StaticResource SysUsageInfo}" >
                         <Run Text="{Binding SystemUsageInfoVm.SelectedInfo.gpuUsage}"/>
                         <Run Text="%" FontSize="15"/>
                     </TextBlock>
+                    <Label Content="GPU" Grid.Column="3" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" Margin="0, 75, 0, 0" FontFamily="Bahnschrift Regular"/>
                 </Grid>
             </Border>
             
