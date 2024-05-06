@@ -3,10 +3,168 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:AutoBenchmarkDownloader"
+        xmlns:userControls="clr-namespace:AutoBenchmarkDownloader.View.UserControls"
+        xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+        xmlns:viewmodel="clr-namespace:AutoBenchmarkDownloader.ViewModel"
+        d:DataContext="{d:DesignInstance Type=viewmodel:MainWindowViewModel}"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        MouseDown="MainWindow_OnMouseDown"
+        Title="MainWindow" ResizeMode="NoResize" Height="600" Width="800">
+
+    <Window.Resources>
+        <!-- widget background -->
+        <Style TargetType="Border" x:Key="Tile.Background">
+            <Setter Property="CornerRadius" Value="10" />
+            <Setter Property="Background" Value="#303030" />
+            <Setter Property="Opacity" Value="0.75" />
+        </Style>
+
+        <!-- SystemUsageInfo Style -->
+        <Style x:Key="SysUsageInfo" TargetType="TextBlock">
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="FontSize" Value="30" />
+            <Setter Property="FontFamily" Value="Bahnschrift Regular" />
+        </Style>
+
+        <!-- dxDiag textBlock -->
+        <Style TargetType="TextBlock" x:Key="dxDiagTextBlock">
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="FontFamily" Value="Bahnschrift Regular" />
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="Margin" Value="5, 10, 0, 0" />
+        </Style>
+    </Window.Resources>
+
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="45" />
+            <RowDefinition />
+            <RowDefinition Height="20" />
+        </Grid.RowDefinitions>
+
+        <Grid.Background>
+            <ImageBrush ImageSource="Resources/Images/app_background.jpg" Stretch="UniformToFill" Opacity="0.95" />
+        </Grid.Background>
+
+        <!-- Menu bar -->
+        <userControls:MenuBar Grid.Row="0" />
+
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="2*" />
+                <RowDefinition Height="1*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+
+            
+            <!-- download widget -->
+            <Border Grid.RowSpan="2" Style="{StaticResource Tile.Background}" Margin="10, 10, 10, 0">
+                <ItemsControl ItemsSource="{Binding  SoftwareInfoVm.CurrentState.SoftwareInfos}" Margin="20">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Margin="0, 0, 0, 10">
+                                    <ui:ToggleSwitch IsChecked="{Binding Download}" Content="{Binding Name}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </Border>
+
+            <!-- file path widget -->
+            <Border Grid.Row="2" Grid.Column="0" Style="{StaticResource Tile.Background}" Margin="10, 20, 10, 20">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                    <TextBlock Text="Save path:" Foreground="WhiteSmoke" VerticalAlignment="Center"/>
+                    <TextBox x:Name="PathTextBox"
+                             Text="{Binding  SoftwareInfoVm.CurrentState.OutputPath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                             Width="356" Height="35"
+                             Margin="10"/>
+                    <Button Content="{ui:SymbolIcon Folder16}" Width="auto" Height="35" Command="{Binding SoftwareInfoVm.ChooseOutputPathCommand}" />
+                </StackPanel>
+            </Border>
+
+            <!-- PC usage widget -->
+            <Border Grid.Row="0" Grid.Column="1" Style="{StaticResource Tile.Background}" Margin="0, 10, 10, 0" >
+                <Grid Grid.Row="1" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" Style="{StaticResource SysUsageInfo}" >
+                        <Run Text="{Binding SystemUsageInfoVm.SelectedInfo.cpuUsage}"/>
+                        <Run Text="%" FontSize="15"/>
+                    </TextBlock>
+                    <Label Content="CPU" Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" Margin="0, 75, 0, 0" FontFamily="Bahnschrift Regular"/>
+
+                    <TextBlock Grid.Column="1" Style="{StaticResource SysUsageInfo}" >
+                        <Run Text="{Binding SystemUsageInfoVm.SelectedInfo.ramUsage}"/>
+                        <Run Text="%" FontSize="15"/>
+                    </TextBlock>
+                    <Label Content="RAM" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" Margin="0, 75, 0, 0" FontFamily="Bahnschrift Regular"/>
+
+                    <TextBlock Grid.Column="2" Style="{StaticResource SysUsageInfo}" >
+                        <Run Text="{Binding SystemUsageInfoVm.SelectedInfo.gpuUsage}"/>
+                        <Run Text="%" FontSize="15"/>
+                    </TextBlock>
+                    <Label Content="GPU" Grid.Column="3" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" Margin="0, 75, 0, 0" FontFamily="Bahnschrift Regular"/>
+                </Grid>
+            </Border>
+            
+            <!-- DXDiag widget -->
+            <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource Tile.Background}"  Margin="0, 10, 10, 0" >
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                    <StackPanel>
+                        <ItemsControl ItemsSource="{Binding DxDiagInfoVm.dxDiagInfos}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <TextBlock Text="CPU" Style="{StaticResource dxDiagTextBlock}" FontSize="16" FontFamily="Bahnschrift Bold"/>
+                                        <TextBlock Text="{Binding CpuModel}" Style="{StaticResource dxDiagTextBlock}"/>
+
+                                        <TextBlock Text="RAM" Style="{StaticResource dxDiagTextBlock}" FontSize="16" FontFamily="Bahnschrift Bold" Margin="5, 20, 0, 0"/>
+                                        <TextBlock Style="{StaticResource dxDiagTextBlock}" >
+                                            <Run Text="{Binding TotalRam}"/>
+                                            <Run Text="{Binding RamModules[0].Speed}"/>
+                                        </TextBlock>
+                                        <TextBlock Text="{Binding RamModulesInfo}" Style="{StaticResource dxDiagTextBlock}"/>
+                                        
+                                        <TextBlock Text="Motherboard" Style="{StaticResource dxDiagTextBlock}" FontSize="16" FontFamily="Bahnschrift Bold" Margin="5, 20, 0, 0"/>
+                                        <TextBlock Text="{Binding Motherboard}" Style="{StaticResource dxDiagTextBlock}"/>
+                                        <TextBlock Text="{Binding Bios}" Style="{StaticResource dxDiagTextBlock}"/>
+                                            
+                                        <TextBlock Text="GPU" Style="{StaticResource dxDiagTextBlock}" FontSize="16" FontFamily="Bahnschrift Bold" Margin="5, 20, 0, 0"/>
+                                        <TextBlock Text="{Binding Gpu}" Style="{StaticResource dxDiagTextBlock}"/>
+                                        <TextBlock Text="{Binding GpuDriverVer}" Style="{StaticResource dxDiagTextBlock}"/>
+                                        <TextBlock Text="{Binding GpuDriverDate}" Style="{StaticResource dxDiagTextBlock}"/>
+                                            
+                                        <TextBlock Text="System" Style="{StaticResource dxDiagTextBlock}" FontSize="16" FontFamily="Bahnschrift Bold" Margin="5, 20, 0, 0"/>
+                                        <TextBlock Text="{Binding Os}" Style="{StaticResource dxDiagTextBlock}"/>
+                                        <TextBlock Text=""/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </ScrollViewer>
+            </Border>
+            
+            <!-- Download button -->
+            <Button Grid.Row="2" Grid.Column="1" Content="DOWNLOAD" Margin="0,20,10,20" HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch" Command="{Binding  SoftwareInfoVm.DownloadCommand}" />
+
+        </Grid>
+
+        
+        <!-- footer -->
+        <Border Grid.Row="2" Background="#131313" Opacity="0.6"/>
 
     </Grid>
 </Window>
