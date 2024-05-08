@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace AutoBenchmarkDownloader.View.UserControls
 {
     /// <summary>
-    /// Interaction logic for DownloadItemCard.xaml
+    /// Interaction logic for NewSoftwareCard.xaml
     /// </summary>
-    public partial class DownloadItemCard : UserControl
+    public partial class NewSoftwareCard : UserControl
     {
-        public DownloadItemCard()
+        public NewSoftwareCard()
         {
             InitializeComponent();
         }

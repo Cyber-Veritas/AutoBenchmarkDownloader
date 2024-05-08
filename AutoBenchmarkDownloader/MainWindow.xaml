@@ -13,11 +13,11 @@
         MouseDown="MainWindow_OnMouseDown" 
         Background="#1f1f1f"
         Title="Auto Benchmark Downloader"
-        Height="720" Width="1280" MinWidth="600">
+        Height="720" Width="800" MinHeight="320" MinWidth="450">
 
     <Grid>
 
-        <ui:NavigationView PaneDisplayMode="LeftMinimal" IsPaneOpen="False" OpenPaneLength="148" >
+        <ui:NavigationView PaneDisplayMode="Left" IsBackButtonVisible="Collapsed" IsPaneToggleVisible="False" IsPaneOpen="False" OpenPaneLength="148" >
             <ui:NavigationView.MenuItems>
 
                 <ui:NavigationViewItem Content="Home" Icon="{ui:SymbolIcon Home24}"/>
