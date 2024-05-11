@@ -22,7 +22,7 @@
 
                 <ui:NavigationViewItem Content="Home" Icon="{ui:SymbolIcon Home24}"/>
                 <ui:NavigationViewItem Content="Download" Icon="{ui:SymbolIcon ArrowDownload24}" TargetPageType="{x:Type pages:DownloadPage}"/>
-                <ui:NavigationViewItem Content="Statistics" Icon="{ui:SymbolIcon DataPie24}"/>
+                <ui:NavigationViewItem Content="Statistics" Icon="{ui:SymbolIcon DataPie24}" TargetPageType="{x:Type pages:SystemMonitorInfoPage}"/>
 
             </ui:NavigationView.MenuItems>
 
