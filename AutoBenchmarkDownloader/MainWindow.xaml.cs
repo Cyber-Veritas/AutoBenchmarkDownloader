@@ -8,7 +8,7 @@ namespace AutoBenchmarkDownloader
     public partial class MainWindow : MicaWindow
     {
         private SystemUsageInfoViewModel viewModel;
-        private SystemMonitorInfoCombinedViewModel viewModelCombined;
+
         public MainWindow()
         {
             InitializeComponent();

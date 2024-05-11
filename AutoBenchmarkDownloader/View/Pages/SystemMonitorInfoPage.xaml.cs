@@ -8,7 +8,7 @@ namespace AutoBenchmarkDownloader.View.Pages
         public SystemMonitorInfoPage()
         {
             InitializeComponent();
-            SystemMonitorInfoCombinedViewModel vm = new SystemMonitorInfoCombinedViewModel();
+            SystemMonitorViewModel vm = new SystemMonitorViewModel();
             DataContext = vm;
         }
     }

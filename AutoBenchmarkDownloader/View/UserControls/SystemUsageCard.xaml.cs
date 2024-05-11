@@ -18,7 +18,7 @@ namespace AutoBenchmarkDownloader.View.UserControls
     /// <summary>
     /// Logika interakcji dla klasy SystemUsageCard.xaml
     /// </summary>
-    public partial class SystemUsageCard : Page
+    public partial class SystemUsageCard : UserControl
     {
         public SystemUsageCard()
         {
