@@ -1,8 +1,9 @@
-﻿using AutoBenchmarkDownloader.Utilities;
+﻿using AutoBenchmarkDownloader.MVVM;
+using AutoBenchmarkDownloader.Utilities;
 
 namespace AutoBenchmarkDownloader.ViewModel
 {
-    class SystemMonitorViewModel
+    class SystemMonitorViewModel : ViewModelBase
     {
         private readonly SystemInfoModel _systemInfoModel;
         //private readonly SystemMonitorViewModel _monitorViewModel;
