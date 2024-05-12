@@ -5,6 +5,23 @@ namespace AutoBenchmarkDownloader.View.UserControls
 {
     public partial class SoftwareCard : UserControl
     {
+
+
+        public Uri SoftwareIcon
+        {
+            get
+            {
+                var uriString = (string)GetValue(SoftwareIconProperty);
+                return new Uri(uriString);
+            }
+            set => SetValue(SoftwareIconProperty, value);
+        }
+
+        public static readonly DependencyProperty SoftwareIconProperty =
+            DependencyProperty.Register(nameof(SoftwareIcon), typeof(Uri), typeof(SoftwareCard), new PropertyMetadata(null));
+
+
+
         public string SoftwareTitle
         {
             get => (string)GetValue(SoftwareTitleProperty);

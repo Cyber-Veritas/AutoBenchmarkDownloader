@@ -8,8 +8,8 @@
              xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
              mc:Ignorable="d" 
              Height="60" d:DesignWidth="480" MinWidth="360">
-    <Border CornerRadius="8" Background="#505a5a5a">
-        <ui:Button HorizontalAlignment="Stretch" BorderThickness="0" CornerRadius="8">
+    <Border Style="{StaticResource Tile}">
+        <ui:Button HorizontalAlignment="Stretch" BorderThickness="0" CornerRadius="8" Click="ButtonBase_OnClick">
             <TextBlock Text="+" Foreground="White" Opacity="0.5" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="48" Padding="0,0,0,12" />
         </ui:Button>
     </Border>

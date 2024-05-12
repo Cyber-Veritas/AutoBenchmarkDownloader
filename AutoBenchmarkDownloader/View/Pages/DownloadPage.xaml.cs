@@ -1,5 +1,5 @@
-﻿using System.Windows.Controls;
-using AutoBenchmarkDownloader.ViewModel;
+﻿using AutoBenchmarkDownloader.ViewModel;
+using System.Windows.Controls;
 
 namespace AutoBenchmarkDownloader.View.Pages
 {

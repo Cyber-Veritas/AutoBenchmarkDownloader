@@ -5,18 +5,26 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AutoBenchmarkDownloader.View.UserControls"
              xmlns:controls="clr-namespace:MicaWPF.Controls;assembly=MicaWPF"
-             d:DataContext="{d:DesignInstance local:SoftwareCard}"
+             xmlns:converters="clr-namespace:AutoBenchmarkDownloader.Utilities.Converters"
              mc:Ignorable="d" 
              Name="SoftwareCardControl"
              Height="60" d:DesignWidth="480" MinWidth="360">
-    <Border CornerRadius="8" Background="#505a5a5a">
+    <Border Style="{StaticResource Tile}">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="6*" />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <StackPanel Orientation="Horizontal">
-                <Border x:Name="SoftwareIcon" Width="48" Height="48" Background="Blue" Margin="6,0,0,0" CornerRadius="4" />
+                <StackPanel.Resources>
+                    <converters:UriToImageSourceConverter x:Key="UriToImageSourceConverter" />
+                </StackPanel.Resources>
+
+                <Border CornerRadius="4" Width="48" Height="48" Margin="6,0,0,0">
+                    <Border.Background>
+                        <ImageBrush Stretch="Fill" ImageSource="{Binding SoftwareIcon, ElementName=SoftwareCardControl, Converter={StaticResource UriToImageSourceConverter}}" />
+                    </Border.Background>
+                </Border>
                 <StackPanel Margin="10">
                     <TextBlock Text="{Binding SoftwareTitle, ElementName=SoftwareCardControl}" FontSize="16" Foreground="White"/>
                     <TextBlock Text="{Binding SoftwareDescription, ElementName=SoftwareCardControl}" FontSize="12" Foreground="White" Opacity="0.75" />

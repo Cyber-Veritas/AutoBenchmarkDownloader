@@ -28,7 +28,7 @@
             <ItemsControl.ItemsSource>
                 <CompositeCollection>
                     <CollectionContainer Collection="{Binding Source={StaticResource cvs}}" />
-                    <userControls:NewSoftwareCard Margin="4"/>
+                    <userControls:NewSoftwareCard Margin="4" />
                 </CompositeCollection>
             </ItemsControl.ItemsSource>
             <ItemsControl.ItemsPanel>
@@ -40,13 +40,14 @@
                 <DataTemplate DataType="model:SoftwareInfo">
                     <userControls:SoftwareCard Margin="4"
                                                SoftwareTitle="{Binding Name}" 
+                                               SoftwareIcon="{Binding IconPath}"
                                                SoftwareDescription="{Binding Description}"
                                                SoftwareDownload="{Binding Download}"/>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
 
-        <ui:Button Grid.Row="1" HorizontalAlignment="Center" Height="90" Width="256" Margin="32">
+        <ui:Button Grid.Row="1" HorizontalAlignment="Center" Height="90" Width="256" Margin="32" >
             <ui:Button.Content>
                 <TextBlock FontSize="24" Text="Download"></TextBlock>
             </ui:Button.Content>
