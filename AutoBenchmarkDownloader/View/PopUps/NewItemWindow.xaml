@@ -7,27 +7,34 @@
         xmlns:controls="clr-namespace:MicaWPF.Controls;assembly=MicaWPF"
         xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
         mc:Ignorable="d"
-        Title="Add Software" Height="320" Width="260" ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="5*" />
-            <RowDefinition />
-        </Grid.RowDefinitions>
+        Title="Add Software" Height="320" Width="260" ResizeMode="NoResize" WindowStartupLocation="Manual">
+    <Border Background="Transparent" MouseDown="NewItemWindow_OnMouseDown">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="5*" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
 
-        <StackPanel Margin="8">
-            <Border Width="48" Height="48" Background="Aqua" CornerRadius="4" BorderThickness="1" BorderBrush="Black" Margin="0,0,0,8"/>
-            <UniformGrid Columns="1" Margin="8" >
-                <ui:TextBox Margin="6" PlaceholderText="Title"/>
-                <ui:TextBox Margin="6" PlaceholderText="Description"/>
-                <ui:TextBox Margin="6" PlaceholderText="Address"/>
-            </UniformGrid>
-        </StackPanel>
+            <StackPanel Margin="8">
+                <Border CornerRadius="4" Width="48" Height="48" Margin="0,0,0,8">
+                    <Border.Background>
+                        <ImageBrush x:Name="ImgIcon" Stretch="Fill" />
+                    </Border.Background>
+                </Border>
+                <!--<Border Width="48" Height="48" Background="Aqua" CornerRadius="4" BorderThickness="1" BorderBrush="Black" Margin="0,0,0,8"/>-->
+                <UniformGrid Columns="1" Margin="8" >
+                    <ui:TextBox x:Name="TbTitle" Margin="6" PlaceholderText="Title" TextChanged="TextBox_TextChanged"/>
+                    <ui:TextBox x:Name="TbDescription" Margin="6" PlaceholderText="Description (optional)" />
+                    <ui:TextBox x:Name="TbAddress" Margin="6" PlaceholderText="Address" TextChanged="TextBox_TextChanged"/>
+                </UniformGrid>
+            </StackPanel>
 
-        
+    
 
-        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
-            <controls:Button Content="Cancel" Width="64" Margin="4" />
-            <controls:Button Content="OK" Width="64" Margin="4" />
-        </StackPanel>
-    </Grid>
+            <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
+                <controls:Button x:Name="BtnCancel" Content="Cancel" Width="64" Margin="4" Click="BtnCancel_OnClick"/>
+                <controls:Button x:Name="BtnOk" Content="OK" Width="64" Margin="4" Click="BtnOk_OnClick" IsEnabled="False"/>
+            </StackPanel>
+        </Grid>
+    </Border>
 </controls:MicaWindow>

@@ -2,7 +2,7 @@
 
 namespace AutoBenchmarkDownloader.Model
 {
-    internal class SoftwareInfo : ViewModelBase
+    public class SoftwareInfo : ViewModelBase
     {
         public required string Name { get; set; }
         public string? Description { get; set; }

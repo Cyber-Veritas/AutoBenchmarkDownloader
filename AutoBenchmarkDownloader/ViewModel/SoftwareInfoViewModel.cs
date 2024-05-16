@@ -24,7 +24,10 @@ namespace AutoBenchmarkDownloader.ViewModel
 
         public RelayCommand ChooseOutputPathCommand => new(
             execute => ChooseOutputPath());
-        
+
+        public RelayCommand AddSoftwareCommand => new(
+                       execute => _yamlOperations.AddSoftware());
+
 
         public SoftwareInfoViewModel()
         {

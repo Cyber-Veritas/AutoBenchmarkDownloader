@@ -7,9 +7,9 @@ namespace AutoBenchmarkDownloader.View.Pages
     {
         public DownloadPage()
         {
-            InitializeComponent();
             SoftwareInfoViewModel vm = new SoftwareInfoViewModel();
             DataContext = vm;
+            InitializeComponent();
         }
     }
 }

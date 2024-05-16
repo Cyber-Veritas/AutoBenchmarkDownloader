@@ -1,4 +1,5 @@
 ﻿using AutoBenchmarkDownloader.Model;
+using AutoBenchmarkDownloader.View.PopUps;
 using System.IO;
 using System.Windows;
 using YamlDotNet.Serialization;
@@ -107,6 +108,26 @@ internal class YamlOperations
         }
 
         _currentState.OutputPath = sourceState.OutputPath;
+
+    }
+
+    public void AddSoftware()
+    {
+        var newSoftware = new SoftwareInfo()
+        {
+            Name = "",
+            Description = "",
+            Address = "",
+            Download = true
+        };
+
+        var newItemWindow = new NewItemWindow(newSoftware);
+        var result = newItemWindow.ShowDialog();
+
+        if (result == true)
+        {
+            _currentState.SoftwareInfos.Add(newSoftware);
+        }
 
     }
 }
