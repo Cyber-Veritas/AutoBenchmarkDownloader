@@ -15,10 +15,17 @@
 
     <Page.Resources>
         <Style TargetType="TextBlock" x:Key="systemInfo">
-            <Setter Property="Foreground" Value="White" />
+            <Setter Property="Foreground" Value="#ffffff" />
             <Setter Property="FontFamily" Value="Bahnschrift Regular" />
             <Setter Property="FontSize" Value="12" />
-            <Setter Property="Margin" Value="5, 10, 0, 0" />
+            <Setter Property="Margin" Value="5, 3, 0, 0" />
+        </Style>
+
+        <Style TargetType="TextBlock" x:Key="systemInfoCategory">
+            <Setter Property="Foreground" Value="#9f9f9f" />
+            <Setter Property="FontFamily" Value="Bahnschrift Bold" />
+            <Setter Property="FontSize" Value="11" />
+            <Setter Property="Margin" Value="5, 7, 0, 0" />
         </Style>
     </Page.Resources>
 
@@ -46,26 +53,22 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <StackPanel>
-                                <TextBlock Text="CPU" Style="{StaticResource systemInfo}" FontSize="16" FontFamily="Bahnschrift Bold"/>
+                                <TextBlock Text="CPU" Style="{StaticResource systemInfoCategory}"/>
                                 <TextBlock Text="{Binding CpuModel}" Style="{StaticResource systemInfo}"/>
 
-                                <TextBlock Text="RAM" Style="{StaticResource systemInfo}" FontSize="16" FontFamily="Bahnschrift Bold" Margin="5, 20, 0, 0"/>
+                                <TextBlock Text="RAM" Style="{StaticResource systemInfoCategory}"/>
                                 <TextBlock Style="{StaticResource systemInfo}" >
                                             <Run Text="{Binding TotalRam}"/>
                                             <Run Text="{Binding RamModules[0].Speed}"/>
                                 </TextBlock>
-                                <TextBlock Text="{Binding RamModulesInfo}" Style="{StaticResource systemInfo}"/>
 
-                                <TextBlock Text="Motherboard" Style="{StaticResource systemInfo}" FontSize="16" FontFamily="Bahnschrift Bold" Margin="5, 20, 0, 0"/>
+                                <TextBlock Text="Motherboard" Style="{StaticResource systemInfoCategory}"/>
                                 <TextBlock Text="{Binding Motherboard}" Style="{StaticResource systemInfo}"/>
-                                <TextBlock Text="{Binding Bios}" Style="{StaticResource systemInfo}"/>
 
-                                <TextBlock Text="GPU" Style="{StaticResource systemInfo}" FontSize="16" FontFamily="Bahnschrift Bold" Margin="5, 20, 0, 0"/>
+                                <TextBlock Text="GPU" Style="{StaticResource systemInfoCategory}"/>
                                 <TextBlock Text="{Binding Gpu}" Style="{StaticResource systemInfo}"/>
-                                <TextBlock Text="{Binding GpuDriverVer}" Style="{StaticResource systemInfo}"/>
-                                <TextBlock Text="{Binding GpuDriverDate}" Style="{StaticResource systemInfo}"/>
 
-                                <TextBlock Text="System" Style="{StaticResource systemInfo}" FontSize="16" FontFamily="Bahnschrift Bold" Margin="5, 20, 0, 0"/>
+                                <TextBlock Text="System" Style="{StaticResource systemInfoCategory}"/>
                                 <TextBlock Text="{Binding Os}" Style="{StaticResource systemInfo}"/>
                                 <TextBlock Text=""/>
                             </StackPanel>
@@ -82,10 +85,21 @@
             Grid.RowSpan="1"
             Grid.Column="1"
             Margin="8"
-            Background="RoyalBlue"
+            Background="#505a5a5a"
             CornerRadius="8">
 
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
 
+                <ui:ProgressRing Grid.Column="0" IsIndeterminate="False" />
+                <ui:ProgressRing Grid.Column="1" IsIndeterminate="False" />
+                <ui:ProgressRing Grid.Column="2" IsIndeterminate="False" />
+            </Grid>
+           
         </Border>
 
         <!-- System Advanced CPU Info -->

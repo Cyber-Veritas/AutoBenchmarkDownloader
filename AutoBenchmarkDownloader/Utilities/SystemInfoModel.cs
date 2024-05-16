@@ -28,7 +28,7 @@ namespace AutoBenchmarkDownloader.Utilities
             string RamModuleInfo = ListToStringConverter(ramModules);
             string Motherboard = GetHardwareInfo("Win32_BaseBoard", "Product", "MOBO");
             string Bios = "BIOS: " + GetHardwareInfo("Win32_BIOS", "Name", "BIOS");
-            string Os = GetHardwareInfo("Win32_OperatingSystem", "Caption", "OS") + " " + GetHardwareInfo("Win32_OperatingSystem", "Version", "VERSION");
+            string Os = GetHardwareInfo("Win32_OperatingSystem", "Caption", "OS") + " ver." + GetHardwareInfo("Win32_OperatingSystem", "Version", "VERSION");
             string Gpu = GetHardwareInfo("Win32_VideoController", "VideoProcessor", "GPU");
             string GpuDriverDate = "Driver Date: " + ConvertDateDriver(GetHardwareInfo("Win32_VideoController", "DriverDate", "GPU"));
             string GpuDriverVer = "Driver Version: " + GetHardwareInfo("Win32_VideoController", "DriverVersion", "GPU");
