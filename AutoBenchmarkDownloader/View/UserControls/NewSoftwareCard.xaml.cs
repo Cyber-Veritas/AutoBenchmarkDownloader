@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace AutoBenchmarkDownloader.View.UserControls
 {
     /// <summary>
-    /// Interaction logic for MenuBar.xaml
+    /// Interaction logic for NewSoftwareCard.xaml
     /// </summary>
-    public partial class MenuBar : UserControl
+    public partial class NewSoftwareCard : UserControl
     {
-        public MenuBar()
+        public NewSoftwareCard()
         {
             InitializeComponent();
         }

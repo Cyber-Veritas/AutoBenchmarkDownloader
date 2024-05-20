@@ -1,18 +1,19 @@
 ﻿using AutoBenchmarkDownloader.ViewModel;
 using System.Windows;
 using System.Windows.Input;
+using MicaWPF.Controls;
 
 namespace AutoBenchmarkDownloader
 {
-    public partial class MainWindow : Window
+    public partial class MainWindow : MicaWindow
     {
         private SystemUsageInfoViewModel viewModel;
+
         public MainWindow()
         {
             InitializeComponent();
 
-            MainWindowViewModel vm = new MainWindowViewModel();
-            DataContext = vm;
+            Wpf.Ui.Appearance.WindowBackgroundManager.ApplyDarkThemeToWindow(this);
         }
 
         private void MainWindow_OnMouseDown(object sender, MouseButtonEventArgs e)

@@ -5,16 +5,17 @@ namespace AutoBenchmarkDownloader.Model
     internal class SoftwareInfo : ViewModelBase
     {
         public required string Name { get; set; }
+        public string? Description { get; set; }
         public required string Address { get; set; }
 
-        private bool download;
+        private bool _download;
 
         public bool Download
         {
-            get { return download; }
+            get => _download;
             set
             {
-                download = value;
+                _download = value;
                 OnPropertyChanged();
             }
         }
