@@ -1,7 +1,5 @@
 ﻿using AutoBenchmarkDownloader.Model;
 using AutoBenchmarkDownloader.MVVM;
-using LibreHardwareMonitor.Hardware;
-using System;
 using System.Collections.ObjectModel;
 using System.Management;
 namespace AutoBenchmarkDownloader.Utilities

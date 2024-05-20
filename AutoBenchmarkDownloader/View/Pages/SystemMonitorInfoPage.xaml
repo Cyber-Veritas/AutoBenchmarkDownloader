@@ -27,6 +27,18 @@
             <Setter Property="FontSize" Value="11" />
             <Setter Property="Margin" Value="5, 7, 0, 0" />
         </Style>
+
+        <Style TargetType="TextBlock" x:Key="systemUsage">
+            <Setter Property="Foreground" Value="#ffffff" />
+            <Setter Property="FontFamily" Value="Bahnschrift Bold" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="FontSize" Value="32" />
+        </Style>
+
+        <Style TargetType="{x:Type ui:ProgressRing}" x:Key="progressRing">
+            <Setter Property="Foreground" Value="Red"/>
+        </Style>
     </Page.Resources>
 
     <Grid>
@@ -59,7 +71,7 @@
                                 <TextBlock Text="RAM" Style="{StaticResource systemInfoCategory}"/>
                                 <TextBlock Style="{StaticResource systemInfo}" >
                                             <Run Text="{Binding TotalRam}"/>
-                                            <Run Text="{Binding RamModules[0].Speed}"/>
+                                            <Run Text="{Binding RamModules[0].Speed}" BaselineAlignment="Center"/>
                                 </TextBlock>
 
                                 <TextBlock Text="Motherboard" Style="{StaticResource systemInfoCategory}"/>
@@ -76,7 +88,7 @@
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
             </StackPanel>
-            
+
         </Border>
 
         <!-- System Usage Info -->
@@ -94,12 +106,93 @@
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Style="{StaticResource systemUsage}">
+                    <Run Text="{Binding SystemUsageM.SelectedInfo.cpuUsage}"/><Run Text="%" FontSize="16"/>
+                </TextBlock>
+                <TextBlock Grid.Column="1" Style="{StaticResource systemUsage}">
+                    <Run Text="{Binding SystemUsageM.SelectedInfo.ramUsage}"/><Run Text="%" FontSize="16"/>
+                </TextBlock>
+                <TextBlock Grid.Column="2" Style="{StaticResource systemUsage}">
+                    <Run Text="{Binding SystemUsageM.SelectedInfo.gpuUsage}"/><Run Text="%" FontSize="16"/>
+                </TextBlock>
 
-                <ui:ProgressRing Grid.Column="0" IsIndeterminate="False" />
-                <ui:ProgressRing Grid.Column="1" IsIndeterminate="False" />
-                <ui:ProgressRing Grid.Column="2" IsIndeterminate="False" />
+                <!-- background bar effect -->
+                <ui:ProgressRing Grid.Column="0" IsIndeterminate="False" Progress="100" Foreground="#FF4C4C4C" Width="100" Height="100"/>
+                <ui:ProgressRing Grid.Column="1" IsIndeterminate="False" Progress="100" Foreground="#FF4C4C4C" Width="100" Height="100"/>
+                <ui:ProgressRing Grid.Column="2" IsIndeterminate="False" Progress="100" Foreground="#FF4C4C4C" Width="100" Height="100"/>
+                
+                <!--blur effects -->
+                <!-- CPU -->
+                <Border Grid.Column="0">
+                    <Border.Effect>
+                        <BlurEffect Radius="10"/>
+                    </Border.Effect>
+                    <ui:ProgressRing RenderTransformOrigin="0.5,0.5" Progress="{Binding SystemUsageM.SelectedInfo.cpuUsage}" Foreground="#80FFDB" Width="100" Height="100">
+                        <ui:ProgressRing.RenderTransform>
+                            <TransformGroup>
+                                <RotateTransform Angle="-90"/>
+                            </TransformGroup>
+                        </ui:ProgressRing.RenderTransform>
+                    </ui:ProgressRing>
+                </Border>
+
+                <Border Grid.Column="1">
+                    <Border.Effect>
+                        <BlurEffect Radius="10"/>
+                    </Border.Effect>
+                    <ui:ProgressRing RenderTransformOrigin="0.5,0.5" Progress="{Binding SystemUsageM.SelectedInfo.ramUsage}" Foreground="#F72585" Width="100" Height="100">
+                        <ui:ProgressRing.RenderTransform>
+                            <TransformGroup>
+                                <RotateTransform Angle="-90"/>
+                            </TransformGroup>
+                        </ui:ProgressRing.RenderTransform>
+                    </ui:ProgressRing>
+                </Border>
+
+                <Border Grid.Column="2">
+                    <Border.Effect>
+                        <BlurEffect Radius="10"/>
+                    </Border.Effect>
+                    <ui:ProgressRing RenderTransformOrigin="0.5,0.5" Progress="{Binding SystemUsageM.SelectedInfo.gpuUsage}" Foreground="#9747FF" Width="100" Height="100">
+                        <ui:ProgressRing.RenderTransform>
+                            <TransformGroup>
+                                <RotateTransform Angle="-90"/>
+                            </TransformGroup>
+                        </ui:ProgressRing.RenderTransform>
+                    </ui:ProgressRing>
+                </Border>
+
+
+                <!-- bar values -->
+                <!-- CPU -->
+                <ui:ProgressRing RenderTransformOrigin="0.5,0.5" Grid.Column="0" Progress="{Binding SystemUsageM.SelectedInfo.cpuUsage}" Foreground="#80FFDB" Width="100" Height="100">
+                    <ui:ProgressRing.RenderTransform>
+                        <TransformGroup>
+                            <RotateTransform Angle="-90"/>
+                        </TransformGroup>
+                    </ui:ProgressRing.RenderTransform>
+                </ui:ProgressRing>
+
+                <!-- RAM -->
+                <ui:ProgressRing RenderTransformOrigin="0.5,0.5" Grid.Column="1" Progress="{Binding SystemUsageM.SelectedInfo.ramUsage}" Foreground="#F72585" Width="100" Height="100">
+                    <ui:ProgressRing.RenderTransform>
+                        <TransformGroup>
+                            <RotateTransform Angle="-90"/>
+                        </TransformGroup>
+                    </ui:ProgressRing.RenderTransform>
+                </ui:ProgressRing>
+                
+                <!-- GPU -->
+                <ui:ProgressRing RenderTransformOrigin="0.5,0.5" Grid.Column="2" Progress="{Binding SystemUsageM.SelectedInfo.gpuUsage}" Foreground="#9747FF" Width="100" Height="100">
+                    <ui:ProgressRing.RenderTransform>
+                        <TransformGroup>
+                            <RotateTransform Angle="-90"/>
+                        </TransformGroup>
+                    </ui:ProgressRing.RenderTransform>
+                </ui:ProgressRing>
+                
             </Grid>
-           
+
         </Border>
 
         <!-- System Advanced CPU Info -->
@@ -127,5 +220,5 @@
         <userControls:SystemBasicInfoCard 
             GpuInfo ="{Binding SystemInfoM.dxDiagInfos[0].Gpu}" />
     </Grid>-->
-    
+
 </Page>
