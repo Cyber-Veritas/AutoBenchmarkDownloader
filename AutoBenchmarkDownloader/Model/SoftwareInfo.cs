@@ -35,5 +35,31 @@ namespace AutoBenchmarkDownloader.Model
             }
         }
 
+        public SoftwareInfo Clone()
+        {
+            return new SoftwareInfo
+            {
+                Name = Name,
+                Description = Description,
+                Address = Address,
+                IconPath = IconPath,
+                Download = Download
+            };
+        }
+
+        public bool Compare(SoftwareInfo other)
+        {
+            return Name == other.Name && Description == other.Description && Address == other.Address && IconPath == other.IconPath;
+        }
+
+        public void Modify(SoftwareInfo other)
+        {
+            Name = other.Name;
+            Description = other.Description;
+            Address = other.Address;
+            IconPath = other.IconPath;
+
+            OnPropertyChanged(null);
+        }
     }
 }

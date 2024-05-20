@@ -28,6 +28,9 @@ namespace AutoBenchmarkDownloader.ViewModel
         public RelayCommand AddSoftwareCommand => new(
                        execute => _yamlOperations.AddSoftware());
 
+        public RelayCommand EditSoftwareCommand => new(
+            execute => _yamlOperations.EditSoftware((string)execute));
+
 
         public SoftwareInfoViewModel()
         {

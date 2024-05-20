@@ -92,6 +92,7 @@ internal class YamlOperations
         return deserializer.Deserialize<State>(serialized);
     }
 
+
     public void AddDataFromState(State sourceState)
     {
         foreach (var info in sourceState.SoftwareInfos)
@@ -113,7 +114,7 @@ internal class YamlOperations
 
     public void AddSoftware()
     {
-        var newSoftware = new SoftwareInfo()
+        var info = new SoftwareInfo()
         {
             Name = "",
             Description = "",
@@ -121,13 +122,43 @@ internal class YamlOperations
             Download = true
         };
 
-        var newItemWindow = new NewItemWindow(newSoftware);
-        var result = newItemWindow.ShowDialog();
+        var newItemWindow = new NewItemWindow(info);
+        newItemWindow.ShowDialog();
 
-        if (result == true)
+        if (newItemWindow.ResultState == DialogResultState.Ok)
         {
-            _currentState.SoftwareInfos.Add(newSoftware);
+            _currentState.SoftwareInfos.Add(info);
+            SaveConfig();
         }
-
     }
+
+    public void EditSoftware(string softwareTitle)
+    {
+        var originalInfo = _currentState.SoftwareInfos.FirstOrDefault(i => i.Name == softwareTitle);
+
+        var info = originalInfo!.Clone();
+
+        var newItemWindow = new NewItemWindow(info);
+        newItemWindow.ShowDialog();
+
+        switch (newItemWindow.ResultState)
+        {
+            case DialogResultState.Ok:
+                originalInfo.Modify(info);
+                SaveConfig();
+                break;
+
+            case DialogResultState.Delete:
+                if (originalInfo.IconPath != "pack://application:,,,/Resources/SoftwareIcons/default.png")
+                {
+                    File.Delete(originalInfo.IconPath);
+                }
+                _currentState.SoftwareInfos.Remove(originalInfo);
+                SaveConfig();
+                break;
+
+
+        }
+    }
+
 }
