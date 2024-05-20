@@ -1,0 +1,30 @@
+﻿<UserControl x:Class="AutoBenchmarkDownloader.View.UserControls.SoftwareCard"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AutoBenchmarkDownloader.View.UserControls"
+             xmlns:controls="clr-namespace:MicaWPF.Controls;assembly=MicaWPF"
+             d:DataContext="{d:DesignInstance local:SoftwareCard}"
+             mc:Ignorable="d" 
+             Name="SoftwareCardControl"
+             Height="60" d:DesignWidth="480" MinWidth="360">
+    <Border CornerRadius="8" Background="#505a5a5a">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="6*" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <StackPanel Orientation="Horizontal">
+                <Border x:Name="SoftwareIcon" Width="48" Height="48" Background="Blue" Margin="6,0,0,0" CornerRadius="4" />
+                <StackPanel Margin="10">
+                    <TextBlock Text="{Binding SoftwareTitle, ElementName=SoftwareCardControl}" FontSize="16" Foreground="White"/>
+                    <TextBlock Text="{Binding SoftwareDescription, ElementName=SoftwareCardControl}" FontSize="12" Foreground="White" Opacity="0.75" />
+                </StackPanel>
+            </StackPanel>
+
+            <controls:ToggleSwitch IsChecked="{Binding SoftwareDownload, ElementName=SoftwareCardControl}" Grid.Column="1" HorizontalAlignment="Right" Margin="0,0,12,0" Padding="0"/>
+        </Grid>
+    </Border>
+    
+</UserControl>
