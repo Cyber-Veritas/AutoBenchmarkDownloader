@@ -2,17 +2,27 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net8.0-windows</TargetFramework>
+    <TargetFramework>net8.0-windows10.0.19041.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
+    <UseWindowsForms>False</UseWindowsForms>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="Resources\Images\app_background.jpg" />
+    <None Remove="Resources\SoftwareIcons\cpu-z.ico" />
+    <None Remove="Resources\SoftwareIcons\default.png" />
+    <None Remove="Resources\SoftwareIcons\furmark2.ico" />
+    <None Remove="Resources\UI\edit-solid.svg" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="MicaWPF" Version="6.2.8" />
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.77" />
+    <PackageReference Include="SharpVectors" Version="1.8.4" />
+    <PackageReference Include="System.Drawing.Common" Version="8.0.5" />
+    <PackageReference Include="LibreHardwareMonitorLib" Version="0.9.3" />
     <PackageReference Include="System.Management" Version="8.0.0" />
   </ItemGroup>
 
@@ -20,16 +30,16 @@
     <Resource Include="Resources\Images\app_background.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Styles\" />
+    <Resource Include="Resources\SoftwareIcons\cpu-z.ico" />
+    <Resource Include="Resources\SoftwareIcons\default.png" />
+    <Resource Include="Resources\SoftwareIcons\furmark2.ico" />
+    <Resource Include="Resources\UI\edit-solid.svg" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="System.Management" Version="8.0.0" />
     <PackageReference Include="WPF-UI" Version="3.0.4" />
-    <PackageReference Include="YamlDotNet" Version="15.1.2" />
+    <PackageReference Include="YamlDotNet" Version="15.1.4" />
   </ItemGroup>
 
 </Project>

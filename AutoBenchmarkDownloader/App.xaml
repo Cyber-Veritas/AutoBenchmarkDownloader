@@ -3,12 +3,16 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:AutoBenchmarkDownloader"
              xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+             xmlns:mica="clr-namespace:MicaWPF.Styles;assembly=MicaWPF"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ui:ThemesDictionary Theme="Dark" />
                 <ui:ControlsDictionary />
+                <mica:ThemeDictionary DesignModeTheme="Dark" Theme="Auto" />
+                <mica:ControlsDictionary />
+                <ResourceDictionary Source="Styles/Tile.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

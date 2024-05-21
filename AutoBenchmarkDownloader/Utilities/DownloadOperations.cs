@@ -39,7 +39,11 @@ namespace AutoBenchmarkDownloader.Utilities
                         var response = await client.GetAsync(url);
                         response.EnsureSuccessStatusCode();
 
-                        var filePath = Path.Combine(currentState.OutputPath, "Benchmark", item.Name + ".zip");
+                        var originalFileName = response.RequestMessage?.RequestUri?.Segments.Last();
+
+                        var fileName = originalFileName ?? item.Name + ".zip";
+
+                        var filePath = Path.Combine(currentState.OutputPath, "Benchmark", fileName);
 
                         using (var fileStream = File.Create(filePath))
                         {

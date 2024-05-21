@@ -2,15 +2,14 @@
 using AutoBenchmarkDownloader.MVVM;
 using System.Collections.ObjectModel;
 using System.Management;
-
-namespace AutoBenchmarkDownloader.ViewModel
+namespace AutoBenchmarkDownloader.Utilities
 {
-    internal class DxDiagInfoViewModel : SystemHardwareInfo
+    class SystemInfoModel : SystemHardwareInfo
     {
         public ObservableCollection<DxDiagInfo> dxDiagInfos { get; set; }
         public string TotalRam;
 
-        public DxDiagInfoViewModel() 
+        public SystemInfoModel()
         {
             dxDiagInfos = new ObservableCollection<DxDiagInfo>();
             string TotalRam = "";
@@ -27,11 +26,11 @@ namespace AutoBenchmarkDownloader.ViewModel
             string RamModuleInfo = ListToStringConverter(ramModules);
             string Motherboard = GetHardwareInfo("Win32_BaseBoard", "Product", "MOBO");
             string Bios = "BIOS: " + GetHardwareInfo("Win32_BIOS", "Name", "BIOS");
-            string Os = GetHardwareInfo("Win32_OperatingSystem", "Caption", "OS") + " " + GetHardwareInfo("Win32_OperatingSystem", "Version", "VERSION");
+            string Os = GetHardwareInfo("Win32_OperatingSystem", "Caption", "OS") + " ver." + GetHardwareInfo("Win32_OperatingSystem", "Version", "VERSION");
             string Gpu = GetHardwareInfo("Win32_VideoController", "VideoProcessor", "GPU");
             string GpuDriverDate = "Driver Date: " + ConvertDateDriver(GetHardwareInfo("Win32_VideoController", "DriverDate", "GPU"));
             string GpuDriverVer = "Driver Version: " + GetHardwareInfo("Win32_VideoController", "DriverVersion", "GPU");
-            string DirectX = GetHardwareInfo("Win32_DirectXVersion", "Caption", "DX");      
+            string DirectX = GetHardwareInfo("Win32_DirectXVersion", "Caption", "DX");
 
             DxDiagInfo dxDiagInfo = new DxDiagInfo()
             {
@@ -43,8 +42,8 @@ namespace AutoBenchmarkDownloader.ViewModel
                 Bios = Bios,
                 Os = Os,
                 Gpu = Gpu,
-                GpuDriverVer= GpuDriverVer,
-                GpuDriverDate= GpuDriverDate,
+                GpuDriverVer = GpuDriverVer,
+                GpuDriverDate = GpuDriverDate,
                 DirectX = DirectX,
             };
 
@@ -78,9 +77,9 @@ namespace AutoBenchmarkDownloader.ViewModel
 
                     ramModulesList.Add(ramModule);
                     totalRamCounter += ramCapacity;
-                    id ++;
+                    id++;
                 }
-                TotalRam = BytesToGB(totalRamCounter)+"GB";
+                TotalRam = BytesToGB(totalRamCounter) + "GB";
             }
 
             catch (Exception e)
