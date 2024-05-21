@@ -1,4 +1,5 @@
 ﻿using AutoBenchmarkDownloader.Model;
+using AutoBenchmarkDownloader.View.PopUps;
 using System.IO;
 using System.Windows;
 using YamlDotNet.Serialization;
@@ -21,8 +22,9 @@ internal class YamlOperations
     {
         SoftwareInfos =
         [
-            new SoftwareInfo { Name = "FurMark 2", Description = "GPU stress test", Address = "https://geeks3d.com/dl/get/748", Download = true },
-            new SoftwareInfo { Name = "CPU-Z", Description = "System information software", Address = "https://download.cpuid.com/cpu-z/cpu-z_2.09-en.zip", Download = false }
+            new SoftwareInfo { Name = "CPU-Z",  IconPath = "pack://application:,,,/Resources/SoftwareIcons/cpu-z.ico", Description = "System information software", Address = "https://download.cpuid.com/cpu-z/cpu-z_2.09-en.zip", Download = true },
+            new SoftwareInfo { Name = "FurMark 2", IconPath = "pack://application:,,,/Resources/SoftwareIcons/furmark2.ico", Description = "GPU stress test", Address = "https://geeks3d.com/dl/get/748", Download = false },
+            new SoftwareInfo { Name = "Example", Description = "Example software", Address = "https://example.com/", Download = false }
         ],
         OutputPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
     };
@@ -90,6 +92,7 @@ internal class YamlOperations
         return deserializer.Deserialize<State>(serialized);
     }
 
+
     public void AddDataFromState(State sourceState)
     {
         foreach (var info in sourceState.SoftwareInfos)
@@ -108,4 +111,54 @@ internal class YamlOperations
         _currentState.OutputPath = sourceState.OutputPath;
 
     }
+
+    public void AddSoftware()
+    {
+        var info = new SoftwareInfo()
+        {
+            Name = "",
+            Description = "",
+            Address = "",
+            Download = true
+        };
+
+        var newItemWindow = new NewItemWindow(info);
+        newItemWindow.ShowDialog();
+
+        if (newItemWindow.ResultState == DialogResultState.Ok)
+        {
+            _currentState.SoftwareInfos.Add(info);
+            SaveConfig();
+        }
+    }
+
+    public void EditSoftware(string softwareTitle)
+    {
+        var originalInfo = _currentState.SoftwareInfos.FirstOrDefault(i => i.Name == softwareTitle);
+
+        var info = originalInfo!.Clone();
+
+        var newItemWindow = new NewItemWindow(info);
+        newItemWindow.ShowDialog();
+
+        switch (newItemWindow.ResultState)
+        {
+            case DialogResultState.Ok:
+                originalInfo.Modify(info);
+                SaveConfig();
+                break;
+
+            case DialogResultState.Delete:
+                if (originalInfo.IconPath != "pack://application:,,,/Resources/SoftwareIcons/default.png")
+                {
+                    File.Delete(originalInfo.IconPath);
+                }
+                _currentState.SoftwareInfos.Remove(originalInfo);
+                SaveConfig();
+                break;
+
+
+        }
+    }
+
 }
