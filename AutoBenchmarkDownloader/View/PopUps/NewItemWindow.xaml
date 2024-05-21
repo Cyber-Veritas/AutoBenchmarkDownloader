@@ -1,0 +1,43 @@
+﻿<controls:MicaWindow x:Class="AutoBenchmarkDownloader.View.PopUps.NewItemWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AutoBenchmarkDownloader.View.PopUps"
+        xmlns:controls="clr-namespace:MicaWPF.Controls;assembly=MicaWPF"
+        xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+        xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
+        mc:Ignorable="d"
+        Title="Add Software" Height="320" Width="260" ResizeMode="NoResize" WindowStartupLocation="Manual">
+    <Border Background="Transparent" MouseDown="NewItemWindow_OnMouseDown">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="5*" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <StackPanel Margin="8">
+                <Border CornerRadius="4" Width="48" Height="48" Margin="0,0,0,8"
+                        MouseEnter="UIElement_OnMouseEnter" MouseLeave="UIElement_OnMouseLeave" MouseDown="UIElement_OnMouseDown">
+                    <Border.Background>
+                        <ImageBrush x:Name="ImgIcon" Stretch="Fill" />
+                    </Border.Background>
+                    <svgc:SvgViewbox x:Name="SvgEdit" Opacity="0.0" Width="16" Height="16" Source="/Resources/UI/edit-solid.svg" />
+                </Border>
+                <UniformGrid Columns="1" Margin="8" >
+                    <ui:TextBox x:Name="TbTitle" Margin="6" PlaceholderText="Title" TextChanged="TextBox_TextChanged"/>
+                    <ui:TextBox x:Name="TbDescription" Margin="6" PlaceholderText="Description (optional)" />
+                    <ui:TextBox x:Name="TbAddress" Margin="6" PlaceholderText="Address" TextChanged="TextBox_TextChanged"/>
+                </UniformGrid>
+            </StackPanel>
+
+    
+
+            <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
+                <controls:Button x:Name="BtnCancel" Content="Cancel" Width="64" Margin="4" Click="BtnCancel_OnClick"/>
+                <controls:Button x:Name="BtnDelete" Content="Delete" Width="64" Margin="4" Visibility="Collapsed" Click="BtnDelete_OnClick"/>
+                <controls:Button x:Name="BtnOk" Content="OK" Width="64" Margin="4" Click="BtnOk_OnClick" IsEnabled="False" IsDefault="True"/>
+            </StackPanel>
+        </Grid>
+    </Border>
+</controls:MicaWindow>

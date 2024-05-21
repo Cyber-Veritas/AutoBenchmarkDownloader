@@ -12,6 +12,7 @@
                 <ui:ControlsDictionary />
                 <mica:ThemeDictionary DesignModeTheme="Dark" Theme="Auto" />
                 <mica:ControlsDictionary />
+                <ResourceDictionary Source="Styles/Tile.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

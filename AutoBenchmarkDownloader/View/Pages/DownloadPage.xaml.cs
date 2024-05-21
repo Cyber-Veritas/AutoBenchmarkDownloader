@@ -1,5 +1,5 @@
-﻿using System.Windows.Controls;
-using AutoBenchmarkDownloader.ViewModel;
+﻿using AutoBenchmarkDownloader.ViewModel;
+using System.Windows.Controls;
 
 namespace AutoBenchmarkDownloader.View.Pages
 {
@@ -7,9 +7,9 @@ namespace AutoBenchmarkDownloader.View.Pages
     {
         public DownloadPage()
         {
-            InitializeComponent();
             SoftwareInfoViewModel vm = new SoftwareInfoViewModel();
             DataContext = vm;
+            InitializeComponent();
         }
     }
 }
