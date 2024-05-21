@@ -6,12 +6,12 @@ namespace AutoBenchmarkDownloader.Utilities
 {
     class SystemInfoModel : SystemHardwareInfo
     {
-        public ObservableCollection<DxDiagInfo> dxDiagInfos { get; set; }
+        public ObservableCollection<HardwareInfo> hardwareInfos { get; set; }
         public string TotalRam;
 
         public SystemInfoModel()
         {
-            dxDiagInfos = new ObservableCollection<DxDiagInfo>();
+            hardwareInfos = new ObservableCollection<HardwareInfo>();
             string TotalRam = "";
             SetInfo();
         }
@@ -32,7 +32,7 @@ namespace AutoBenchmarkDownloader.Utilities
             string GpuDriverVer = "Driver Version: " + GetHardwareInfo("Win32_VideoController", "DriverVersion", "GPU");
             string DirectX = GetHardwareInfo("Win32_DirectXVersion", "Caption", "DX");
 
-            DxDiagInfo dxDiagInfo = new DxDiagInfo()
+            HardwareInfo hardwareInfo = new HardwareInfo()
             {
                 CpuModel = CpuModel,
                 RamModules = ramModules,
@@ -47,7 +47,7 @@ namespace AutoBenchmarkDownloader.Utilities
                 DirectX = DirectX,
             };
 
-            dxDiagInfos.Add(dxDiagInfo);
+            hardwareInfos.Add(hardwareInfo);
         }
 
         private List<RamModule> RamInfo()
@@ -105,6 +105,7 @@ namespace AutoBenchmarkDownloader.Utilities
                 ramModulesString += " " + ramModules[i].DeviceLocator;
                 ramModulesString += " " + ramModules[i].Size;
                 ramModulesString += " " + ramModules[i].Code;
+                ramModulesString += "- " + ramModules[i].Manufacturer;
 
                 if (i < ramModules.Count - 1)
                 {

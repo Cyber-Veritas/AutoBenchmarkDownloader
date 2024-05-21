@@ -20,5 +20,7 @@ namespace AutoBenchmarkDownloader.MVVM
                 return "[" + errorInfo + " info ERROR]";
             }
         }
+
+        
     }
 }
