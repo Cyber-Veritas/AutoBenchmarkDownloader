@@ -6,15 +6,15 @@ namespace AutoBenchmarkDownloader.ViewModel
     class SystemMonitorViewModel : ViewModelBase
     {
         private readonly SystemInfoModel _systemInfoModel;
-        //private readonly SystemMonitorViewModel _monitorViewModel;
+        private readonly SystemUsageModel _systemUsageModel;
 
         public SystemMonitorViewModel()
         {
             _systemInfoModel = new SystemInfoModel();
-            //_monitorViewModel = new SystemMonitorViewModel(); 
+            _systemUsageModel = new SystemUsageModel(); 
         }
 
         public SystemInfoModel SystemInfoM => _systemInfoModel;
-        //public SystemMonitorViewModel MonitorViewModel => _monitorViewModel;
+        public SystemUsageModel SystemUsageM => _systemUsageModel;
     }
 }
