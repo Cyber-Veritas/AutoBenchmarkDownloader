@@ -50,7 +50,8 @@ namespace AutoBenchmarkDownloader.Utilities
                 GpuDriverDate = GpuDriverDate,
                 DirectX = DirectX,
 
-                CpuAdvanceds = CpuAdvancedInfo()
+                CpuAdvanceds = CpuAdvancedInfo(),
+                MotherboardAdvanceds = MotherboardAdvancedInfo()
             };
 
             hardwareInfos.Add(hardwareInfo);
@@ -65,14 +66,14 @@ namespace AutoBenchmarkDownloader.Utilities
                 // define cpu advanced information
                 CpuAdvanced cpuAdvanced = new CpuAdvanced()
                 {
-                    Model = "",
-                    CodeName = "",
-                    Litography = "",
-                    Cores = "",
-                    Threads = "",
-                    Frequency = "",
-                    TDP = "",
-                    Platform = ""
+                    Model = GetHardwareInfo("Win32_Processor", "Name", "CPU_Model"),
+                    CodeName = GetHardwareInfo("Win32_Processor", "Description", "CPU_CodeName"),
+                    Litography = "Unknown",
+                    Cores = GetHardwareInfo("Win32_Processor", "NumberOfCores", "CPU_Cores"),
+                    Threads = GetHardwareInfo("Win32_Processor", "NumberOfLogicalProcessors", "CPU_Threads"),
+                    Frequency = GetHardwareInfo("Win32_Processor", "CurrentClockSpeed", "CPU_Frequency"),
+                    TDP = "Unknown",
+                    Platform = "Unknown"
                 };
             }
             catch (Exception e)
@@ -81,6 +82,21 @@ namespace AutoBenchmarkDownloader.Utilities
             }
 
             return cpuAdvanceds;
+        }
+
+        private List<MotherboardAdvanced> MotherboardAdvancedInfo() 
+        {
+            List<MotherboardAdvanced> motherboardAdvanceds = new List<MotherboardAdvanced>();
+            try
+            {
+                
+            }
+
+            catch (Exception e) 
+            {
+                Console.WriteLine("unable to find Motherboard info" + e.Message);
+            }
+            return motherboardAdvanceds;
         }
 
         private List<RamModule> RamInfo()

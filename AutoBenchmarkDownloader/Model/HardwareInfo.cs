@@ -34,8 +34,10 @@ namespace AutoBenchmarkDownloader.Model
         public required string Model { get; set; }
         public required string Bios { get; set; }
         public required string BiosDate { get; set; }
-        public required string Vendor { get; set; }
+        public required string Manufacturer { get; set; }
         public required string Chipset { get; set; }
+
+        public required string SerialNumber { get; set; }
     }
 
     public class GpuAdvanced
@@ -62,14 +64,14 @@ namespace AutoBenchmarkDownloader.Model
         public required string DirectX { get; set; }
         public required List<CpuAdvanced> CpuAdvanceds { get; set; }
         public required List<RamModule> RamModules { get; set; }
-        //public required List<MotherboardAdvanced> MotherboardAdvanceds { get; set; }
+        public required List<MotherboardAdvanced> MotherboardAdvanceds { get; set; }
         //public required List<GpuAdvanced> gpuAdvanceds { get; set; }
 
         public HardwareInfo()
         {
             CpuAdvanceds = new List<CpuAdvanced>();
             RamModules = new List<RamModule>();
-            //MotherboardAdvanceds = new List<MotherboardAdvanced>();
+            MotherboardAdvanceds = new List<MotherboardAdvanced>();
             //gpuAdvanceds = new List<GpuAdvanced>();
         }
     }
