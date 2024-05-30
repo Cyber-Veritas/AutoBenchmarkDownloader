@@ -1,7 +1,11 @@
 ﻿using AutoBenchmarkDownloader.Model;
 using AutoBenchmarkDownloader.MVVM;
 using System.Collections.ObjectModel;
+using System.DirectoryServices.ActiveDirectory;
 using System.Management;
+using System.Runtime.Intrinsics.Arm;
+using System.Threading;
+using Windows.Foundation.Metadata;
 namespace AutoBenchmarkDownloader.Utilities
 {
     class SystemInfoModel : SystemHardwareInfo
@@ -27,7 +31,7 @@ namespace AutoBenchmarkDownloader.Utilities
             string Motherboard = GetHardwareInfo("Win32_BaseBoard", "Product", "MOBO");
             string Bios = "BIOS: " + GetHardwareInfo("Win32_BIOS", "Name", "BIOS");
             string Os = GetHardwareInfo("Win32_OperatingSystem", "Caption", "OS") + " ver." + GetHardwareInfo("Win32_OperatingSystem", "Version", "VERSION");
-            string Gpu = GetHardwareInfo("Win32_VideoController", "VideoProcessor", "GPU");
+            string Gpu = GetHardwareInfo("Win32_VideoController", "Caption", "GPU");
             string GpuDriverDate = "Driver Date: " + ConvertDateDriver(GetHardwareInfo("Win32_VideoController", "DriverDate", "GPU"));
             string GpuDriverVer = "Driver Version: " + GetHardwareInfo("Win32_VideoController", "DriverVersion", "GPU");
             string DirectX = GetHardwareInfo("Win32_DirectXVersion", "Caption", "DX");
@@ -45,9 +49,38 @@ namespace AutoBenchmarkDownloader.Utilities
                 GpuDriverVer = GpuDriverVer,
                 GpuDriverDate = GpuDriverDate,
                 DirectX = DirectX,
+
+                CpuAdvanceds = CpuAdvancedInfo()
             };
 
             hardwareInfos.Add(hardwareInfo);
+        }
+
+        private List<CpuAdvanced> CpuAdvancedInfo()
+        {
+            List<CpuAdvanced> cpuAdvanceds = new List<CpuAdvanced>();
+
+            try
+            {
+                // define cpu advanced information
+                CpuAdvanced cpuAdvanced = new CpuAdvanced()
+                {
+                    Model = "",
+                    CodeName = "",
+                    Litography = "",
+                    Cores = "",
+                    Threads = "",
+                    Frequency = "",
+                    TDP = "",
+                    Platform = ""
+                };
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("unable to find CPU info" + e.Message);
+            }
+
+            return cpuAdvanceds;
         }
 
         private List<RamModule> RamInfo()

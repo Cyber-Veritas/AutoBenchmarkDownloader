@@ -60,14 +60,14 @@ namespace AutoBenchmarkDownloader.Model
         public required string GpuDriverVer { get; set; }
         public required string GpuDriverDate { get; set; }
         public required string DirectX { get; set; }
-        //public required List<CpuAdvanced> CpuAdvanceds { get; set; }
+        public required List<CpuAdvanced> CpuAdvanceds { get; set; }
         public required List<RamModule> RamModules { get; set; }
         //public required List<MotherboardAdvanced> MotherboardAdvanceds { get; set; }
         //public required List<GpuAdvanced> gpuAdvanceds { get; set; }
 
         public HardwareInfo()
         {
-            //CpuAdvanceds = new List<CpuAdvanced>();
+            CpuAdvanceds = new List<CpuAdvanced>();
             RamModules = new List<RamModule>();
             //MotherboardAdvanceds = new List<MotherboardAdvanced>();
             //gpuAdvanceds = new List<GpuAdvanced>();
