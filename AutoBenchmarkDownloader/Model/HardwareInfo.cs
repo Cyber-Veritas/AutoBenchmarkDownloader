@@ -36,7 +36,6 @@ namespace AutoBenchmarkDownloader.Model
         public required string BiosDate { get; set; }
         public required string Manufacturer { get; set; }
         public required string Chipset { get; set; }
-
         public required string SerialNumber { get; set; }
     }
 
@@ -65,14 +64,14 @@ namespace AutoBenchmarkDownloader.Model
         public required List<CpuAdvanced> CpuAdvanceds { get; set; }
         public required List<RamModule> RamModules { get; set; }
         public required List<MotherboardAdvanced> MotherboardAdvanceds { get; set; }
-        //public required List<GpuAdvanced> gpuAdvanceds { get; set; }
+        public required List<GpuAdvanced> GpuAdvanceds { get; set; }
 
         public HardwareInfo()
         {
             CpuAdvanceds = new List<CpuAdvanced>();
             RamModules = new List<RamModule>();
             MotherboardAdvanceds = new List<MotherboardAdvanced>();
-            //gpuAdvanceds = new List<GpuAdvanced>();
+            GpuAdvanceds = new List<GpuAdvanced>();
         }
     }
 }

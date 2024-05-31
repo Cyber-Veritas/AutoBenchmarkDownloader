@@ -1,5 +1,6 @@
 ﻿using AutoBenchmarkDownloader.Model;
 using AutoBenchmarkDownloader.MVVM;
+using LibreHardwareMonitor.Hardware.Motherboard;
 using System.Collections.ObjectModel;
 using System.DirectoryServices.ActiveDirectory;
 using System.Management;
@@ -23,6 +24,9 @@ namespace AutoBenchmarkDownloader.Utilities
         private void SetInfo()
         {
             List<RamModule> ramModules = RamInfo();
+            List<CpuAdvanced> cpuAdvanceds = CpuAdvancedInfo();
+            List<MotherboardAdvanced> motherboardAdvanceds = MotherboardAdvancedInfo();
+            List<GpuAdvanced> gpuAdvanceds = GpuAdvancedInfo();
 
             // Win32_PerfFormattedData_GPUPerformanceCounters_GPUAdapterMemory - gpu memory info
 
@@ -32,14 +36,13 @@ namespace AutoBenchmarkDownloader.Utilities
             string Bios = "BIOS: " + GetHardwareInfo("Win32_BIOS", "Name", "BIOS");
             string Os = GetHardwareInfo("Win32_OperatingSystem", "Caption", "OS") + " ver." + GetHardwareInfo("Win32_OperatingSystem", "Version", "VERSION");
             string Gpu = GetHardwareInfo("Win32_VideoController", "Caption", "GPU");
-            string GpuDriverDate = "Driver Date: " + ConvertDateDriver(GetHardwareInfo("Win32_VideoController", "DriverDate", "GPU"));
+            string GpuDriverDate = "Driver Date: " + ConvertDate(GetHardwareInfo("Win32_VideoController", "DriverDate", "GPU"));
             string GpuDriverVer = "Driver Version: " + GetHardwareInfo("Win32_VideoController", "DriverVersion", "GPU");
             string DirectX = GetHardwareInfo("Win32_DirectXVersion", "Caption", "DX");
 
             HardwareInfo hardwareInfo = new HardwareInfo()
             {
                 CpuModel = CpuModel,
-                RamModules = ramModules,
                 RamModulesInfo = RamModuleInfo,
                 TotalRam = TotalRam,
                 Motherboard = Motherboard,
@@ -50,8 +53,10 @@ namespace AutoBenchmarkDownloader.Utilities
                 GpuDriverDate = GpuDriverDate,
                 DirectX = DirectX,
 
-                CpuAdvanceds = CpuAdvancedInfo(),
-                MotherboardAdvanceds = MotherboardAdvancedInfo()
+                CpuAdvanceds = cpuAdvanceds,
+                RamModules = ramModules,
+                MotherboardAdvanceds = motherboardAdvanceds,
+                GpuAdvanceds = gpuAdvanceds
             };
 
             hardwareInfos.Add(hardwareInfo);
@@ -75,6 +80,8 @@ namespace AutoBenchmarkDownloader.Utilities
                     TDP = "Unknown",
                     Platform = "Unknown"
                 };
+
+                cpuAdvanceds.Add(cpuAdvanced);
             }
             catch (Exception e)
             {
@@ -89,7 +96,18 @@ namespace AutoBenchmarkDownloader.Utilities
             List<MotherboardAdvanced> motherboardAdvanceds = new List<MotherboardAdvanced>();
             try
             {
-                
+                // define motherboard advanced information
+                MotherboardAdvanced motherboardAdvanced = new MotherboardAdvanced()
+                {
+                    Model = GetHardwareInfo("Win32_BaseBoard", "Model", "MOBO_Model"),
+                    Bios = GetHardwareInfo("Win32_BIOS", "Name", "BIOS"),
+                    BiosDate = ConvertDate(GetHardwareInfo("Win32_BIOS", "ReleaseDate", "BIOS_Date")),
+                    Manufacturer = GetHardwareInfo("Win32_BaseBoard", "Manufacturer", "MOBO_Manufacturer"),
+                    Chipset = "Unknown",
+                    SerialNumber = GetHardwareInfo("Win32_BaseBoard", "SerialNumber", "MOBO_SerialNumber")
+                };
+
+                motherboardAdvanceds.Add(motherboardAdvanced);
             }
 
             catch (Exception e) 
@@ -97,6 +115,32 @@ namespace AutoBenchmarkDownloader.Utilities
                 Console.WriteLine("unable to find Motherboard info" + e.Message);
             }
             return motherboardAdvanceds;
+        }
+
+        private List<GpuAdvanced> GpuAdvancedInfo()
+        {
+            List<GpuAdvanced> gpuAdvanceds = new List<GpuAdvanced>();
+            try
+            {
+                // define gpu advanced information
+                GpuAdvanced gpuAdvanced = new GpuAdvanced()
+                {
+                    Model = GetHardwareInfo("Win32_VideoController", "Caption", "GPU_Model"),
+                    Manufacturer = GetHardwareInfo("Win32_VideoController", "AdapterCompatibility", "GPU_Manufacturer"),
+                    VRAM = "",
+                    DriverVer = GetHardwareInfo("Win32_VideoController", "DriverVersion", "GPU"),
+                    DriverDate = ConvertDate(GetHardwareInfo("Win32_VideoController", "DriverDate", "GPU")),
+                    ModelCode = ""
+                };
+
+                gpuAdvanceds.Add(gpuAdvanced);
+            }
+
+            catch (Exception e)
+            {
+                Console.WriteLine("unable to find Gpu info" + e.Message);
+            }
+            return gpuAdvanceds;
         }
 
         private List<RamModule> RamInfo()
@@ -164,17 +208,17 @@ namespace AutoBenchmarkDownloader.Utilities
             return ramModulesString;
         }
 
-        static string ConvertDateDriver(string dateDriver)
+        static string ConvertDate(string componentDate)
         {
-            if (dateDriver.Contains("ERROR") == true)
+            if (componentDate.Contains("ERROR") == true)
             {
-                return "";
+                return "N/A";
             }
             else
             {
-                string year = dateDriver.Substring(0, Math.Min(4, dateDriver.Length));
-                string day = dateDriver.Substring(4, Math.Min(2, dateDriver.Length));
-                string month = dateDriver.Substring(6, Math.Min(2, dateDriver.Length));
+                string year = componentDate.Substring(0, Math.Min(4, componentDate.Length));
+                string day = componentDate.Substring(4, Math.Min(2, componentDate.Length));
+                string month = componentDate.Substring(6, Math.Min(2, componentDate.Length));
                 return day + "." + month + "." + year;
             }
         }
