@@ -8,7 +8,6 @@
         xmlns:viewmodel="clr-namespace:AutoBenchmarkDownloader.ViewModel"
         xmlns:controls="clr-namespace:MicaWPF.Controls;assembly=MicaWPF"
         xmlns:pages="clr-namespace:AutoBenchmarkDownloader.View.Pages"
-        d:DataContext="{d:DesignInstance Type=viewmodel:MainWindowViewModel}"
         mc:Ignorable="d"
         MouseDown="MainWindow_OnMouseDown" 
         Background="#1f1f1f"
@@ -17,21 +16,23 @@
 
     <Grid>
 
-        <ui:NavigationView PaneDisplayMode="Left" IsBackButtonVisible="Collapsed" IsPaneToggleVisible="False" IsPaneOpen="False" OpenPaneLength="148" >
+        <ui:NavigationView x:Name="RootNavigation" PaneDisplayMode="Left" IsBackButtonVisible="Collapsed" IsPaneToggleVisible="False"
+                           IsPaneOpen="False" OpenPaneLength="148" >
             <ui:NavigationView.MenuItems>
 
-                <ui:NavigationViewItem Content="Home" Icon="{ui:SymbolIcon Home24}"/>
-                <ui:NavigationViewItem Content="Download" Icon="{ui:SymbolIcon ArrowDownload24}" TargetPageType="{x:Type pages:DownloadPage}"/>
-                <ui:NavigationViewItem Content="Statistics" Icon="{ui:SymbolIcon DataPie24}" TargetPageType="{x:Type pages:SystemMonitorInfoPage}"/>
+                <ui:NavigationViewItem x:Name="HomeItem" Content="Home" Icon="{ui:SymbolIcon Home24}" TargetPageType="{x:Type pages:HomePage}"/>
+                <ui:NavigationViewItem x:Name="DownloadItem" Content="Download" Icon="{ui:SymbolIcon ArrowDownload24}" TargetPageType="{x:Type pages:DownloadPage}"/>
+                <ui:NavigationViewItem x:Name="StatisticsItem" Content="Statistics" Icon="{ui:SymbolIcon DataPie24}" TargetPageType="{x:Type pages:SystemMonitorInfoPage}"/>
 
             </ui:NavigationView.MenuItems>
 
             <ui:NavigationView.FooterMenuItems>
-                <ui:NavigationViewItem Content="About" Icon="{ui:SymbolIcon ChatHelp24}" />
-                <ui:NavigationViewItem Content="Settings" Icon="{ui:SymbolIcon Settings24}" />
+                <ui:NavigationViewItem x:Name="AboutItem" Content="About" Icon="{ui:SymbolIcon ChatHelp24}" />
+                <ui:NavigationViewItem x:Name="SettingsItem" Content="Settings" Icon="{ui:SymbolIcon Settings24}" />
             </ui:NavigationView.FooterMenuItems>
-        </ui:NavigationView>
 
+        </ui:NavigationView>
+        
 
     </Grid>
 
