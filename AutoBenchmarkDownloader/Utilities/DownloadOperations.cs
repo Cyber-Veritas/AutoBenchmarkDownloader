@@ -8,7 +8,7 @@ namespace AutoBenchmarkDownloader.Utilities
     internal static class DownloadOperations
     {
 
-        public static async void DownloadSelectedSoftware(State currentState)
+        public static async Task DownloadSelectedSoftware(State currentState)
         {
             if (!Path.Exists(currentState.OutputPath))
             {

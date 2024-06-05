@@ -12,9 +12,11 @@ namespace AutoBenchmarkDownloader.ViewModel
 
         private readonly YamlOperations _yamlOperations;
 
+        private bool _isDownloading = false;
+
         public RelayCommand DownloadCommand => new(
-            execute => DownloadOperations.DownloadSelectedSoftware(CurrentState),
-            canExecute => CurrentState.SoftwareInfos.Any(info => info.Download));
+            execute => DownloadSoftwareAsync(),
+            canExecute => CurrentState.SoftwareInfos.Any(info => info.Download) && !_isDownloading);
         
         public RelayCommand SaveConfigCommand => new(
             execute => _yamlOperations.SaveConfig());
@@ -64,6 +66,13 @@ namespace AutoBenchmarkDownloader.ViewModel
             {
                 CurrentState.OutputPath = dialog.FolderName;
             }
+        }
+
+        private async Task DownloadSoftwareAsync()
+        {
+            _isDownloading = true;
+            await DownloadOperations.DownloadSelectedSoftware(CurrentState);
+            _isDownloading = false;
         }
     }
 }
