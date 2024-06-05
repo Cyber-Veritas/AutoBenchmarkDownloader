@@ -160,7 +160,7 @@ internal class YamlOperations
                 break;
 
             case DialogResultState.Delete:
-                if (originalInfo.IconPath != "pack://application:,,,/Resources/SoftwareIcons/default.png")
+                if (!originalInfo.IconPath.StartsWith("pack://"))
                 {
                     File.Delete(originalInfo.IconPath);
                 }

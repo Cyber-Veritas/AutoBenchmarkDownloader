@@ -35,7 +35,7 @@
 
             <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
                 <controls:Button x:Name="BtnCancel" Content="Cancel" Width="64" Margin="4" Click="BtnCancel_OnClick"/>
-                <controls:Button x:Name="BtnDelete" Content="Delete" Width="64" Margin="4" Visibility="Collapsed" Click="BtnDelete_OnClick"/>
+                <controls:Button x:Name="BtnDelete" Content="Delete" Width="64" Margin="4" Visibility="Visible" Click="BtnDelete_OnClick"/>
                 <controls:Button x:Name="BtnOk" Content="OK" Width="64" Margin="4" Click="BtnOk_OnClick" IsEnabled="False" IsDefault="True"/>
             </StackPanel>
         </Grid>
