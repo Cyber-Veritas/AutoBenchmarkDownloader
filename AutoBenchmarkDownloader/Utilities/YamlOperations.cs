@@ -22,9 +22,20 @@ internal class YamlOperations
     {
         SoftwareInfos =
         [
-            new SoftwareInfo { Name = "CPU-Z",  IconPath = "pack://application:,,,/Resources/SoftwareIcons/cpu-z.ico", Description = "System information software", Address = "https://download.cpuid.com/cpu-z/cpu-z_2.09-en.zip", Download = true },
+            new SoftwareInfo { Name = "CPU-Z",  IconPath = "pack://application:,,,/Resources/SoftwareIcons/cpu-z.ico", Description = "System information software", Address = "https://www.geeks3d.com/dl/get/10066", Download = true },
+            new SoftwareInfo { Name = "GPU-Z", IconPath = "pack://application:,,,/Resources/SoftwareIcons/gpu-z.ico", Description = "GPU information software", Address = "https://www.geeks3d.com/dl/get/10001", Download = true },
+            new SoftwareInfo { Name = "HWiNFO", IconPath = "pack://application:,,,/Resources/SoftwareIcons/hwinfo.ico", Description = "Diagnostic software", Address = "https://www.geeks3d.com/dl/get/10055", Download = true },
+            new SoftwareInfo { Name = "HWMonitor", IconPath = "pack://application:,,,/Resources/SoftwareIcons/hwmonitor.ico", Description = "Hardware health monitoring", Address = "https://www.geeks3d.com/dl/get/10026", Download = true },
+            new SoftwareInfo { Name = "AIDA64", IconPath = "pack://application:,,,/Resources/SoftwareIcons/aida64.ico", Description = "System information software", Address = "https://download.aida64.com/aida64extreme730.zip", Download = false },
+            new SoftwareInfo { Name = "Afterburner", IconPath = "pack://application:,,,/Resources/SoftwareIcons/afterburner.ico", Description = "GPU overclocking", Address = "https://www.geeks3d.com/dl/get/10183", Download = false },
+            new SoftwareInfo { Name = "CrystalDiskInfo", IconPath = "pack://application:,,,/Resources/SoftwareIcons/crystaldiskinfo.ico", Description = "Disk health monitoring", Address = "https://www.geeks3d.com/dl/get/10014", Download = false },
+            new SoftwareInfo { Name = "CrystalDiskMark", IconPath = "pack://application:,,,/Resources/SoftwareIcons/crystaldiskmark.ico", Description = "Disk benchmark", Address = "https://www.geeks3d.com/dl/get/10015", Download = false },
+            new SoftwareInfo { Name = "Valley Benchmark", IconPath = "pack://application:,,,/Resources/SoftwareIcons/valleybench.ico", Description = "Performance and stability test", Address = "https://assets.unigine.com/d/Unigine_Valley-1.0.exe", Download = false },
             new SoftwareInfo { Name = "FurMark 2", IconPath = "pack://application:,,,/Resources/SoftwareIcons/furmark2.ico", Description = "GPU stress test", Address = "https://geeks3d.com/dl/get/748", Download = false },
-            new SoftwareInfo { Name = "Example", Description = "Example software", Address = "https://example.com/", Download = false }
+            new SoftwareInfo { Name = "Cinebench 2024", IconPath = "pack://application:,,,/Resources/SoftwareIcons/cinebench.ico", Description = "CPU benchmark", Address = "https://www.geeks3d.com/dl/get/10211", Download = false },
+            new SoftwareInfo { Name = "Prime95", IconPath = "pack://application:,,,/Resources/SoftwareIcons/prime95.ico", Description = "CPU stress test", Address = "https://geeks3d.com/dl/get/10236", Download = false },
+            new SoftwareInfo { Name = "Blender Benchmark", IconPath = "pack://application:,,,/Resources/SoftwareIcons/blenderbench.ico", Description = "3D render speed test", Address = "https://download.blender.org/release/BlenderBenchmark2.0/launcher/benchmark-launcher-3.1.0-windows.zip", Download = false },
+            //new SoftwareInfo { Name = "Example", Description = "Example software", Address = "https://example.com/", Download = false }
         ],
         OutputPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
     };

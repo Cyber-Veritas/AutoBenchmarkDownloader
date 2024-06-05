@@ -17,7 +17,7 @@
     <Grid>
 
         <ui:NavigationView x:Name="RootNavigation" PaneDisplayMode="Left" IsBackButtonVisible="Collapsed" IsPaneToggleVisible="False"
-                           IsPaneOpen="False" OpenPaneLength="148" >
+                           IsPaneOpen="False" OpenPaneLength="148"   >
             <ui:NavigationView.MenuItems>
 
                 <ui:NavigationViewItem x:Name="HomeItem" Content="Home" Icon="{ui:SymbolIcon Home24}" TargetPageType="{x:Type pages:HomePage}"/>

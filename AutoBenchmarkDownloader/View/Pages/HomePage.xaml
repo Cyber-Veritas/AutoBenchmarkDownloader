@@ -10,6 +10,22 @@
       Title="HomePage">
 
     <Grid>
-        <userControls:PageCard />
+        <StackPanel>
+        <userControls:PageCard Margin="20"/>
+        <userControls:PageCard Margin="20"/>
+        <userControls:PageCard Margin="20"/>
+        <userControls:PageCard Margin="20"/>
+        <userControls:PageCard Margin="20"/>
+        <userControls:PageCard Margin="20"/>
+        <userControls:PageCard Margin="20"/>
+        <userControls:PageCard Margin="20"/>
+        <userControls:PageCard Margin="20"/>
+        <userControls:PageCard Margin="20"/>
+        <userControls:PageCard Margin="20"/>
+        <userControls:PageCard Margin="20"/>
+        <userControls:PageCard Margin="20"/>
+        <userControls:PageCard Margin="20"/>
+
+        </StackPanel>
     </Grid>
 </Page>

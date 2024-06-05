@@ -11,10 +11,36 @@
 
   <ItemGroup>
     <None Remove="Resources\Images\app_background.jpg" />
+    <None Remove="Resources\SoftwareIcons\afterburner.ico" />
+    <None Remove="Resources\SoftwareIcons\aida64.ico" />
+    <None Remove="Resources\SoftwareIcons\blenderbench.ico" />
+    <None Remove="Resources\SoftwareIcons\cinebench.ico" />
     <None Remove="Resources\SoftwareIcons\cpu-z.ico" />
+    <None Remove="Resources\SoftwareIcons\crystaldiskinfo.ico" />
+    <None Remove="Resources\SoftwareIcons\crystaldiskmark.ico" />
     <None Remove="Resources\SoftwareIcons\default.png" />
     <None Remove="Resources\SoftwareIcons\furmark2.ico" />
+    <None Remove="Resources\SoftwareIcons\gpu-z.ico" />
+    <None Remove="Resources\SoftwareIcons\hwinfo.ico" />
+    <None Remove="Resources\SoftwareIcons\hwmonitor.ico" />
+    <None Remove="Resources\SoftwareIcons\prime95.ico" />
+    <None Remove="Resources\SoftwareIcons\valleybench.ico" />
     <None Remove="Resources\UI\edit-solid.svg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\SoftwareIcons\afterburner.ico" />
+    <Resource Include="Resources\SoftwareIcons\blenderbench.ico" />
+    <Resource Include="Resources\SoftwareIcons\cinebench.ico" />
+    <Resource Include="Resources\SoftwareIcons\crystaldiskmark.ico" />
+    <Resource Include="Resources\SoftwareIcons\prime95.ico" />
+    <Resource Include="Resources\SoftwareIcons\valleybench.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\SoftwareIcons\aida64.ico" />
+    <Resource Include="Resources\SoftwareIcons\crystaldiskinfo.ico" />
+    <Resource Include="Resources\SoftwareIcons\hwmonitor.ico" />
   </ItemGroup>
 
   <ItemGroup>
@@ -33,6 +59,8 @@
     <Resource Include="Resources\SoftwareIcons\cpu-z.ico" />
     <Resource Include="Resources\SoftwareIcons\default.png" />
     <Resource Include="Resources\SoftwareIcons\furmark2.ico" />
+    <Resource Include="Resources\SoftwareIcons\gpu-z.ico" />
+    <Resource Include="Resources\SoftwareIcons\hwinfo.ico" />
     <Resource Include="Resources\UI\edit-solid.svg" />
   </ItemGroup>
 
