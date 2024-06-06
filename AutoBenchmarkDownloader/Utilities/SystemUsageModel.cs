@@ -15,6 +15,7 @@ namespace AutoBenchmarkDownloader.Utilities
 
         private int percCpuUsage = -1;
         private int prevCpuUsage = -1;
+        private int cpuTemperature = -1;
 
         public SystemUsageModel()
         {
@@ -42,9 +43,11 @@ namespace AutoBenchmarkDownloader.Utilities
         {
             Task.Run(() =>
             {
+                var (cpuPercentage, cpuTemp) = CpuUsage();
                 SelectedInfo = new SystemUsageInfo
                 {
-                    cpuUsage = CpuPercentage(),
+                    cpuUsage = cpuPercentage,
+                    cpuTemperature = cpuTemp,
                     ramUsage = RamPercentage(),
                     gpuUsage = GpuPercentage()
                 };
@@ -52,7 +55,7 @@ namespace AutoBenchmarkDownloader.Utilities
             prevCpuUsage = percCpuUsage;
         }
 
-        private int CpuPercentage()
+        private (int, int) CpuUsage()
         {
             try
             {
@@ -66,8 +69,11 @@ namespace AutoBenchmarkDownloader.Utilities
                             if (sensor.SensorType == SensorType.Load && sensor.Name.Contains("Total"))
                             {
                                 percCpuUsage = (int)sensor.Value.GetValueOrDefault();
-                                break;
-                            }                     
+                            }
+                            if (sensor.SensorType == SensorType.Temperature && sensor.Name.Contains("Core"))
+                            {
+                                cpuTemperature = (int)sensor.Value.GetValueOrDefault(); // need to fix
+                            }                         
                         }
                         break;
                     }
@@ -78,12 +84,12 @@ namespace AutoBenchmarkDownloader.Utilities
                 // protect for value above 100 percent from LibreHardwareMonitor issue
                 if (percCpuUsage > 100) { percCpuUsage = prevCpuUsage; }
 
-                return percCpuUsage;
+                return (percCpuUsage, cpuTemperature);
             }
 
             catch (Exception e)
             {
-                return -1;
+                return (-1, -1);
             }
         }
 

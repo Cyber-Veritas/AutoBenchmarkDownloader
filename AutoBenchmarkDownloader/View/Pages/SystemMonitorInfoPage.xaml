@@ -221,20 +221,57 @@
 
             <StackPanel>
                 <!-- System Advanced CPU Info -->
-                <Expander Header="CPU" VerticalAlignment="Top" Background="CadetBlue" Margin="0,0,0,0">
-                    <StackPanel>
-                        <ItemsControl ItemsSource="{Binding SystemInfoM.hardwareInfos[0].CpuAdvanceds}">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <StackPanel>
-                                        <TextBlock Text="PLACEHOLDER" />
-                                        <TextBlock Text="PLACEHOLDER" />
-                                        <TextBlock Text="PLACEHOLDER" />
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                    </StackPanel>
+                <Expander Header="CPU" VerticalAlignment="Top" Background="#505a5a5a" Margin="0,0,0,0" FontFamily="Bahnschrift Bold">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="{Binding SystemUsageM.SelectedInfo.cpuTemperature}" Foreground="red"/>
+                            <ItemsControl ItemsSource="{Binding SystemInfoM.hardwareInfos[0].CpuAdvanceds}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <TextBlock Style="{StaticResource systemInfo}">
+                                                <Run Text="Model: "/><Run Text="{Binding Model}"/>
+                                            </TextBlock>
+
+                                            <TextBlock Style="{StaticResource systemInfo}">
+                                                <Run Text="Processor Code: "/><Run Text="{Binding CodeName}"/>
+                                            </TextBlock>
+                                            
+                                            
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="1">
+                            <ItemsControl ItemsSource="{Binding SystemInfoM.hardwareInfos[0].CpuAdvanceds}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <TextBlock Style="{StaticResource systemInfo}">
+                                                <Run Text="Cores: "/><Run Text="{Binding Cores}"/>
+                                            </TextBlock>
+
+                                            <TextBlock Style="{StaticResource systemInfo}">
+                                                <Run Text="Threads: "/><Run Text="{Binding Threads}"/>
+                                            </TextBlock>
+
+                                            <TextBlock Style="{StaticResource systemInfo}">
+                                                <Run Text="Base Frequency: "/><Run Text="{Binding Frequency}"/><Run Text=" MHz"/>
+                                            </TextBlock>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </Grid>
                 </Expander>
 
                 <!-- System Advanced RAM Info -->

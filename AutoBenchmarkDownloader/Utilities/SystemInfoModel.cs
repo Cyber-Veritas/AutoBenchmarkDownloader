@@ -1,12 +1,7 @@
 ﻿using AutoBenchmarkDownloader.Model;
 using AutoBenchmarkDownloader.MVVM;
-using LibreHardwareMonitor.Hardware.Motherboard;
 using System.Collections.ObjectModel;
-using System.DirectoryServices.ActiveDirectory;
 using System.Management;
-using System.Runtime.Intrinsics.Arm;
-using System.Threading;
-using Windows.Foundation.Metadata;
 namespace AutoBenchmarkDownloader.Utilities
 {
     class SystemInfoModel : SystemHardwareInfo
@@ -164,7 +159,7 @@ namespace AutoBenchmarkDownloader.Utilities
                         DeviceLocator = "[" + (string)item["DeviceLocator"] + "]",
                         Manufacturer = (string)item["Manufacturer"],
                         Code = (string)item["PartNumber"],
-                        Speed = item["Speed"].ToString() + "MHz",
+                        Speed = item["Speed"].ToString() + " MHz",
                         Size = BytesToGB(ramCapacity) + "GB"
                     };
 
