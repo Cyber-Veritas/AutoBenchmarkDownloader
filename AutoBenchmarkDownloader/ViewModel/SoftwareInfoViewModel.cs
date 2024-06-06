@@ -22,7 +22,7 @@ namespace AutoBenchmarkDownloader.ViewModel
             execute => _yamlOperations.SaveConfig());
 
         public RelayCommand ResetConfigCommand => new(
-            execute => _yamlOperations.AddDataFromState(_yamlOperations.DeepCopyState(_yamlOperations._defaultState)));
+            execute => ResetConfig());
 
         public RelayCommand ChooseOutputPathCommand => new(
             execute => ChooseOutputPath());
@@ -73,6 +73,12 @@ namespace AutoBenchmarkDownloader.ViewModel
             _isDownloading = true;
             await DownloadOperations.DownloadSelectedSoftware(CurrentState);
             _isDownloading = false;
+        }
+
+        private void ResetConfig()
+        {
+            _yamlOperations.AddDataFromState(_yamlOperations.DeepCopyState(_yamlOperations._defaultState));
+            _yamlOperations.SaveConfig();
         }
     }
 }
