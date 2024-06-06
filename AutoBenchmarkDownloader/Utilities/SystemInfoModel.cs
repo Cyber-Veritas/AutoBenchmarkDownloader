@@ -1,5 +1,6 @@
 ﻿using AutoBenchmarkDownloader.Model;
 using AutoBenchmarkDownloader.MVVM;
+using LibreHardwareMonitor.Hardware;
 using System.Collections.ObjectModel;
 using System.Management;
 namespace AutoBenchmarkDownloader.Utilities
@@ -94,12 +95,12 @@ namespace AutoBenchmarkDownloader.Utilities
                 // define motherboard advanced information
                 MotherboardAdvanced motherboardAdvanced = new MotherboardAdvanced()
                 {
-                    Model = GetHardwareInfo("Win32_BaseBoard", "Model", "MOBO_Model"),
+                    Model = GetHardwareInfo("Win32_BaseBoard", "Product", "MOBO_Model"),
                     Bios = GetHardwareInfo("Win32_BIOS", "Name", "BIOS"),
                     BiosDate = ConvertDate(GetHardwareInfo("Win32_BIOS", "ReleaseDate", "BIOS_Date")),
                     Manufacturer = GetHardwareInfo("Win32_BaseBoard", "Manufacturer", "MOBO_Manufacturer"),
                     Chipset = "Unknown",
-                    SerialNumber = GetHardwareInfo("Win32_BaseBoard", "SerialNumber", "MOBO_SerialNumber")
+                    SerialNumber = MotherboardSerialNumber(GetHardwareInfo("Win32_BaseBoard", "SerialNumber", "MOBO_SerialNumber"))
                 };
 
                 motherboardAdvanceds.Add(motherboardAdvanced);
@@ -112,20 +113,29 @@ namespace AutoBenchmarkDownloader.Utilities
             return motherboardAdvanceds;
         }
 
+        private string MotherboardSerialNumber(string serialNumber)
+        {
+            if (serialNumber == "Default string") { serialNumber = "N/A"; }
+            return serialNumber;
+        }
+
         private List<GpuAdvanced> GpuAdvancedInfo()
         {
             List<GpuAdvanced> gpuAdvanceds = new List<GpuAdvanced>();
             try
             {
                 // define gpu advanced information
+                string gpuResolution = GetHardwareInfo("Win32_VideoController", "CurrentHorizontalResolution", "GPU") + "x" + GetHardwareInfo("Win32_VideoController", "CurrentVerticalResolution", "GPU");
+                
                 GpuAdvanced gpuAdvanced = new GpuAdvanced()
                 {
                     Model = GetHardwareInfo("Win32_VideoController", "Caption", "GPU_Model"),
                     Manufacturer = GetHardwareInfo("Win32_VideoController", "AdapterCompatibility", "GPU_Manufacturer"),
-                    VRAM = "",
+                    VRAM = GpuVRAM(),
                     DriverVer = GetHardwareInfo("Win32_VideoController", "DriverVersion", "GPU"),
                     DriverDate = ConvertDate(GetHardwareInfo("Win32_VideoController", "DriverDate", "GPU")),
-                    ModelCode = ""
+                    Resolution = gpuResolution,
+                    RefreshRate = GetHardwareInfo("Win32_VideoController", "CurrentRefreshRate", "GPU") + "Hz"
                 };
 
                 gpuAdvanceds.Add(gpuAdvanced);
@@ -176,6 +186,39 @@ namespace AutoBenchmarkDownloader.Utilities
             }
 
             return ramModulesList;
+        }
+
+        static string GpuVRAM()
+        {
+            string gpuVRAM = "";
+            Computer computer = new Computer
+            {
+                IsGpuEnabled = true
+            };
+
+            computer.Open();
+
+            foreach (var hardware in computer.Hardware)
+            {
+                if (hardware.HardwareType == HardwareType.GpuAmd || hardware.HardwareType == HardwareType.GpuNvidia || hardware.HardwareType == HardwareType.GpuIntel)
+                {
+                    hardware.Update();
+
+                    foreach (var sensor in hardware.Sensors)
+                    {
+                        if (sensor.SensorType == SensorType.SmallData && sensor.Name.Contains("GPU Memory Total"))
+                        {
+                            gpuVRAM = sensor.Value.GetValueOrDefault().ToString();
+                            break;
+                        }
+                    }
+                    break;
+                }
+            }
+
+            computer.Close();
+
+            return gpuVRAM;
         }
 
         static string BytesToGB(ulong bytes)

@@ -46,7 +46,8 @@ namespace AutoBenchmarkDownloader.Model
         public required string VRAM { get; set; }
         public required string DriverVer { get; set; }
         public required string DriverDate { get; set; }
-        public required string ModelCode { get; set; }
+        public required string Resolution {  get; set; }
+        public required string RefreshRate { get; set; }
     }
 
     public class HardwareInfo

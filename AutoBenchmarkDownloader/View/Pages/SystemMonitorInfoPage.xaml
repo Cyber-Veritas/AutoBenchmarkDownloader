@@ -28,6 +28,18 @@
             <Setter Property="Margin" Value="5, 7, 0, 0" />
         </Style>
 
+        <Style TargetType="Run" x:Key="systemInfoRun">
+            <Setter Property="Foreground" Value="#ffffff" />
+            <Setter Property="FontFamily" Value="Bahnschrift Regular" />
+            <Setter Property="FontSize" Value="12" />
+        </Style>
+
+        <Style TargetType="Run" x:Key="systemInfoCategoryRun">
+            <Setter Property="Foreground" Value="#9f9f9f" />
+            <Setter Property="FontFamily" Value="Bahnschrift Bold" />
+            <Setter Property="FontSize" Value="12" />
+        </Style>
+
         <Style TargetType="TextBlock" x:Key="systemUsage">
             <Setter Property="Foreground" Value="#ffffff" />
             <Setter Property="FontFamily" Value="Bahnschrift Bold" />
@@ -235,15 +247,8 @@
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
                                         <StackPanel>
-                                            <TextBlock Style="{StaticResource systemInfo}">
-                                                <Run Text="Model: "/><Run Text="{Binding Model}"/>
-                                            </TextBlock>
-
-                                            <TextBlock Style="{StaticResource systemInfo}">
-                                                <Run Text="Processor Code: "/><Run Text="{Binding CodeName}"/>
-                                            </TextBlock>
-                                            
-                                            
+                                            <TextBlock><Run Text="Model: " Style="{StaticResource systemInfoCategoryRun}"/><Run Text="{Binding Model}" Style="{StaticResource systemInfoRun}"/></TextBlock>
+                                            <TextBlock><Run Text="Processor Code: " Style="{StaticResource systemInfoCategoryRun}"/><Run Text="{Binding CodeName}" Style="{StaticResource systemInfoRun}"/></TextBlock>
                                         </StackPanel>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
@@ -255,17 +260,9 @@
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
                                         <StackPanel>
-                                            <TextBlock Style="{StaticResource systemInfo}">
-                                                <Run Text="Cores: "/><Run Text="{Binding Cores}"/>
-                                            </TextBlock>
-
-                                            <TextBlock Style="{StaticResource systemInfo}">
-                                                <Run Text="Threads: "/><Run Text="{Binding Threads}"/>
-                                            </TextBlock>
-
-                                            <TextBlock Style="{StaticResource systemInfo}">
-                                                <Run Text="Base Frequency: "/><Run Text="{Binding Frequency}"/><Run Text=" MHz"/>
-                                            </TextBlock>
+                                            <TextBlock><Run Text="Cores: " Style="{StaticResource systemInfoCategoryRun}"/><Run Text="{Binding Cores}" Style="{StaticResource systemInfoRun}"/></TextBlock>
+                                            <TextBlock><Run Text="Threads: " Style="{StaticResource systemInfoCategoryRun}"/><Run Text="{Binding Threads}" Style="{StaticResource systemInfoRun}"/></TextBlock>
+                                            <TextBlock><Run Text="Base Frequency: " Style="{StaticResource systemInfoCategoryRun}"/><Run Text="{Binding Frequency}" Style="{StaticResource systemInfoRun}"/><Run Text=" MHz" Style="{StaticResource systemInfoRun}"/></TextBlock>
                                         </StackPanel>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
@@ -299,8 +296,8 @@
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
                                         <StackPanel>
-                                            <TextBlock Style="{StaticResource systemInfo}"><Run Text="Size: "/><Run Text="{Binding TotalRam}"/></TextBlock>
-                                            <TextBlock Style="{StaticResource systemInfo}"><Run Text="Frequency: "/><Run Text="{Binding RamModules[0].Speed}"/></TextBlock>
+                                            <TextBlock><Run Text="Size: " Style="{StaticResource systemInfoCategoryRun}"/><Run Text="{Binding TotalRam}" Style="{StaticResource systemInfoRun}"/></TextBlock>
+                                            <TextBlock><Run Text="Frequency: " Style="{StaticResource systemInfoCategoryRun}"/><Run Text="{Binding RamModules[0].Speed}" Style="{StaticResource systemInfoRun}"/></TextBlock>
                                         </StackPanel>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
@@ -310,41 +307,83 @@
                 </Expander>
 
                 <!-- System Advanced Motherboard Info -->
-                <Expander Header="Motherboard" VerticalAlignment="Top" Background="DeepSkyBlue" Margin="0,5,0,0">
-                    <StackPanel>
-                        <ItemsControl ItemsSource="{Binding SystemInfoM.hardwareInfos[0].MotherboardAdvanceds}">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <StackPanel>
-                                        <TextBlock Text="{Binding BiosDate}" />
-                                        <TextBlock Text="PLACEHOLDER" />
-                                        <TextBlock Text="PLACEHOLDER" />
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                    </StackPanel>
+                <Expander Header="Motherboard" VerticalAlignment="Top" Background="#505a5a5a" Margin="0,5,0,0" FontFamily="Bahnschrift Bold">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0">
+                            <ItemsControl ItemsSource="{Binding SystemInfoM.hardwareInfos[0].MotherboardAdvanceds}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <TextBlock><Run Text="Model: " Style="{StaticResource systemInfoCategoryRun}"/><Run Text="{Binding Model}" Style="{StaticResource systemInfoRun}"/></TextBlock>
+                                            <TextBlock><Run Text="Manufacturer: " Style="{StaticResource systemInfoCategoryRun}"/><Run Text="{Binding Manufacturer}" Style="{StaticResource systemInfoRun}"/></TextBlock>
+                                            <TextBlock><Run Text="Serial Number: " Style="{StaticResource systemInfoCategoryRun}"/><Run Text="{Binding SerialNumber}" Style="{StaticResource systemInfoRun}"/></TextBlock>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="1">
+                            <ItemsControl ItemsSource="{Binding SystemInfoM.hardwareInfos[0].MotherboardAdvanceds}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <TextBlock><Run Text="BIOS: " Style="{StaticResource systemInfoCategoryRun}"/><Run Text="{Binding Bios}" Style="{StaticResource systemInfoRun}"/></TextBlock>
+                                            <TextBlock><Run Text="BIOS Date: " Style="{StaticResource systemInfoCategoryRun}"/><Run Text="{Binding BiosDate}" Style="{StaticResource systemInfoRun}"/></TextBlock>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </Grid>
                 </Expander>
 
                 <!-- System Advanced GPU Info -->
-                <Expander Header="GPU" VerticalAlignment="Top" Background="DodgerBlue" Margin="0,5,0,0">
-                    <StackPanel>
-                        <ItemsControl ItemsSource="{Binding SystemInfoM.hardwareInfos[0].GpuAdvanceds}">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <StackPanel>
-                                        <TextBlock Text="PLACEHOLDER" />
-                                        <TextBlock Text="PLACEHOLDER" />
-                                        <TextBlock Text="PLACEHOLDER" />
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                    </StackPanel>
+                <Expander Header="GPU" VerticalAlignment="Top" Background="#505a5a5a" Margin="0,5,0,0" FontFamily="Bahnschrift Bold">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0">
+                            <ItemsControl ItemsSource="{Binding SystemInfoM.hardwareInfos[0].GpuAdvanceds}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <TextBlock><Run Text="Model: " Style="{StaticResource systemInfoCategoryRun}"/><Run Text="{Binding Model}" Style="{StaticResource systemInfoRun}"/></TextBlock>
+                                            <TextBlock><Run Text="Manufacturer: " Style="{StaticResource systemInfoCategoryRun}"/><Run Text="{Binding Manufacturer}" Style="{StaticResource systemInfoRun}"/></TextBlock>
+                                            <TextBlock><Run Text="VRAM: " Style="{StaticResource systemInfoCategoryRun}"/><Run Text="{Binding VRAM}" Style="{StaticResource systemInfoRun}"/><Run Text=" MB" Style="{StaticResource systemInfoRun}"/></TextBlock>
+                                            <TextBlock><Run Text="Resolution: " Style="{StaticResource systemInfoCategoryRun}"/><Run Text="{Binding Resolution}" Style="{StaticResource systemInfoRun}"/></TextBlock>
+                                            <TextBlock><Run Text="Refresh Rate: " Style="{StaticResource systemInfoCategoryRun}"/><Run Text="{Binding RefreshRate}" Style="{StaticResource systemInfoRun}"/></TextBlock>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="1">
+                            <ItemsControl ItemsSource="{Binding SystemInfoM.hardwareInfos[0].GpuAdvanceds}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <TextBlock><Run Text="Driver version: " Style="{StaticResource systemInfoCategoryRun}"/><Run Text="{Binding DriverVer}" Style="{StaticResource systemInfoRun}"/></TextBlock>
+                                            <TextBlock><Run Text="Driver date: " Style="{StaticResource systemInfoCategoryRun}"/><Run Text="{Binding DriverDate}" Style="{StaticResource systemInfoRun}"/></TextBlock>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </Grid>
                 </Expander>
 
                 <!-- System Advanced System Info -->
-                <Expander Header="System" VerticalAlignment="Top" Background="CornflowerBlue" Margin="0,5,0,0">
+                <Expander Header="System" VerticalAlignment="Top" Background="CornflowerBlue" Margin="0,5,0,0" FontFamily="Bahnschrift Bold">
                     <StackPanel>
                         <TextBlock Text="PLACEHOLDER" />
                         <TextBlock Text="PLACEHOLDER" />
