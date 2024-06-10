@@ -11,7 +11,7 @@ namespace AutoBenchmarkDownloader.MVVM
                 ManagementObjectSearcher searcher = new ManagementObjectSearcher("root\\CIMV2", "SELECT * FROM "+computerSystemHardwareClass+"");
                 foreach (ManagementObject item in searcher.Get())
                 {
-                    return (string)item[infoToGet];
+                    return (string)item[infoToGet].ToString();
                 }
                 return "["+errorInfo+" info ERROR]";
             }
@@ -20,5 +20,7 @@ namespace AutoBenchmarkDownloader.MVVM
                 return "[" + errorInfo + " info ERROR]";
             }
         }
+
+        
     }
 }

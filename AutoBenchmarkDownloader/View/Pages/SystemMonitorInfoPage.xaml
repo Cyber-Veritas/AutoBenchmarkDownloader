@@ -28,6 +28,18 @@
             <Setter Property="Margin" Value="5, 7, 0, 0" />
         </Style>
 
+        <Style TargetType="Run" x:Key="systemInfoRun">
+            <Setter Property="Foreground" Value="#ffffff" />
+            <Setter Property="FontFamily" Value="Bahnschrift Regular" />
+            <Setter Property="FontSize" Value="12" />
+        </Style>
+
+        <Style TargetType="Run" x:Key="systemInfoCategoryRun">
+            <Setter Property="Foreground" Value="#9f9f9f" />
+            <Setter Property="FontFamily" Value="Bahnschrift Bold" />
+            <Setter Property="FontSize" Value="12" />
+        </Style>
+
         <Style TargetType="TextBlock" x:Key="systemUsage">
             <Setter Property="Foreground" Value="#ffffff" />
             <Setter Property="FontFamily" Value="Bahnschrift Bold" />
@@ -43,6 +55,12 @@
             <Setter Property="VerticalAlignment" Value="Center" />
             <Setter Property="Margin" Value="0,150,0,0" />
             <Setter Property="FontSize" Value="20" />
+        </Style>
+
+        <Style TargetType="Expander" x:Key="expanderAdvanced">
+            <Setter Property="Margin" Value="0,0,0,0" />
+            <Setter Property="VerticalAlignment" Value="Top" />
+            <Setter Property="Background" Value="Red"/>
         </Style>
     </Page.Resources>
 
@@ -66,7 +84,7 @@
             CornerRadius="8">
 
             <StackPanel>
-                <ItemsControl ItemsSource="{Binding SystemInfoM.dxDiagInfos}">
+                <ItemsControl ItemsSource="{Binding SystemInfoM.hardwareInfos}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <StackPanel>
@@ -139,7 +157,7 @@
                     <Border.Effect>
                         <BlurEffect Radius="10"/>
                     </Border.Effect>
-                    <ui:ProgressRing RenderTransformOrigin="0.5,0.5" Progress="{Binding SystemUsageM.SelectedInfo.cpuUsage}" Foreground="#80FFDB" Width="100" Height="100">
+                    <ui:ProgressRing EngAngle="0" RenderTransformOrigin="0.5,0.5" Progress="{Binding SystemUsageM.SelectedInfo.cpuUsage}" Foreground="#80FFDB" Width="100" Height="100">
                         <ui:ProgressRing.RenderTransform>
                             <TransformGroup>
                                 <RotateTransform Angle="-90"/>
@@ -152,7 +170,7 @@
                     <Border.Effect>
                         <BlurEffect Radius="10"/>
                     </Border.Effect>
-                    <ui:ProgressRing RenderTransformOrigin="0.5,0.5" Progress="{Binding SystemUsageM.SelectedInfo.ramUsage}" Foreground="#F72585" Width="100" Height="100">
+                    <ui:ProgressRing EngAngle="0" RenderTransformOrigin="0.5,0.5" Progress="{Binding SystemUsageM.SelectedInfo.ramUsage}" Foreground="#F72585" Width="100" Height="100">
                         <ui:ProgressRing.RenderTransform>
                             <TransformGroup>
                                 <RotateTransform Angle="-90"/>
@@ -165,7 +183,7 @@
                     <Border.Effect>
                         <BlurEffect Radius="10"/>
                     </Border.Effect>
-                    <ui:ProgressRing RenderTransformOrigin="0.5,0.5" Progress="{Binding SystemUsageM.SelectedInfo.gpuUsage}" Foreground="#9747FF" Width="100" Height="100">
+                    <ui:ProgressRing EngAngle="0" RenderTransformOrigin="0.5,0.5" Progress="{Binding SystemUsageM.SelectedInfo.gpuUsage}" Foreground="#9747FF" Width="100" Height="100">
                         <ui:ProgressRing.RenderTransform>
                             <TransformGroup>
                                 <RotateTransform Angle="-90"/>
@@ -177,7 +195,7 @@
 
                 <!-- bar values -->
                 <!-- CPU -->
-                <ui:ProgressRing RenderTransformOrigin="0.5,0.5" Grid.Column="0" Progress="{Binding SystemUsageM.SelectedInfo.cpuUsage}" Foreground="#80FFDB" Width="100" Height="100">
+                <ui:ProgressRing EngAngle="0" RenderTransformOrigin="0.5,0.5" Grid.Column="0" Progress="{Binding SystemUsageM.SelectedInfo.cpuUsage}" Foreground="#80FFDB" Width="100" Height="100">
                     <ui:ProgressRing.RenderTransform>
                         <TransformGroup>
                             <RotateTransform Angle="-90"/>
@@ -186,7 +204,7 @@
                 </ui:ProgressRing>
 
                 <!-- RAM -->
-                <ui:ProgressRing RenderTransformOrigin="0.5,0.5" Grid.Column="1" Progress="{Binding SystemUsageM.SelectedInfo.ramUsage}" Foreground="#F72585" Width="100" Height="100">
+                <ui:ProgressRing EngAngle="0" RenderTransformOrigin="0.5,0.5" Grid.Column="1" Progress="{Binding SystemUsageM.SelectedInfo.ramUsage}" Foreground="#F72585" Width="100" Height="100">
                     <ui:ProgressRing.RenderTransform>
                         <TransformGroup>
                             <RotateTransform Angle="-90"/>
@@ -195,7 +213,7 @@
                 </ui:ProgressRing>
 
                 <!-- GPU -->
-                <ui:ProgressRing RenderTransformOrigin="0.5,0.5" Grid.Column="2" Progress="{Binding SystemUsageM.SelectedInfo.gpuUsage}" Foreground="#9747FF" Width="100" Height="100">
+                <ui:ProgressRing EngAngle="0" RenderTransformOrigin="0.5,0.5" Grid.Column="2" Progress="{Binding SystemUsageM.SelectedInfo.gpuUsage}" Foreground="#9747FF" Width="100" Height="100">
                     <ui:ProgressRing.RenderTransform>
                         <TransformGroup>
                             <RotateTransform Angle="-90"/>
@@ -205,7 +223,7 @@
             </Grid>
         </Border>
 
-        <!-- System Advanced CPU Info -->
+        <!-- System Advanced Info -->
         <Border
             Grid.Row="1"
             Grid.RowSpan="1"
@@ -213,13 +231,193 @@
             Grid.ColumnSpan="2"
             Margin="8">
 
-            <Expander Header="CPU" VerticalAlignment="Top" Background="Red">
-                <StackPanel>
-                    <TextBlock Text="{Binding SystemInfoM.dxDiagInfos[0].CpuModel}" />
-                    <TextBlock Text="{Binding SystemInfoM.dxDiagInfos[0].Gpu}" />
-                    <TextBlock Text="{Binding SystemInfoM.dxDiagInfos[0].GpuDriverDate}" />
-                </StackPanel>
-            </Expander>
+            <StackPanel>
+                <!-- System Advanced CPU Info -->
+                <Expander Header="CPU" VerticalAlignment="Top" Background="#505a5a5a" Margin="0,0,0,0" FontFamily="Bahnschrift Bold">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+
+                        <StackPanel Grid.Column="0">
+                            <ItemsControl ItemsSource="{Binding SystemInfoM.hardwareInfos[0].CpuAdvanceds}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <TextBlock><Run Text="Model: " Style="{StaticResource systemInfoCategoryRun}"/><Run Text="{Binding Model}" Style="{StaticResource systemInfoRun}"/></TextBlock>
+                                            <TextBlock><Run Text="Processor Code: " Style="{StaticResource systemInfoCategoryRun}"/><Run Text="{Binding CodeName}" Style="{StaticResource systemInfoRun}"/></TextBlock>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="1">
+                            <ItemsControl ItemsSource="{Binding SystemInfoM.hardwareInfos[0].CpuAdvanceds}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <TextBlock><Run Text="Cores: " Style="{StaticResource systemInfoCategoryRun}"/><Run Text="{Binding Cores}" Style="{StaticResource systemInfoRun}"/></TextBlock>
+                                            <TextBlock><Run Text="Threads: " Style="{StaticResource systemInfoCategoryRun}"/><Run Text="{Binding Threads}" Style="{StaticResource systemInfoRun}"/></TextBlock>
+                                            <TextBlock><Run Text="Base Frequency: " Style="{StaticResource systemInfoCategoryRun}"/><Run Text="{Binding Frequency}" Style="{StaticResource systemInfoRun}"/><Run Text=" MHz" Style="{StaticResource systemInfoRun}"/></TextBlock>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </Grid>
+                </Expander>
+
+                <!-- System Advanced RAM Info -->
+                <Expander Header="RAM" VerticalAlignment="Top" Background="#505a5a5a" Margin="0,5,0,0" FontFamily="Bahnschrift Bold">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0">
+                            <ItemsControl ItemsSource="{Binding SystemInfoM.hardwareInfos}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding RamModulesInfo}" Style="{StaticResource systemInfo}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="1">
+                            <ItemsControl ItemsSource="{Binding SystemInfoM.hardwareInfos}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <TextBlock><Run Text="Size: " Style="{StaticResource systemInfoCategoryRun}"/><Run Text="{Binding TotalRam}" Style="{StaticResource systemInfoRun}"/></TextBlock>
+                                            <TextBlock><Run Text="Frequency: " Style="{StaticResource systemInfoCategoryRun}"/><Run Text="{Binding RamModules[0].Speed}" Style="{StaticResource systemInfoRun}"/></TextBlock>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </Grid>
+                </Expander>
+
+                <!-- System Advanced Motherboard Info -->
+                <Expander Header="Motherboard" VerticalAlignment="Top" Background="#505a5a5a" Margin="0,5,0,0" FontFamily="Bahnschrift Bold">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0">
+                            <ItemsControl ItemsSource="{Binding SystemInfoM.hardwareInfos[0].MotherboardAdvanceds}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <TextBlock><Run Text="Model: " Style="{StaticResource systemInfoCategoryRun}"/><Run Text="{Binding Model}" Style="{StaticResource systemInfoRun}"/></TextBlock>
+                                            <TextBlock><Run Text="Manufacturer: " Style="{StaticResource systemInfoCategoryRun}"/><Run Text="{Binding Manufacturer}" Style="{StaticResource systemInfoRun}"/></TextBlock>
+                                            <TextBlock><Run Text="Serial Number: " Style="{StaticResource systemInfoCategoryRun}"/><Run Text="{Binding SerialNumber}" Style="{StaticResource systemInfoRun}"/></TextBlock>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="1">
+                            <ItemsControl ItemsSource="{Binding SystemInfoM.hardwareInfos[0].MotherboardAdvanceds}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <TextBlock><Run Text="BIOS: " Style="{StaticResource systemInfoCategoryRun}"/><Run Text="{Binding Bios}" Style="{StaticResource systemInfoRun}"/></TextBlock>
+                                            <TextBlock><Run Text="BIOS Date: " Style="{StaticResource systemInfoCategoryRun}"/><Run Text="{Binding BiosDate}" Style="{StaticResource systemInfoRun}"/></TextBlock>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </Grid>
+                </Expander>
+
+                <!-- System Advanced GPU Info -->
+                <Expander Header="GPU" VerticalAlignment="Top" Background="#505a5a5a" Margin="0,5,0,0" FontFamily="Bahnschrift Bold">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0">
+                            <ItemsControl ItemsSource="{Binding SystemInfoM.hardwareInfos[0].GpuAdvanceds}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <TextBlock><Run Text="Model: " Style="{StaticResource systemInfoCategoryRun}"/><Run Text="{Binding Model}" Style="{StaticResource systemInfoRun}"/></TextBlock>
+                                            <TextBlock><Run Text="Manufacturer: " Style="{StaticResource systemInfoCategoryRun}"/><Run Text="{Binding Manufacturer}" Style="{StaticResource systemInfoRun}"/></TextBlock>
+                                            <TextBlock><Run Text="VRAM: " Style="{StaticResource systemInfoCategoryRun}"/><Run Text="{Binding VRAM}" Style="{StaticResource systemInfoRun}"/><Run Text=" MB" Style="{StaticResource systemInfoRun}"/></TextBlock>
+                                            <TextBlock><Run Text="Resolution: " Style="{StaticResource systemInfoCategoryRun}"/><Run Text="{Binding Resolution}" Style="{StaticResource systemInfoRun}"/></TextBlock>
+                                            <TextBlock><Run Text="Refresh Rate: " Style="{StaticResource systemInfoCategoryRun}"/><Run Text="{Binding RefreshRate}" Style="{StaticResource systemInfoRun}"/></TextBlock>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="1">
+                            <ItemsControl ItemsSource="{Binding SystemInfoM.hardwareInfos[0].GpuAdvanceds}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <TextBlock><Run Text="Driver version: " Style="{StaticResource systemInfoCategoryRun}"/><Run Text="{Binding DriverVer}" Style="{StaticResource systemInfoRun}"/></TextBlock>
+                                            <TextBlock><Run Text="Driver date: " Style="{StaticResource systemInfoCategoryRun}"/><Run Text="{Binding DriverDate}" Style="{StaticResource systemInfoRun}"/></TextBlock>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </Grid>
+                </Expander>
+
+                <!-- System Advanced System Info -->
+                <Expander Header="System" VerticalAlignment="Top" Background="#505a5a5a" Margin="0,5,0,0" FontFamily="Bahnschrift Bold">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0">
+                            <ItemsControl ItemsSource="{Binding SystemInfoM.hardwareInfos[0].SystemAdvanceds}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <TextBlock><Run Text="OS: " Style="{StaticResource systemInfoCategoryRun}"/><Run Text="{Binding Os}" Style="{StaticResource systemInfoRun}"/></TextBlock>
+                                            <TextBlock><Run Text="Disks: " Style="{StaticResource systemInfoCategoryRun}"/><Run Text="{Binding DiskLists}" Style="{StaticResource systemInfoRun}"/></TextBlock>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="1">
+                            <ItemsControl ItemsSource="{Binding SystemInfoM.hardwareInfos[0].SystemAdvanceds}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <TextBlock><Run Text="Architecture: " Style="{StaticResource systemInfoCategoryRun}"/><Run Text="{Binding Bit}" Style="{StaticResource systemInfoRun}"/></TextBlock>
+                                            <TextBlock><Run Text="Computer Name: " Style="{StaticResource systemInfoCategoryRun}"/><Run Text="{Binding ComputerName}" Style="{StaticResource systemInfoRun}"/></TextBlock>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </Grid>
+                </Expander>
+            </StackPanel>
+
         </Border>
 
     </Grid>
