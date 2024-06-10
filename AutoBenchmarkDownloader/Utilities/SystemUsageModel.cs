@@ -70,7 +70,7 @@ namespace AutoBenchmarkDownloader.Utilities
                             {
                                 percCpuUsage = (int)sensor.Value.GetValueOrDefault();
                             }
-                            if (sensor.SensorType == SensorType.Temperature && sensor.Name.Contains("Core"))
+                            if (sensor.SensorType == SensorType.Temperature && sensor.Name.Contains("CPU Package"))
                             {
                                 cpuTemperature = (int)sensor.Value.GetValueOrDefault(); // need to fix
                             }                         

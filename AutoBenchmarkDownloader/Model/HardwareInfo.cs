@@ -50,6 +50,14 @@ namespace AutoBenchmarkDownloader.Model
         public required string RefreshRate { get; set; }
     }
 
+    public class SystemAdvanced
+    {
+        public required string Os { get; set; }
+        public required string DiskLists { get; set; }
+        public required string Bit { get; set;}
+        public required string ComputerName { get; set;}
+    }
+
     public class HardwareInfo
     {
         public required string CpuModel { get; set; }
@@ -61,11 +69,11 @@ namespace AutoBenchmarkDownloader.Model
         public required string Gpu { get; set; }
         public required string GpuDriverVer { get; set; }
         public required string GpuDriverDate { get; set; }
-        public required string DirectX { get; set; }
         public required List<CpuAdvanced> CpuAdvanceds { get; set; }
         public required List<RamModule> RamModules { get; set; }
         public required List<MotherboardAdvanced> MotherboardAdvanceds { get; set; }
         public required List<GpuAdvanced> GpuAdvanceds { get; set; }
+        public required List<SystemAdvanced> SystemAdvanceds { get; set; }
 
         public HardwareInfo()
         {
@@ -73,6 +81,7 @@ namespace AutoBenchmarkDownloader.Model
             RamModules = new List<RamModule>();
             MotherboardAdvanceds = new List<MotherboardAdvanced>();
             GpuAdvanceds = new List<GpuAdvanced>();
+            SystemAdvanceds = new List<SystemAdvanced>();
         }
     }
 }

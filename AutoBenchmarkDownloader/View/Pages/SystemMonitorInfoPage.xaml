@@ -242,7 +242,6 @@
 
 
                         <StackPanel Grid.Column="0">
-                            <TextBlock Text="{Binding SystemUsageM.SelectedInfo.cpuTemperature}" Foreground="red"/>
                             <ItemsControl ItemsSource="{Binding SystemInfoM.hardwareInfos[0].CpuAdvanceds}">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
@@ -383,12 +382,39 @@
                 </Expander>
 
                 <!-- System Advanced System Info -->
-                <Expander Header="System" VerticalAlignment="Top" Background="CornflowerBlue" Margin="0,5,0,0" FontFamily="Bahnschrift Bold">
-                    <StackPanel>
-                        <TextBlock Text="PLACEHOLDER" />
-                        <TextBlock Text="PLACEHOLDER" />
-                        <TextBlock Text="PLACEHOLDER" />
-                    </StackPanel>
+                <Expander Header="System" VerticalAlignment="Top" Background="#505a5a5a" Margin="0,5,0,0" FontFamily="Bahnschrift Bold">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0">
+                            <ItemsControl ItemsSource="{Binding SystemInfoM.hardwareInfos[0].SystemAdvanceds}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <TextBlock><Run Text="OS: " Style="{StaticResource systemInfoCategoryRun}"/><Run Text="{Binding Os}" Style="{StaticResource systemInfoRun}"/></TextBlock>
+                                            <TextBlock><Run Text="Disks: " Style="{StaticResource systemInfoCategoryRun}"/><Run Text="{Binding DiskLists}" Style="{StaticResource systemInfoRun}"/></TextBlock>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="1">
+                            <ItemsControl ItemsSource="{Binding SystemInfoM.hardwareInfos[0].SystemAdvanceds}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <TextBlock><Run Text="Architecture: " Style="{StaticResource systemInfoCategoryRun}"/><Run Text="{Binding Bit}" Style="{StaticResource systemInfoRun}"/></TextBlock>
+                                            <TextBlock><Run Text="Computer Name: " Style="{StaticResource systemInfoCategoryRun}"/><Run Text="{Binding ComputerName}" Style="{StaticResource systemInfoRun}"/></TextBlock>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </Grid>
                 </Expander>
             </StackPanel>
 

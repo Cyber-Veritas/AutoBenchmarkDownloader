@@ -19,13 +19,14 @@ namespace AutoBenchmarkDownloader.Utilities
 
         private void SetInfo()
         {
+            // get advanced data
             List<RamModule> ramModules = RamInfo();
             List<CpuAdvanced> cpuAdvanceds = CpuAdvancedInfo();
             List<MotherboardAdvanced> motherboardAdvanceds = MotherboardAdvancedInfo();
             List<GpuAdvanced> gpuAdvanceds = GpuAdvancedInfo();
+            List<SystemAdvanced> systemAdvanceds = SystemAdvancedInfo();
 
-            // Win32_PerfFormattedData_GPUPerformanceCounters_GPUAdapterMemory - gpu memory info
-
+            // get basic info
             string CpuModel = GetHardwareInfo("Win32_Processor", "Name", "CPU");
             string RamModuleInfo = ListToStringConverter(ramModules);
             string Motherboard = GetHardwareInfo("Win32_BaseBoard", "Product", "MOBO");
@@ -34,7 +35,6 @@ namespace AutoBenchmarkDownloader.Utilities
             string Gpu = GetHardwareInfo("Win32_VideoController", "Caption", "GPU");
             string GpuDriverDate = "Driver Date: " + ConvertDate(GetHardwareInfo("Win32_VideoController", "DriverDate", "GPU"));
             string GpuDriverVer = "Driver Version: " + GetHardwareInfo("Win32_VideoController", "DriverVersion", "GPU");
-            string DirectX = GetHardwareInfo("Win32_DirectXVersion", "Caption", "DX");
 
             HardwareInfo hardwareInfo = new HardwareInfo()
             {
@@ -47,12 +47,12 @@ namespace AutoBenchmarkDownloader.Utilities
                 Gpu = Gpu,
                 GpuDriverVer = GpuDriverVer,
                 GpuDriverDate = GpuDriverDate,
-                DirectX = DirectX,
 
                 CpuAdvanceds = cpuAdvanceds,
                 RamModules = ramModules,
                 MotherboardAdvanceds = motherboardAdvanceds,
-                GpuAdvanceds = gpuAdvanceds
+                GpuAdvanceds = gpuAdvanceds,
+                SystemAdvanceds = systemAdvanceds
             };
 
             hardwareInfos.Add(hardwareInfo);
@@ -188,6 +188,54 @@ namespace AutoBenchmarkDownloader.Utilities
             return ramModulesList;
         }
 
+        private List<SystemAdvanced> SystemAdvancedInfo()
+        {
+            List<SystemAdvanced> systemAdvanceds = new List<SystemAdvanced>();
+
+            try
+            {
+                SystemAdvanced systemAdvanced = new SystemAdvanced()
+                {
+                    Os = GetHardwareInfo("Win32_OperatingSystem", "Caption", "OS") + " ver." + GetHardwareInfo("Win32_OperatingSystem", "Version", "VERSION"),
+                    DiskLists = SystemDiskList(),
+                    Bit = GetHardwareInfo("Win32_ComputerSystem", "SystemType", "Bit"),
+                    ComputerName = GetHardwareInfo("Win32_ComputerSystem", "Name", "Bit")
+                };
+                systemAdvanceds.Add(systemAdvanced);
+            }
+
+            catch (Exception e)
+            {
+                Console.WriteLine("unable to find System info" + e.Message);
+            }
+
+            return systemAdvanceds;
+        }
+
+        static string SystemDiskList()
+        {
+            string diskList = "\n";
+            int id = 0;
+            try
+            {
+                ManagementObjectSearcher searcher = new ManagementObjectSearcher("root\\CIMV2", "SELECT * FROM Win32_DiskDrive");
+                foreach (ManagementObject item in searcher.Get())
+                {
+                    diskList += id++ + ": ";
+                    diskList += item["Model"].ToString() + " ";
+                    diskList += BytesToGB((ulong)item["size"]) + " GB";
+                    diskList += "\n";
+                }    
+            }
+
+            catch (Exception e)
+            {
+                diskList = "cannot get disk info";
+            }
+
+            return diskList;
+        }
+
         static string GpuVRAM()
         {
             string gpuVRAM = "";
@@ -223,7 +271,7 @@ namespace AutoBenchmarkDownloader.Utilities
 
         static string BytesToGB(ulong bytes)
         {
-            return ((bytes / Math.Pow(1024, 3))).ToString();
+            return Math.Round(((bytes / Math.Pow(1024, 3))), 1).ToString();
         }
 
         static string ListToStringConverter(List<RamModule> ramModules)
