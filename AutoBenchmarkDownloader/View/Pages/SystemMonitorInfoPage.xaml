@@ -89,7 +89,7 @@
                         <DataTemplate>
                             <StackPanel>
                                 <TextBlock Text="CPU" Style="{StaticResource systemInfoCategory}"/>
-                                <TextBlock Text="{Binding CpuModel}" Style="{StaticResource systemInfo}"/>
+                                <TextBlock Text="{Binding CpuAdvanceds[0].Model}" Style="{StaticResource systemInfo}"/>
 
                                 <TextBlock Text="RAM" Style="{StaticResource systemInfoCategory}"/>
                                 <TextBlock Style="{StaticResource systemInfo}" >
@@ -98,13 +98,13 @@
                                 </TextBlock>
 
                                 <TextBlock Text="Motherboard" Style="{StaticResource systemInfoCategory}"/>
-                                <TextBlock Text="{Binding Motherboard}" Style="{StaticResource systemInfo}"/>
+                                <TextBlock Text="{Binding MotherboardAdvanceds[0].Model}" Style="{StaticResource systemInfo}"/>
 
                                 <TextBlock Text="GPU" Style="{StaticResource systemInfoCategory}"/>
-                                <TextBlock Text="{Binding Gpu}" Style="{StaticResource systemInfo}"/>
+                                <TextBlock Text="{Binding GpuAdvanceds[0].Model}" Style="{StaticResource systemInfo}"/>
 
                                 <TextBlock Text="System" Style="{StaticResource systemInfoCategory}"/>
-                                <TextBlock Text="{Binding Os}" Style="{StaticResource systemInfo}"/>
+                                <TextBlock Text="{Binding SystemAdvanceds[0].Os}" Style="{StaticResource systemInfo}"/>
                                 <TextBlock Text=""/>
                             </StackPanel>
                         </DataTemplate>

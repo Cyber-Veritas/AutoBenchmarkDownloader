@@ -21,35 +21,18 @@ namespace AutoBenchmarkDownloader.Utilities
         {
             // get advanced data
             List<RamModule> ramModules = RamInfo();
+            string RamModuleInfo = ListToStringConverter(ramModules);
             List<CpuAdvanced> cpuAdvanceds = CpuAdvancedInfo();
             List<MotherboardAdvanced> motherboardAdvanceds = MotherboardAdvancedInfo();
             List<GpuAdvanced> gpuAdvanceds = GpuAdvancedInfo();
             List<SystemAdvanced> systemAdvanceds = SystemAdvancedInfo();
 
-            // get basic info
-            string CpuModel = GetHardwareInfo("Win32_Processor", "Name", "CPU");
-            string RamModuleInfo = ListToStringConverter(ramModules);
-            string Motherboard = GetHardwareInfo("Win32_BaseBoard", "Product", "MOBO");
-            string Bios = "BIOS: " + GetHardwareInfo("Win32_BIOS", "Name", "BIOS");
-            string Os = GetHardwareInfo("Win32_OperatingSystem", "Caption", "OS") + " ver." + GetHardwareInfo("Win32_OperatingSystem", "Version", "VERSION");
-            string Gpu = GetHardwareInfo("Win32_VideoController", "Caption", "GPU");
-            string GpuDriverDate = "Driver Date: " + ConvertDate(GetHardwareInfo("Win32_VideoController", "DriverDate", "GPU"));
-            string GpuDriverVer = "Driver Version: " + GetHardwareInfo("Win32_VideoController", "DriverVersion", "GPU");
-
             HardwareInfo hardwareInfo = new HardwareInfo()
             {
-                CpuModel = CpuModel,
-                RamModulesInfo = RamModuleInfo,
-                TotalRam = TotalRam,
-                Motherboard = Motherboard,
-                Bios = Bios,
-                Os = Os,
-                Gpu = Gpu,
-                GpuDriverVer = GpuDriverVer,
-                GpuDriverDate = GpuDriverDate,
-
                 CpuAdvanceds = cpuAdvanceds,
                 RamModules = ramModules,
+                RamModulesInfo = RamModuleInfo,
+                TotalRam = TotalRam,
                 MotherboardAdvanceds = motherboardAdvanceds,
                 GpuAdvanceds = gpuAdvanceds,
                 SystemAdvanceds = systemAdvanceds
