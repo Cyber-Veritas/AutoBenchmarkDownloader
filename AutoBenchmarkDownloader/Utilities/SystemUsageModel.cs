@@ -15,7 +15,6 @@ namespace AutoBenchmarkDownloader.Utilities
 
         private int percCpuUsage = -1;
         private int prevCpuUsage = -1;
-        private int cpuTemperature = -1;
 
         public SystemUsageModel()
         {
@@ -47,7 +46,6 @@ namespace AutoBenchmarkDownloader.Utilities
                 SelectedInfo = new SystemUsageInfo
                 {
                     cpuUsage = cpuPercentage,
-                    cpuTemperature = cpuTemp,
                     ramUsage = RamPercentage(),
                     gpuUsage = GpuPercentage()
                 };
@@ -55,7 +53,7 @@ namespace AutoBenchmarkDownloader.Utilities
             prevCpuUsage = percCpuUsage;
         }
 
-        private (int, int) CpuUsage()
+        private int CpuUsage()
         {
             try
             {
@@ -70,10 +68,6 @@ namespace AutoBenchmarkDownloader.Utilities
                             {
                                 percCpuUsage = (int)sensor.Value.GetValueOrDefault();
                             }
-                            if (sensor.SensorType == SensorType.Temperature && sensor.Name.Contains("CPU Package"))
-                            {
-                                cpuTemperature = (int)sensor.Value.GetValueOrDefault(); // need to fix
-                            }                         
                         }
                         break;
                     }
@@ -84,12 +78,12 @@ namespace AutoBenchmarkDownloader.Utilities
                 // protect for value above 100 percent from LibreHardwareMonitor issue
                 if (percCpuUsage > 100) { percCpuUsage = prevCpuUsage; }
 
-                return (percCpuUsage, cpuTemperature);
+                return percCpuUsage;
             }
 
             catch (Exception e)
             {
-                return (-1, -1);
+                return -1;
             }
         }
 
