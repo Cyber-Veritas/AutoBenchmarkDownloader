@@ -42,10 +42,9 @@ namespace AutoBenchmarkDownloader.Utilities
         {
             Task.Run(() =>
             {
-                var (cpuPercentage, cpuTemp) = CpuUsage();
                 SelectedInfo = new SystemUsageInfo
                 {
-                    cpuUsage = cpuPercentage,
+                    cpuUsage = CpuUsage(),
                     ramUsage = RamPercentage(),
                     gpuUsage = GpuPercentage()
                 };
