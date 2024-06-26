@@ -60,15 +60,9 @@ namespace AutoBenchmarkDownloader.Model
 
     public class HardwareInfo
     {
-        public required string CpuModel { get; set; }
         public required string RamModulesInfo { get; set; }
         public required string TotalRam { get; set; }
-        public required string Motherboard { get; set; }
-        public required string Bios { get; set; }
-        public required string Os { get; set; }
-        public required string Gpu { get; set; }
-        public required string GpuDriverVer { get; set; }
-        public required string GpuDriverDate { get; set; }
+
         public required List<CpuAdvanced> CpuAdvanceds { get; set; }
         public required List<RamModule> RamModules { get; set; }
         public required List<MotherboardAdvanced> MotherboardAdvanceds { get; set; }
