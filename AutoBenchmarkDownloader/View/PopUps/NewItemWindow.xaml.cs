@@ -49,6 +49,11 @@ namespace AutoBenchmarkDownloader.View.PopUps
                 uri = new Uri(NewSoftware.IconPath, UriKind.Relative);
             }
 
+            if (NewSoftware.Name == "")
+            {
+                BtnDelete.Visibility = Visibility.Collapsed;
+            }
+
             var imageSource = (ImageSource)converter.Convert(uri, typeof(ImageSource), null, CultureInfo.CurrentCulture);
             ImgIcon.ImageSource = imageSource;
 

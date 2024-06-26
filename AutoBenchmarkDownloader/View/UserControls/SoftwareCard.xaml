@@ -41,7 +41,7 @@
                 </StackPanel>
             </StackPanel>
 
-            <controls:ToggleSwitch IsChecked="{Binding Download}" Grid.Column="1" HorizontalAlignment="Right" Margin="0,0,12,0" Padding="0"/>
+            <controls:ToggleSwitch IsChecked="{Binding Download}" Command="{Binding DataContext.SaveConfigCommand, RelativeSource={RelativeSource AncestorType=Page}}"  Grid.Column="1" HorizontalAlignment="Right" Margin="0,0,12,0" Padding="0"/>
         </Grid>
     </Border>
     

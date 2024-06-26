@@ -3,6 +3,7 @@ using AutoBenchmarkDownloader.MVVM;
 using System.Diagnostics;
 using System.Management;
 using System.Windows.Threading;
+using LibreHardwareMonitor.Hardware;
 
 namespace AutoBenchmarkDownloader.Utilities
 {
@@ -10,9 +11,21 @@ namespace AutoBenchmarkDownloader.Utilities
     {
         public SystemUsageInfo selectedInfo;
         private DispatcherTimer timer;
+        private Computer computer;
+
+        private int percCpuUsage = -1;
+        private int prevCpuUsage = -1;
 
         public SystemUsageModel()
         {
+            computer = new Computer()
+            {
+                IsCpuEnabled = true,
+                IsGpuEnabled = true,
+                IsMemoryEnabled = true
+            };
+            computer.Open();
+
             timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromSeconds(1);
             timer.Tick += Timer_Tick;
@@ -31,32 +44,43 @@ namespace AutoBenchmarkDownloader.Utilities
             {
                 SelectedInfo = new SystemUsageInfo
                 {
-                    cpuUsage = CpuPercentage(),
+                    cpuUsage = CpuUsage(),
                     ramUsage = RamPercentage(),
                     gpuUsage = GpuPercentage()
                 };
             });
+            prevCpuUsage = percCpuUsage;
         }
 
-        // it is only "_Total" info
-        private int CpuPercentage()
+        private int CpuUsage()
         {
             try
             {
-                int percCpuUsage = -1;
-                ManagementObjectSearcher searcher = new ManagementObjectSearcher("root\\CIMV2", "SELECT * FROM Win32_PerfFormattedData_PerfOS_Processor WHERE Name='_Total'");
-                foreach (ManagementObject obj in searcher.Get())
+                foreach (var hardwareItem in computer.Hardware)
                 {
-                    percCpuUsage = Convert.ToInt32(obj["PercentProcessorTime"]);
-                    break;
+                    if (hardwareItem.HardwareType == HardwareType.Cpu)
+                    {
+                        hardwareItem.Update();
+                        foreach (var sensor in hardwareItem.Sensors)
+                        {
+                            if (sensor.SensorType == SensorType.Load && sensor.Name.Contains("Total"))
+                            {
+                                percCpuUsage = (int)sensor.Value.GetValueOrDefault();
+                            }
+                        }
+                        break;
+                    }
                 }
+                // set first value for prevCpuUsage
+                if (prevCpuUsage == -1) { prevCpuUsage = percCpuUsage; }
 
-                if (percCpuUsage == 0) { percCpuUsage = 1; }
+                // protect for value above 100 percent from LibreHardwareMonitor issue
+                if (percCpuUsage > 100) { percCpuUsage = prevCpuUsage; }
 
                 return percCpuUsage;
             }
 
-            catch (Exception ex)
+            catch (Exception e)
             {
                 return -1;
             }
