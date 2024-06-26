@@ -47,15 +47,22 @@ namespace AutoBenchmarkDownloader.Utilities
 
             try
             {
+                var infoToGet = new List<string>
+                {
+                    "Name", "Description", "NumberOfCores", "NumberOfLogicalProcessors",
+                    "CurrentClockSpeed"
+                };
+
+                var hardwareInfo = GetHardwareInfo("Win32_Processor", infoToGet, "CPU");
                 // define cpu advanced information
                 CpuAdvanced cpuAdvanced = new CpuAdvanced()
                 {
-                    Model = GetHardwareInfo("Win32_Processor", "Name", "CPU_Model"),
-                    CodeName = GetHardwareInfo("Win32_Processor", "Description", "CPU_CodeName"),
+                    Model = hardwareInfo["Name"],
+                    CodeName = hardwareInfo["Description"],
                     Litography = "Unknown",
-                    Cores = GetHardwareInfo("Win32_Processor", "NumberOfCores", "CPU_Cores"),
-                    Threads = GetHardwareInfo("Win32_Processor", "NumberOfLogicalProcessors", "CPU_Threads"),
-                    Frequency = GetHardwareInfo("Win32_Processor", "CurrentClockSpeed", "CPU_Frequency"),
+                    Cores = hardwareInfo["NumberOfCores"],
+                    Threads = hardwareInfo["NumberOfLogicalProcessors"],
+                    Frequency = hardwareInfo["CurrentClockSpeed"],
                     TDP = "Unknown",
                     Platform = "Unknown"
                 };
@@ -76,14 +83,20 @@ namespace AutoBenchmarkDownloader.Utilities
             try
             {
                 // define motherboard advanced information
+                var baseBoardInfoToGet = new List<string> { "Product", "Manufacturer", "SerialNumber" };
+                var biosInfoToGet = new List<string> { "Name", "ReleaseDate" };
+
+                var baseBoardInfo = GetHardwareInfo("Win32_BaseBoard", baseBoardInfoToGet, "MOBO");
+                var biosInfo = GetHardwareInfo("Win32_BIOS", biosInfoToGet, "BIOS");
+
                 MotherboardAdvanced motherboardAdvanced = new MotherboardAdvanced()
                 {
-                    Model = GetHardwareInfo("Win32_BaseBoard", "Product", "MOBO_Model"),
-                    Bios = GetHardwareInfo("Win32_BIOS", "Name", "BIOS"),
-                    BiosDate = ConvertDate(GetHardwareInfo("Win32_BIOS", "ReleaseDate", "BIOS_Date")),
-                    Manufacturer = GetHardwareInfo("Win32_BaseBoard", "Manufacturer", "MOBO_Manufacturer"),
-                    Chipset = "Unknown",
-                    SerialNumber = MotherboardSerialNumber(GetHardwareInfo("Win32_BaseBoard", "SerialNumber", "MOBO_SerialNumber"))
+                    Model = baseBoardInfo["Product"],
+                    Bios = biosInfo["Name"],
+                    BiosDate = ConvertDate(biosInfo["ReleaseDate"]),
+                    Manufacturer = baseBoardInfo["Manufacturer"],
+                    Chipset = "Unknown", 
+                    SerialNumber = MotherboardSerialNumber(baseBoardInfo["SerialNumber"])
                 };
 
                 motherboardAdvanceds.Add(motherboardAdvanced);
@@ -105,20 +118,28 @@ namespace AutoBenchmarkDownloader.Utilities
         private List<GpuAdvanced> GpuAdvancedInfo()
         {
             List<GpuAdvanced> gpuAdvanceds = new List<GpuAdvanced>();
+
             try
             {
-                // define gpu advanced information
-                string gpuResolution = GetHardwareInfo("Win32_VideoController", "CurrentHorizontalResolution", "GPU") + "x" + GetHardwareInfo("Win32_VideoController", "CurrentVerticalResolution", "GPU");
-                
+                var infoToGet = new List<string>
+                {
+                    "Caption", "AdapterCompatibility", "DriverVersion", "DriverDate",
+                    "CurrentHorizontalResolution", "CurrentVerticalResolution", "CurrentRefreshRate"
+                };
+
+                var hardwareInfo = GetHardwareInfo("Win32_VideoController", infoToGet, "GPU");
+
+                string gpuResolution = hardwareInfo["CurrentHorizontalResolution"] + "x" + hardwareInfo["CurrentVerticalResolution"];
+
                 GpuAdvanced gpuAdvanced = new GpuAdvanced()
                 {
-                    Model = GetHardwareInfo("Win32_VideoController", "Caption", "GPU_Model"),
-                    Manufacturer = GetHardwareInfo("Win32_VideoController", "AdapterCompatibility", "GPU_Manufacturer"),
+                    Model = hardwareInfo["Caption"],
+                    Manufacturer = hardwareInfo["AdapterCompatibility"],
                     VRAM = GpuVRAM(),
-                    DriverVer = GetHardwareInfo("Win32_VideoController", "DriverVersion", "GPU"),
-                    DriverDate = ConvertDate(GetHardwareInfo("Win32_VideoController", "DriverDate", "GPU")),
+                    DriverVer = hardwareInfo["DriverVersion"],
+                    DriverDate = ConvertDate(hardwareInfo["DriverDate"]),
                     Resolution = gpuResolution,
-                    RefreshRate = GetHardwareInfo("Win32_VideoController", "CurrentRefreshRate", "GPU") + "Hz"
+                    RefreshRate = hardwareInfo["CurrentRefreshRate"] + "Hz"
                 };
 
                 gpuAdvanceds.Add(gpuAdvanced);
@@ -174,16 +195,22 @@ namespace AutoBenchmarkDownloader.Utilities
         private List<SystemAdvanced> SystemAdvancedInfo()
         {
             List<SystemAdvanced> systemAdvanceds = new List<SystemAdvanced>();
-
             try
             {
+                var osInfoToGet = new List<string> { "Caption", "Version" };
+                var computerSystemInfoToGet = new List<string> { "SystemType", "Name" };
+
+                var osInfo = GetHardwareInfo("Win32_OperatingSystem", osInfoToGet, "OS");
+                var computerSystemInfo = GetHardwareInfo("Win32_ComputerSystem", computerSystemInfoToGet, "Bit");
+
                 SystemAdvanced systemAdvanced = new SystemAdvanced()
                 {
-                    Os = GetHardwareInfo("Win32_OperatingSystem", "Caption", "OS") + " ver." + GetHardwareInfo("Win32_OperatingSystem", "Version", "VERSION"),
+                    Os = $"{osInfo["Caption"]} ver.{osInfo["Version"]}",
                     DiskLists = SystemDiskList(),
-                    Bit = GetHardwareInfo("Win32_ComputerSystem", "SystemType", "Bit"),
-                    ComputerName = GetHardwareInfo("Win32_ComputerSystem", "Name", "Bit")
+                    Bit = computerSystemInfo["SystemType"],
+                    ComputerName = computerSystemInfo["Name"]
                 };
+
                 systemAdvanceds.Add(systemAdvanced);
             }
 

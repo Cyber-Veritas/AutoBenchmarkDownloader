@@ -4,21 +4,39 @@ namespace AutoBenchmarkDownloader.MVVM
 {
     internal class SystemHardwareInfo
     {
-        public static string GetHardwareInfo(string computerSystemHardwareClass, string infoToGet, string errorInfo)
+        public static Dictionary<string, string> GetHardwareInfo(string computerSystemHardwareClass, List<string> infoToGet, string errorInfo)
         {
+            var result = new Dictionary<string, string>();
+
             try
             {
-                ManagementObjectSearcher searcher = new ManagementObjectSearcher("root\\CIMV2", "SELECT * FROM "+computerSystemHardwareClass+"");
-                foreach (ManagementObject item in searcher.Get())
+                using (var searcher = new ManagementObjectSearcher($"SELECT * FROM {computerSystemHardwareClass}"))
                 {
-                    return (string)item[infoToGet].ToString();
+                    foreach (ManagementObject item in searcher.Get())
+                    {
+                        foreach (var info in infoToGet)
+                        {
+                            if (item[info] != null)
+                            {
+                                result[info] = item[info].ToString();
+                            }
+                            else
+                            {
+                                result[info] = $"[{errorInfo} {info} ERROR]";
+                            }
+                        }
+                    }
                 }
-                return "["+errorInfo+" info ERROR]";
             }
             catch (Exception e)
             {
-                return "[" + errorInfo + " info ERROR]";
+                foreach (var info in infoToGet)
+                {
+                    result[info] = $"[{errorInfo} {info} ERROR]";
+                }
             }
-        }   
+
+            return result;
+        }
     }
 }
