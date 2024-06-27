@@ -6,15 +6,26 @@ namespace AutoBenchmarkDownloader.ViewModel
     class SystemMonitorViewModel : ViewModelBase
     {
         private readonly SystemInfoModel _systemInfoModel;
-        private readonly SystemUsageModel _systemUsageModel;
+        //private readonly SystemUsageModel _systemUsageModel;
+
+        private bool _isDataLoaded = false;
 
         public SystemMonitorViewModel()
         {
             _systemInfoModel = new SystemInfoModel();
-            _systemUsageModel = new SystemUsageModel(); 
+            //_systemUsageModel = new SystemUsageModel();
+            LoadData();
         }
 
         public SystemInfoModel SystemInfoM => _systemInfoModel;
-        public SystemUsageModel SystemUsageM => _systemUsageModel;
+        //public SystemUsageModel SystemUsageM => _systemUsageModel;
+
+        private void LoadData()
+        {
+            if (_isDataLoaded) return;
+
+            _systemInfoModel.SetInfo(); 
+            _isDataLoaded = true;
+        }
     }
 }
