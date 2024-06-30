@@ -20,11 +20,8 @@ namespace AutoBenchmarkDownloader.Utilities
         {
             computer = new Computer()
             {
-                IsCpuEnabled = true,
-                IsGpuEnabled = true,
-                IsMemoryEnabled = true
-            };
-            computer.Open();
+                IsCpuEnabled = true
+            };  
 
             timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromSeconds(1);
@@ -56,12 +53,13 @@ namespace AutoBenchmarkDownloader.Utilities
         {
             try
             {
-                foreach (var hardwareItem in computer.Hardware)
+                computer.Open();
+                foreach (IHardware hardwareItem in computer.Hardware)
                 {
                     if (hardwareItem.HardwareType == HardwareType.Cpu)
                     {
                         hardwareItem.Update();
-                        foreach (var sensor in hardwareItem.Sensors)
+                        foreach (ISensor sensor in hardwareItem.Sensors)
                         {
                             if (sensor.SensorType == SensorType.Load && sensor.Name.Contains("Total"))
                             {
