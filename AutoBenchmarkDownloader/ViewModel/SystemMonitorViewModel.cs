@@ -8,7 +8,6 @@ namespace AutoBenchmarkDownloader.ViewModel
         private static SystemMonitorViewModel _instance;
         private readonly SystemInfoModel _systemInfoModel;
         private readonly SystemUsageModel _systemUsageModel;
-
         private bool _isDataLoaded = false;
 
         public SystemMonitorViewModel()
@@ -19,7 +18,6 @@ namespace AutoBenchmarkDownloader.ViewModel
         }
 
         public static SystemMonitorViewModel Instance => _instance ?? (_instance = new SystemMonitorViewModel());
-
         public SystemInfoModel SystemInfoM => _systemInfoModel;
         public SystemUsageModel SystemUsageM => _systemUsageModel;
 

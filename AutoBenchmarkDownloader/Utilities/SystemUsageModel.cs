@@ -66,6 +66,7 @@ namespace AutoBenchmarkDownloader.Utilities
                             if (sensor.SensorType == SensorType.Load && sensor.Name.Contains("Total"))
                             {
                                 percCpuUsage = (int)sensor.Value.GetValueOrDefault();
+                                break;
                             }
                         }
                         break;
@@ -82,6 +83,7 @@ namespace AutoBenchmarkDownloader.Utilities
 
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return -1;
             }
         }
@@ -106,6 +108,7 @@ namespace AutoBenchmarkDownloader.Utilities
 
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return -1;
             }
         }
@@ -133,8 +136,9 @@ namespace AutoBenchmarkDownloader.Utilities
                 return percGpuUsageInt;
             }
 
-            catch (Exception ex)
+            catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return -1;
             }
         }
