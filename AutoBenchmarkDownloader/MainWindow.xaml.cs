@@ -11,7 +11,7 @@ namespace AutoBenchmarkDownloader
         public MainWindow()
         {
             InitializeComponent();
-
+            DataContext = SystemMonitorViewModel.Instance;
             //RootNavigation.Navigate(HomeItem.Id);
 
 

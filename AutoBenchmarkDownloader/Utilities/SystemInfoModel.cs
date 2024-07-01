@@ -14,10 +14,10 @@ namespace AutoBenchmarkDownloader.Utilities
         {
             hardwareInfos = new ObservableCollection<HardwareInfo>();
             string TotalRam = "";
-            SetInfo();
+            //SetInfo();
         }
 
-        private void SetInfo()
+        public void SetInfo()
         {
             // get advanced data
             List<RamModule> ramModules = RamInfo();
