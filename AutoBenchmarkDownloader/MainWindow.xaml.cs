@@ -12,10 +12,14 @@ namespace AutoBenchmarkDownloader
         {
             InitializeComponent();
             DataContext = SystemMonitorViewModel.Instance;
-            //RootNavigation.Navigate(HomeItem.Id);
-
 
             Wpf.Ui.Appearance.WindowBackgroundManager.ApplyDarkThemeToWindow(this);
+            Loaded += MainWindow_Loaded;
+        }
+
+        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            RootNavigation.Navigate(typeof(HomePage));
         }
 
         private void MainWindow_OnMouseDown(object sender, MouseButtonEventArgs e)
