@@ -27,13 +27,12 @@
             </ui:NavigationView.MenuItems>
 
             <ui:NavigationView.FooterMenuItems>
-                <ui:NavigationViewItem x:Name="AboutItem" Content="About" Icon="{ui:SymbolIcon ChatHelp24}" />
+                <ui:NavigationViewItem x:Name="AboutItem" Content="About" Icon="{ui:SymbolIcon ChatHelp24}" TargetPageType="{x:Type pages:AboutUsPage}" />
                 <ui:NavigationViewItem x:Name="SettingsItem" Content="Settings" Icon="{ui:SymbolIcon Settings24}" TargetPageType="{x:Type pages:SettingsPage}" />
             </ui:NavigationView.FooterMenuItems>
 
         </ui:NavigationView>
         
-
     </Grid>
 
 </controls:MicaWindow>
