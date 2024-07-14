@@ -24,9 +24,14 @@ namespace AutoBenchmarkDownloader.Utilities
             };  
 
             timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromSeconds(1);
+            timer.Interval = TimeSpan.FromMilliseconds(500);
             timer.Tick += Timer_Tick;
             timer.Start();
+        }
+
+        public void SetRefreshInterval(int interval)
+        {
+            timer.Interval = TimeSpan.FromMilliseconds(interval);
         }
 
         public SystemUsageInfo SelectedInfo
