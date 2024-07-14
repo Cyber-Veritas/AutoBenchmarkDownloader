@@ -19,7 +19,7 @@
         <Style TargetType="TextBlock" x:Key="info">
             <Setter Property="Foreground" Value="WhiteSmoke" />
             <Setter Property="FontFamily" Value="Bahnschrift Regular" />
-            <Setter Property="FontSize" Value="11" />
+            <Setter Property="FontSize" Value="12" />
             <Setter Property="Margin" Value="5, 3, 0, 0" />
             <Setter Property="TextWrapping" Value="Wrap" />
         </Style>
