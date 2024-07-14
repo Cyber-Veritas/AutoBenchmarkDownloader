@@ -11,16 +11,26 @@
     <Page.Resources>
         <Style TargetType="TextBlock" x:Key="infoCategory">
             <Setter Property="Foreground" Value="#ffffff" />
-            <Setter Property="FontFamily" Value="Bahnschrift Regular" />
+            <Setter Property="FontFamily" Value="Bahnschrift Bold" />
             <Setter Property="FontSize" Value="13" />
             <Setter Property="Margin" Value="5, 3, 0, 0" />
         </Style>
 
         <Style TargetType="TextBlock" x:Key="info">
             <Setter Property="Foreground" Value="WhiteSmoke" />
-            <Setter Property="FontFamily" Value="Bahnschrift Bold" />
+            <Setter Property="FontFamily" Value="Bahnschrift Regular" />
             <Setter Property="FontSize" Value="11" />
-            <Setter Property="Margin" Value="5, 7, 0, 0" />
+            <Setter Property="Margin" Value="5, 3, 0, 0" />
+            <Setter Property="TextWrapping" Value="Wrap" />
+        </Style>
+
+        <Style TargetType="Hyperlink">
+            <Setter Property="Foreground" Value="#FF00FFB3" />
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Foreground" Value="#ff0077" />
+                </Trigger>
+            </Style.Triggers>
         </Style>
     </Page.Resources>
     <Grid>
@@ -41,12 +51,16 @@
             Background="#505a5a5a"
             CornerRadius="8">
             <StackPanel>
-                <TextBlock Padding="10, 10, 10, 10" Style="{StaticResource infoCategory}">About Us</TextBlock>
-                <TextBlock Style="{StaticResource info}"> info about us
+                <TextBlock Padding="0, 10, 10, 10" Style="{StaticResource infoCategory}">About Us</TextBlock>
+                <TextBlock Style="{StaticResource info}" Text="We are programming enthusiasts, master coders and fresh computer engineers with a specialisation in computer engineering. Our mission is to create useful and simple applications that make life easier !" />
+                <TextBlock Padding="0, 10, 10, 10" Style="{StaticResource infoCategory}">About Program</TextBlock>
+                <TextBlock Style="{StaticResource info}" Text="AutoBenchamrkDownloader is an application that allows you to download a suite of benchmark applications with a single click. If you are testing computer hardware, you no longer need to manually download all the applications separately. In addition, in the application you can check the basic parameters of your computer to quickly diagnose your hardware." />
+                <TextBlock Style="{StaticResource info}">
                     <Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="https://github.com/Cyber-Veritas/AutoBenchmarkDownloader">GitHub Repository</Hyperlink>
                 </TextBlock>
 
                 <TextBlock/>
+                <TextBlock Style="{StaticResource info}" Text="Below are links to our private profiles on github" />
                 <TextBlock Style="{StaticResource info}" Text="• Michał Czerwiński ">
                     <Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="https://github.com/T4ZZOR">T4ZZOR</Hyperlink>
                 </TextBlock>
@@ -55,7 +69,6 @@
                 </TextBlock>
                 <TextBlock/>
             </StackPanel>
-
         </Border>
 
         <Border
@@ -65,7 +78,7 @@
             Background="#505a5a5a"
             CornerRadius="8">
             <StackPanel>
-                <TextBlock Padding="10, 10, 10, 10" Style="{StaticResource infoCategory}">Resources</TextBlock>
+                <TextBlock Padding="0, 10, 10, 10" Style="{StaticResource infoCategory}">Resources</TextBlock>
                 <TextBlock Style="{StaticResource info}">
                     <Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="https://github.com/LibreHardwareMonitor/LibreHardwareMonitor">Libre Hardware Monitor</Hyperlink>
                 </TextBlock>
@@ -77,9 +90,6 @@
                 </TextBlock>
                 <TextBlock/>
             </StackPanel>
-
         </Border>
-
-
     </Grid>
 </Page>
