@@ -45,14 +45,18 @@
 
         <!-- navigation cells -->
         <UniformGrid Grid.Row="1" Columns="4" Rows="2" Margin="8">
-            <Button Style="{StaticResource navigationButton}" Command="{Binding NavigateCommand}" CommandParameter="DownloadPage">
-                <Button.Content>
-                    <StackPanel Orientation="Horizontal">
-                        <ui:SymbolIcon Symbol="Home24" />
-                        <TextBlock Text=" Set Interval" Margin="5,0,0,0"/>
+            <Button Style="{StaticResource navigationButton}" Margin="8" Height="200" Width="200" VerticalAlignment="Top">
+                <StackPanel Orientation="Vertical">
+                    <ui:SymbolIcon Symbol="Home24" />
+                    <TextBlock Text="[placeholder]" Margin="5,0,0,0"/>
+                </StackPanel>
+            </Button>
 
-                    </StackPanel>
-                </Button.Content>
+            <Button Style="{StaticResource navigationButton}" Margin="8" Height="200" Width="200" VerticalAlignment="Top">
+                <StackPanel Orientation="Vertical">
+                    <ui:SymbolIcon Symbol="Home24" />
+                    <TextBlock Text="[placeholder]" Margin="5,0,0,0"/>
+                </StackPanel>
             </Button>
         </UniformGrid>
        
