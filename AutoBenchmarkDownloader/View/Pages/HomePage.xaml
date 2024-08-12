@@ -27,11 +27,13 @@
             <Setter Property="TextWrapping" Value="Wrap" />
         </Style>
     </Page.Resources>
-    
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="6*" />
+            <RowDefinition Height="2*" />
+            <RowDefinition Height="2*" />
         </Grid.RowDefinitions>
 
         <!-- version header -->
@@ -39,29 +41,51 @@
             <StackPanel>
                 <TextBlock Text="Version 0.1.0a" Style="{StaticResource infoCategory}" HorizontalAlignment="Left" Padding="10"/>
                 <TextBlock Text="[info about application version]" Style="{StaticResource info}" Padding="10, 0, 0, 0"/>
+                <TextBlock/>
             </StackPanel>
-           
+
         </Border>
 
         <!-- navigation cells -->
         <UniformGrid Grid.Row="1" Columns="4" Rows="2" Margin="8">
-            <Button Style="{StaticResource navigationButton}" Margin="8" Height="200" Width="200" VerticalAlignment="Top">
-                <StackPanel Orientation="Vertical">
-                    <ui:SymbolIcon Symbol="Home24" />
-                    <TextBlock Text="[placeholder]" Margin="5,0,0,0"/>
+            <Button Style="{StaticResource navigationButton}">
+                <StackPanel>
+                    
+                    <TextBlock Text="download"/>
                 </StackPanel>
+                
             </Button>
+            <Button Style="{StaticResource navigationButton}">
 
-            <Button Style="{StaticResource navigationButton}" Margin="8" Height="200" Width="200" VerticalAlignment="Top">
-                <StackPanel Orientation="Vertical">
-                    <ui:SymbolIcon Symbol="Home24" />
-                    <TextBlock Text="[placeholder]" Margin="5,0,0,0"/>
-                </StackPanel>
+            </Button>
+            <Button Style="{StaticResource navigationButton}">
+
+            </Button>
+            <Button Style="{StaticResource navigationButton}">
+
+            </Button>
+            <Button Style="{StaticResource navigationButton}">
+
+            </Button>
+            <Button Style="{StaticResource navigationButton}">
+
             </Button>
         </UniformGrid>
-       
-        
-        
-        
+
+        <!-- Other info -->
+        <Border Grid.Row="2" Background="Red" CornerRadius="8" Margin="8">
+            <StackPanel>
+                <TextBlock Text="[PLACEHOLDER]" Style="{StaticResource infoCategory}" HorizontalAlignment="Left" Padding="10"/>
+            </StackPanel>
+        </Border>
+
+        <Border Grid.Row="3" Background="Red" CornerRadius="8" Margin="8">
+            <StackPanel>
+                <TextBlock Text="[PLACEHOLDER]" Style="{StaticResource infoCategory}" HorizontalAlignment="Left" Padding="10"/>
+            </StackPanel>
+        </Border>
+
+
+
     </Grid>
 </Page>
