@@ -1,8 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Style x:Key="navigationButton" TargetType="Button">
-        <Setter Property="Foreground" Value="red" />
-        <Setter Property="Background" Value="Blue" />
+        <Setter Property="Foreground" Value="white" />
+        <Setter Property="Background" Value="#505a5a5a" />
         <Setter Property="FontFamily" Value="Bahnschrift Regular" />
 
         <Setter Property="Margin" Value="10" />
@@ -23,7 +23,8 @@
         
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="true">
-                <Setter Property="Background" Value="Green" />
+                <Setter Property="Background" Value="#606c6c" />
+                <Setter Property="Foreground" Value="#FF00FFB3" />
             </Trigger>
         </Style.Triggers>
     </Style>
