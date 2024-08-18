@@ -12,10 +12,13 @@
         MouseDown="MainWindow_OnMouseDown" 
         Background="#1f1f1f"
         Title="Auto Benchmark Downloader"
-        Height="720" Width="800" MinHeight="320" MinWidth="450">
+        Height="720" 
+        Width="800" 
+        MinHeight="320" 
+        MinWidth="450"
+        SystemBackdropType="Acrylic">
 
     <Grid>
-
         <ui:NavigationView x:Name="RootNavigation" PaneDisplayMode="Left" IsBackButtonVisible="Collapsed" IsPaneToggleVisible="False"
                            IsPaneOpen="False" OpenPaneLength="148"   >
             <ui:NavigationView.MenuItems>

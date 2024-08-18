@@ -13,6 +13,7 @@
                 <mica:ThemeDictionary DesignModeTheme="Dark" Theme="Auto" />
                 <mica:ControlsDictionary />
                 <ResourceDictionary Source="Styles/Tile.xaml" />
+                <ResourceDictionary Source="Styles/navigationButton.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
