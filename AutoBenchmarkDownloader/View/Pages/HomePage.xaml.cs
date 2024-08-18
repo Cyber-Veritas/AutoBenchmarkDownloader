@@ -24,5 +24,14 @@ namespace AutoBenchmarkDownloader.View.Pages
         {
             InitializeComponent();
         }
+
+        private void NavigateToPage(object sender, RoutedEventArgs e)
+        {
+            Button button = sender as Button;
+            string targetPage = button.Tag.ToString();
+
+            NavigationService nav = NavigationService.GetNavigationService(this);
+            nav.Navigate(new Uri("View/Pages/"+targetPage+".xaml", UriKind.RelativeOrAbsolute));
+        }
     }
 }

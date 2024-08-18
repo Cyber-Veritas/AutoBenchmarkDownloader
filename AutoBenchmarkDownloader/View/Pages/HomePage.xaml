@@ -48,22 +48,34 @@
 
         <!-- navigation cells -->
         <UniformGrid Grid.Row="1" Columns="4" Rows="2" Margin="8">
-            <Button Style="{StaticResource navigationButton}">
-                <StackPanel>
-                    
-                    <TextBlock Text="download"/>
+            <Button Style="{StaticResource navigationButton}" Click="NavigateToPage" Tag="DownloadPage">
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+                    <ui:SymbolIcon Symbol="ArrowDownload48" />
+                    <TextBlock Text="download" Margin="5,0,0,0"/>
                 </StackPanel>
-                
             </Button>
-            <Button Style="{StaticResource navigationButton}">
-
+            
+            <Button Style="{StaticResource navigationButton}" Click="NavigateToPage" Tag="SystemMonitorInfoPage">
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+                    <ui:SymbolIcon Symbol="DataPie24" />
+                    <TextBlock Text="monitor" Margin="5,0,0,0"/>
+                </StackPanel>
             </Button>
-            <Button Style="{StaticResource navigationButton}">
-
+            
+            <Button Style="{StaticResource navigationButton}" Click="NavigateToPage" Tag="AboutUsPage">
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+                    <ui:SymbolIcon Symbol="ChatHelp24" />
+                    <TextBlock Text="about us" Margin="5,0,0,0"/>
+                </StackPanel>
             </Button>
-            <Button Style="{StaticResource navigationButton}">
-
+            
+            <Button Style="{StaticResource navigationButton}" Click="NavigateToPage" Tag="SettingsPage">
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+                    <ui:SymbolIcon Symbol="Settings48" />
+                    <TextBlock Text="settings" Margin="5,0,0,0"/>
+                </StackPanel>
             </Button>
+            
             <Button Style="{StaticResource navigationButton}">
 
             </Button>

@@ -6,7 +6,7 @@
         <Setter Property="FontFamily" Value="Bahnschrift Regular" />
 
         <Setter Property="Margin" Value="10" />
-        
+
         
         <Setter Property="Template">
             <Setter.Value>
@@ -20,5 +20,11 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="true">
+                <Setter Property="Background" Value="Green" />
+            </Trigger>
+        </Style.Triggers>
     </Style>
 </ResourceDictionary>
