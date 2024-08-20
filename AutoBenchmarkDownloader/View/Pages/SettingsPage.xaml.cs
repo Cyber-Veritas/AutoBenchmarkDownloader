@@ -9,14 +9,54 @@ namespace AutoBenchmarkDownloader.View.Pages
         public SettingsPage()
         {
             InitializeComponent();
-            DataContext = SystemMonitorViewModel.Instance;
+            DataContext = new SettingsViewModel();
+
+            PathTextBox.Text = (DataContext as SettingsViewModel)?.SoftwareInfoViewModel.CurrentState.OutputPath;
         }
+
+        private void ResetPathButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (DataContext is SettingsViewModel viewModel)
+            {
+                viewModel.SoftwareInfoViewModel.ResetOutputPathCommand.Execute(null);
+                PathTextBox.Text = (DataContext as SettingsViewModel)?.SoftwareInfoViewModel.CurrentState.OutputPath;
+            }
+        }
+
+        private void ChoosePathButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (DataContext is SettingsViewModel viewModel)
+            {
+                viewModel.SoftwareInfoViewModel.ChooseOutputPathCommand.Execute(null);
+                PathTextBox.Text = (DataContext as SettingsViewModel)?.SoftwareInfoViewModel.CurrentState.OutputPath;
+            }
+        }
+
+        private void ApplyPathButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (DataContext is SettingsViewModel viewModel)
+            {
+                viewModel.SoftwareInfoViewModel.ApplyOutputPathCommand.Execute(PathTextBox.Text);
+                PathTextBox.Text = (DataContext as SettingsViewModel)?.SoftwareInfoViewModel.CurrentState.OutputPath;
+            }
+        }
+
+
+        private void ResetSoftwareButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (DataContext is SettingsViewModel viewModel)
+            {
+                viewModel.SoftwareInfoViewModel.RestoreDefaultSoftwareCommand.Execute(null);
+                PathTextBox.Text = (DataContext as SettingsViewModel)?.SoftwareInfoViewModel.CurrentState.OutputPath;
+            }
+        }
+
 
         private void SetIntervalButton_Click(object sender, RoutedEventArgs e)
         {
-            if (DataContext is SystemMonitorViewModel viewModel)
+            if (DataContext is SettingsViewModel viewModel)
             {
-                viewModel.SetIntervalCommand.Execute(IntervalTextBox.Text);
+                viewModel.SystemMonitorViewModel.SetIntervalCommand.Execute(IntervalTextBox.Text);
             }
         }
     }

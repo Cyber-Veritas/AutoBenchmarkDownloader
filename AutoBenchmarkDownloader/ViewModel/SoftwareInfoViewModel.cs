@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Windows;
 using AutoBenchmarkDownloader.Model;
 using AutoBenchmarkDownloader.MVVM;
 using AutoBenchmarkDownloader.Utilities;
@@ -8,6 +9,9 @@ namespace AutoBenchmarkDownloader.ViewModel
 {
     internal class SoftwareInfoViewModel
     {
+        private static SoftwareInfoViewModel _instance;
+        public static SoftwareInfoViewModel Instance => _instance ?? (_instance = new SoftwareInfoViewModel());
+
         public State CurrentState { get; set; }
 
         private readonly YamlOperations _yamlOperations;
@@ -24,11 +28,20 @@ namespace AutoBenchmarkDownloader.ViewModel
         public RelayCommand ResetConfigCommand => new(
             execute => ResetConfig());
 
+        public RelayCommand ResetOutputPathCommand => new(
+            execute => _yamlOperations.RestoreDefaultOutputPath());
+
         public RelayCommand ChooseOutputPathCommand => new(
             execute => ChooseOutputPath());
 
+        public RelayCommand ApplyOutputPathCommand => new(
+            execute => ApplyOutputPath((string)execute));
+
         public RelayCommand AddSoftwareCommand => new(
                        execute => _yamlOperations.AddSoftware());
+
+        public RelayCommand RestoreDefaultSoftwareCommand => new(
+            execute => _yamlOperations.RestoreDefaultSoftwareInfos());
 
         public RelayCommand EditSoftwareCommand => new(
             execute => _yamlOperations.EditSoftware((string)execute));
@@ -65,6 +78,39 @@ namespace AutoBenchmarkDownloader.ViewModel
             if (result == true)
             {
                 CurrentState.OutputPath = dialog.FolderName;
+                _yamlOperations.SaveConfig();
+            }
+        }
+
+        private void ApplyOutputPath(string path)
+        {
+            if (Directory.Exists(path))
+            {
+                CurrentState.OutputPath = path;
+                _yamlOperations.SaveConfig();
+            }
+            else
+            {
+                var result = MessageBox.Show(
+                    $"The directory '{path}' does not exist. Do you want to create it?", 
+                    "Create Directory", 
+                    MessageBoxButton.YesNo, 
+                    MessageBoxImage.Question);
+
+                if (result != MessageBoxResult.Yes) return;
+                try
+                {
+                    Directory.CreateDirectory(path);
+                    CurrentState.OutputPath = path;
+                    _yamlOperations.SaveConfig();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Failed to create directory: {ex.Message}", 
+                        "Error", 
+                        MessageBoxButton.OK, 
+                        MessageBoxImage.Error);
+                }
             }
         }
 
