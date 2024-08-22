@@ -123,6 +123,24 @@ internal class YamlOperations
 
     }
 
+
+    public void RestoreDefaultSoftwareInfos()
+    {
+        _currentState.SoftwareInfos.Clear();
+        foreach (var info in _defaultState.SoftwareInfos)
+        {
+            _currentState.SoftwareInfos.Add(info);
+        }
+        SaveConfig();
+    }
+
+    public void RestoreDefaultOutputPath()
+    {
+        _currentState.OutputPath = _defaultState.OutputPath;
+        SaveConfig();
+    }
+
+
     public void AddSoftware()
     {
         var info = new SoftwareInfo()
