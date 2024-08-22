@@ -8,7 +8,7 @@ namespace AutoBenchmarkDownloader.Utilities
     internal static class DownloadOperations
     {
 
-        public static async Task DownloadSelectedSoftware(State currentState)
+        public static async Task DownloadSelectedSoftware(State currentState, Action<int> updateDownloadProgress)
         {
             if (!Path.Exists(currentState.OutputPath))
             {
@@ -28,8 +28,12 @@ namespace AutoBenchmarkDownloader.Utilities
             var itemsToDownload = currentState.SoftwareInfos.Where(info => info.Download);
             Directory.CreateDirectory(Path.Combine(currentState.OutputPath, "Benchmark"));
 
+            var totalItems = itemsToDownload.Count();
+            var completedItems = 0;
+
             foreach (var item in itemsToDownload)
             {
+                Thread.Sleep(1000);
                 var url = item.Address;
 
                 try
@@ -50,7 +54,7 @@ namespace AutoBenchmarkDownloader.Utilities
                             await response.Content.CopyToAsync(fileStream);
                         }
 
-                        MessageBox.Show("File downloaded successfully!"); 
+                        //MessageBox.Show("File downloaded successfully!"); 
                     }
                 }
                 catch (HttpRequestException ex)
@@ -61,6 +65,10 @@ namespace AutoBenchmarkDownloader.Utilities
                 {
                     MessageBox.Show($"An error occurred: {ex.Message}"); 
                 }
+
+                completedItems++;
+                var progressValue = (completedItems * 100) / totalItems;
+                updateDownloadProgress(progressValue);
             }
         }
     }

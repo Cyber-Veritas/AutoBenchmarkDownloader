@@ -49,13 +49,24 @@
             </ItemsControl>
         </ui:DynamicScrollViewer>
 
-        
-        <!--<ui:Button Grid.Row="1" HorizontalAlignment="Center" Height="90" Width="256" Margin="32" Command="{Binding RestoreDefaultSoftwareCommand}">-->
-        <ui:Button Grid.Row="1" HorizontalAlignment="Center" Height="90" Width="256" Margin="32" Command="{Binding DownloadCommand}">
+
+
+        <!--<Rectangle Grid.Row="1" HorizontalAlignment="Center" Height="90" Width="256" Fill="Brown" />-->
+        <!--<ProgressBar x:Name="DownloadProgressBar" Grid.Row="1" HorizontalAlignment="Center" Height="90" Width="256"/>-->
+        <Grid Grid.Row="1" HorizontalAlignment="Center" Height="90" Width="256" Margin="32">
+            <ProgressBar Value="{Binding DownloadProgress}" Height="90" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="Transparent" />
+            <ui:Button HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Command="{Binding DownloadCommand}">
+                <ui:Button.Content>
+                    <TextBlock FontSize="24" Text="{Binding DownloadButtonText}" />
+                </ui:Button.Content>
+            </ui:Button>
+        </Grid>
+        <!--<ui:Button Grid.Row="1" HorizontalAlignment="Center" Height="90" Width="256" Margin="32" Command="{Binding DownloadCommand}">
             <ui:Button.Content>
                 <TextBlock FontSize="24" Text="Download" />
             </ui:Button.Content>
-        </ui:Button>
+        </ui:Button>-->
+
 
     </Grid>
 </Page>

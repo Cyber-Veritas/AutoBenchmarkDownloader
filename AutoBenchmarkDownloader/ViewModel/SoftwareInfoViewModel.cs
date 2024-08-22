@@ -7,7 +7,7 @@ using Microsoft.Win32;
 
 namespace AutoBenchmarkDownloader.ViewModel
 {
-    internal class SoftwareInfoViewModel
+    internal class SoftwareInfoViewModel : ViewModelBase
     {
         private static SoftwareInfoViewModel _instance;
         public static SoftwareInfoViewModel Instance => _instance ?? (_instance = new SoftwareInfoViewModel());
@@ -17,6 +17,29 @@ namespace AutoBenchmarkDownloader.ViewModel
         private readonly YamlOperations _yamlOperations;
 
         private bool _isDownloading = false;
+
+        private int _downloadProgress;
+        public int DownloadProgress
+        {
+            get => _downloadProgress;
+            set
+            {
+                _downloadProgress = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _downloadButtonText = "Download";
+        public string DownloadButtonText
+        {
+            get => _downloadButtonText;
+            set
+            {
+                _downloadButtonText = value;
+                OnPropertyChanged();
+            }
+        }
+
 
         public RelayCommand DownloadCommand => new(
             execute => DownloadSoftwareAsync(),
@@ -114,10 +137,23 @@ namespace AutoBenchmarkDownloader.ViewModel
             }
         }
 
+        private void UpdateDownloadProgress(int value)
+        {
+            DownloadProgress = value;
+        }
+
         private async Task DownloadSoftwareAsync()
         {
             _isDownloading = true;
-            await DownloadOperations.DownloadSelectedSoftware(CurrentState);
+            DownloadButtonText = "Downloading...";
+            DownloadProgress = 0;
+            await DownloadOperations.DownloadSelectedSoftware(CurrentState, UpdateDownloadProgress);
+            //DownloadProgress = 100;
+            //Thread.Sleep(500);
+            //DownloadButtonText = "Complete";
+            //Thread.Sleep(5000);
+            //DownloadProgress = 0;
+            //DownloadButtonText = "Download";
             _isDownloading = false;
         }
 
