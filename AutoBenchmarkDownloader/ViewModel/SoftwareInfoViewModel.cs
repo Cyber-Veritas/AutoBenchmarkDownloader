@@ -148,12 +148,10 @@ namespace AutoBenchmarkDownloader.ViewModel
             DownloadButtonText = "Downloading...";
             DownloadProgress = 0;
             await DownloadOperations.DownloadSelectedSoftware(CurrentState, UpdateDownloadProgress);
-            //DownloadProgress = 100;
-            //Thread.Sleep(500);
-            //DownloadButtonText = "Complete";
-            //Thread.Sleep(5000);
-            //DownloadProgress = 0;
-            //DownloadButtonText = "Download";
+            DownloadButtonText = "Complete";
+            await Task.Delay(5000);
+            DownloadProgress = 0;
+            DownloadButtonText = "Download";
             _isDownloading = false;
         }
 

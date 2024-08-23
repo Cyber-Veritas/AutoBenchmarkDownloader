@@ -33,7 +33,6 @@ namespace AutoBenchmarkDownloader.Utilities
 
             foreach (var item in itemsToDownload)
             {
-                Thread.Sleep(1000);
                 var url = item.Address;
 
                 try
