@@ -4,10 +4,11 @@
         <Setter Property="Foreground" Value="white" />
         <Setter Property="Background" Value="#505a5a5a" />
         <Setter Property="FontFamily" Value="Bahnschrift Regular" />
-
         <Setter Property="Margin" Value="10" />
+        <Setter Property="Width" Value="150"/>
+        <Setter Property="Height" Value="150"/>
 
-        
+
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">

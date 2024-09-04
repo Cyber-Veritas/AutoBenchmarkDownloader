@@ -30,72 +30,68 @@
 
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="2*" />
             <RowDefinition Height="auto" />
-            <RowDefinition Height="6*" />
             <RowDefinition Height="2*" />
             <RowDefinition Height="2*" />
         </Grid.RowDefinitions>
 
+        
+
+        <!-- navigation cells -->
+        <UniformGrid Grid.Row="0" Columns="4" Rows="1" Margin="8">
+            <Viewbox>
+                <Button Style="{StaticResource navigationButton}" Click="NavigateToPage" Tag="DownloadPage">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Left">
+                        <ui:SymbolIcon Symbol="ArrowDownload24" FontSize="48"/>
+                        <TextBlock Text="download"/>
+                    </StackPanel>
+                </Button>
+            </Viewbox>
+
+            <Viewbox>
+                <Button Style="{StaticResource navigationButton}" Click="NavigateToPage" Tag="SystemMonitorInfoPage">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+                        <ui:SymbolIcon Symbol="DataPie24" FontSize="48"/>
+                        <TextBlock Text="monitor"/>
+                    </StackPanel>
+                </Button>
+            </Viewbox>
+
+            <Viewbox>
+                <Button Style="{StaticResource navigationButton}" Click="NavigateToPage" Tag="AboutUsPage">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+                        <ui:SymbolIcon Symbol="ChatHelp24" FontSize="48" />
+                        <TextBlock Text="about us"/>
+                    </StackPanel>
+                </Button>
+            </Viewbox>
+
+            <Viewbox>
+                <Button Style="{StaticResource navigationButton}" Click="NavigateToPage" Tag="SettingsPage">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+                        <ui:SymbolIcon Symbol="Settings24" FontSize="48" />
+                        <TextBlock Text="settings"/>
+                    </StackPanel>
+                </Button>
+            </Viewbox>
+        </UniformGrid>
+
         <!-- version header -->
-        <Border Grid.Row="0" Background="#505a5a5a" CornerRadius="8" Margin="8">
+        <Border Grid.Row="1" Background="#505a5a5a" CornerRadius="8" Margin="8">
             <StackPanel>
                 <TextBlock Text="Version 0.1.0a" Style="{StaticResource infoCategory}" Foreground="#FF00FFB3" HorizontalAlignment="Left" Padding="10"/>
                 <TextBlock Text="[info about application version]" Style="{StaticResource info}" Padding="10, 0, 0, 0"/>
                 <TextBlock/>
             </StackPanel>
-
         </Border>
-
-        <!-- navigation cells -->
-        <UniformGrid Grid.Row="1" Columns="4" Rows="2" Margin="8">
-            <Button Style="{StaticResource navigationButton}" Click="NavigateToPage" Tag="DownloadPage">
-                <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
-                    <ui:SymbolIcon Symbol="ArrowDownload24" FontSize="48"/>
-                    <TextBlock Text="download" Margin="5,0,0,0"/>
-                </StackPanel>
-            </Button>
-            
-            <Button Style="{StaticResource navigationButton}" Click="NavigateToPage" Tag="SystemMonitorInfoPage">
-                <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
-                    <ui:SymbolIcon Symbol="DataPie24" FontSize="48"/>
-                    <TextBlock Text="monitor" Margin="5,0,0,0"/>
-                </StackPanel>
-            </Button>
-            
-            <Button Style="{StaticResource navigationButton}" Click="NavigateToPage" Tag="AboutUsPage">
-                <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
-                    <ui:SymbolIcon Symbol="ChatHelp24" FontSize="48" />
-                    <TextBlock Text="about us" Margin="5,0,0,0"/>
-                </StackPanel>
-            </Button>
-            
-            <Button Style="{StaticResource navigationButton}" Click="NavigateToPage" Tag="SettingsPage">
-                <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
-                    <ui:SymbolIcon Symbol="Settings24" FontSize="48" />
-                    <TextBlock Text="settings" Margin="5,0,0,0"/>
-                </StackPanel>
-            </Button>
-            
-            <Button Style="{StaticResource navigationButton}">
-
-            </Button>
-            <Button Style="{StaticResource navigationButton}">
-
-            </Button>
-        </UniformGrid>
 
         <!-- Other info -->
-        <Border Grid.Row="2" Background="Red" CornerRadius="8" Margin="8">
+        <!--<Border Grid.Row="2" Background="Red" CornerRadius="8" Margin="8">
             <StackPanel>
                 <TextBlock Text="[PLACEHOLDER]" Style="{StaticResource infoCategory}" HorizontalAlignment="Left" Padding="10"/>
             </StackPanel>
-        </Border>
-
-        <Border Grid.Row="3" Background="Red" CornerRadius="8" Margin="8">
-            <StackPanel>
-                <TextBlock Text="[PLACEHOLDER]" Style="{StaticResource infoCategory}" HorizontalAlignment="Left" Padding="10"/>
-            </StackPanel>
-        </Border>
+        </Border>-->
 
     </Grid>
 </Page>
