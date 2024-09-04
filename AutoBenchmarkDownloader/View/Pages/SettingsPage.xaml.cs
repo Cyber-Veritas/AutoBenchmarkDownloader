@@ -1,28 +1,63 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AutoBenchmarkDownloader.ViewModel;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace AutoBenchmarkDownloader.View.Pages
 {
-    /// <summary>
-    /// Interaction logic for SettingsPage.xaml
-    /// </summary>
     public partial class SettingsPage : Page
     {
         public SettingsPage()
         {
             InitializeComponent();
+            DataContext = new SettingsViewModel();
+
+            PathTextBox.Text = (DataContext as SettingsViewModel)?.SoftwareInfoViewModel.CurrentState.OutputPath;
+        }
+
+        private void ResetPathButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (DataContext is SettingsViewModel viewModel)
+            {
+                viewModel.SoftwareInfoViewModel.ResetOutputPathCommand.Execute(null);
+                PathTextBox.Text = (DataContext as SettingsViewModel)?.SoftwareInfoViewModel.CurrentState.OutputPath;
+            }
+        }
+
+        private void ChoosePathButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (DataContext is SettingsViewModel viewModel)
+            {
+                viewModel.SoftwareInfoViewModel.ChooseOutputPathCommand.Execute(null);
+                PathTextBox.Text = (DataContext as SettingsViewModel)?.SoftwareInfoViewModel.CurrentState.OutputPath;
+            }
+        }
+
+        private void ApplyPathButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (DataContext is SettingsViewModel viewModel)
+            {
+                viewModel.SoftwareInfoViewModel.ApplyOutputPathCommand.Execute(PathTextBox.Text);
+                PathTextBox.Text = (DataContext as SettingsViewModel)?.SoftwareInfoViewModel.CurrentState.OutputPath;
+            }
+        }
+
+
+        private void ResetSoftwareButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (DataContext is SettingsViewModel viewModel)
+            {
+                viewModel.SoftwareInfoViewModel.RestoreDefaultSoftwareCommand.Execute(null);
+                PathTextBox.Text = (DataContext as SettingsViewModel)?.SoftwareInfoViewModel.CurrentState.OutputPath;
+            }
+        }
+
+
+        private void SetIntervalButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (DataContext is SettingsViewModel viewModel)
+            {
+                viewModel.SystemMonitorViewModel.SetIntervalCommand.Execute(IntervalTextBox.Text);
+            }
         }
     }
 }

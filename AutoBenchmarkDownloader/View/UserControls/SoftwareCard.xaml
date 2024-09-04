@@ -11,6 +11,15 @@
              mc:Ignorable="d" 
              Name="SoftwareCardControl"
              Height="60" d:DesignWidth="480" MinWidth="360">
+    <!--<UserControl.Resources>
+        <Style TargetType="controls:ToggleSwitch" x:Key="tSwitchStyle">
+            <Style.Triggers>
+                
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>-->
+    
+
     <Border Style="{StaticResource Tile}">
         <Grid>
             <Grid.ColumnDefinitions>
@@ -36,12 +45,12 @@
                     <svgc:SvgViewbox x:Name="SvgEdit" Opacity="0.0" Width="16" Height="16" Source="/Resources/UI/edit-solid.svg" />
                 </Border>
                 <StackPanel Margin="10">
-                    <TextBlock Text="{Binding SoftwareTitle, ElementName=SoftwareCardControl}" FontSize="16" Foreground="White"/>
-                    <TextBlock Text="{Binding SoftwareDescription, ElementName=SoftwareCardControl}" FontSize="12" Foreground="White" Opacity="0.75" />
+                    <TextBlock Text="{Binding SoftwareTitle, ElementName=SoftwareCardControl}" FontFamily="Bahnschrift Bold" FontSize="14" Foreground="White"/>
+                    <TextBlock Text="{Binding SoftwareDescription, ElementName=SoftwareCardControl}" FontFamily="Bahnschrift Regular" FontSize="11" Foreground="White" Opacity="0.75" />
                 </StackPanel>
             </StackPanel>
 
-            <controls:ToggleSwitch IsChecked="{Binding Download}" Command="{Binding DataContext.SaveConfigCommand, RelativeSource={RelativeSource AncestorType=Page}}"  Grid.Column="1" HorizontalAlignment="Right" Margin="0,0,12,0" Padding="0"/>
+            <controls:ToggleSwitch IsChecked="{Binding Download}" Command="{Binding DataContext.SaveConfigCommand, RelativeSource={RelativeSource AncestorType=Page}}"  Grid.Column="1" HorizontalAlignment="Right" Margin="0,0,12,0" Padding="0" Background="#FF00FFB3"/>
         </Grid>
     </Border>
     

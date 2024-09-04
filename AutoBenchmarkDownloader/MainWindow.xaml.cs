@@ -11,15 +11,24 @@ namespace AutoBenchmarkDownloader
         public MainWindow()
         {
             InitializeComponent();
+
             DataContext = SystemMonitorViewModel.Instance;
 
             Wpf.Ui.Appearance.WindowBackgroundManager.ApplyDarkThemeToWindow(this);
             Loaded += MainWindow_Loaded;
         }
 
-        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        public void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             RootNavigation.Navigate(typeof(HomePage));
+        }
+
+        public void NavigateToPage(string targetPage)
+        {
+            if (targetPage == "DownloadPage") { RootNavigation.Navigate(typeof(DownloadPage)); }
+            else if (targetPage == "SystemMonitorInfoPage") { RootNavigation.Navigate(typeof(SystemMonitorInfoPage)); }
+            else if (targetPage == "AboutUsPage") { RootNavigation.Navigate(typeof(AboutUsPage)); }
+            else if (targetPage == "SettingsPage") { RootNavigation.Navigate(typeof(SettingsPage)); }
         }
 
         private void MainWindow_OnMouseDown(object sender, MouseButtonEventArgs e)
