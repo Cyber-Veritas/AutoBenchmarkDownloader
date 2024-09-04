@@ -57,7 +57,7 @@
             <ProgressBar Value="{Binding DownloadProgress}" Height="90" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="Transparent" />
             <ui:Button HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Command="{Binding DownloadCommand}">
                 <ui:Button.Content>
-                    <TextBlock FontSize="24" Text="{Binding DownloadButtonText}" />
+                    <TextBlock FontSize="24" Text="{Binding DownloadButtonText}" FontFamily="Bahnschrift Bold" />
                 </ui:Button.Content>
             </ui:Button>
         </Grid>
